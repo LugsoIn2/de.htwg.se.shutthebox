@@ -7,3 +7,8 @@ object ShutTheBox {
     println(program)
   }
 }
+
+object Testobject {
+  val testtest = "Hallo du"
+  println(testtest)
+}
