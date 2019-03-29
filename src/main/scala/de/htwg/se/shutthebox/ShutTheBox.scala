@@ -6,6 +6,10 @@ object ShutTheBox {
     val program = "ShutTheBox"
     println(program)
   }
+
+  object Field {
+    val x = 1
+  }
 }
 
 object Testobject {
