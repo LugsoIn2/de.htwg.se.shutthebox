@@ -1,3 +1,5 @@
+import de.htwg.se.shutthebox.model.Cell
+
 case class Field()
 
 val field1 = (Array.ofDim[Int](9))
@@ -7,15 +9,6 @@ for (i <- 0 to 8) {
 
 field1
 
-
-
-val start = 1
-val end   = 6
-
-val rnd = scala.util.Random
-
-val dice1 = start + rnd.nextInt((end - start) + 1)
-val dice2 = start + rnd.nextInt((end - start) + 1)
 
 
 

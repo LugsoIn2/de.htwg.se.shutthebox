@@ -14,22 +14,26 @@ object ShutTheBox {
 class Field {
   val field = Array.ofDim[Cell](9)
   for (i <- 1 to 9) {
-    field(i) = new Cell(i)
+    field(i) = new Cell()
+    field(i).value = i
   }
 }
 
-class Cell(val x : Integer) {
-  var value = x
+class Cell() {
+  var value = 1;
   var isShut = false;
 }
 
+//Dice to roll
 class Die() {
-  val rnd = scala.util.Random
   val start = 1
   val end   = 6
   var value = roll
 
+  // Function to roll the die, generate random number
+  // between 1 and 6
+  // save generated number in value variable
   def roll: Integer = {
-    start + rnd.nextInt((end - start) + 1)
+    start + scala.util.Random.nextInt((end - start) + 1)
   }
 }
