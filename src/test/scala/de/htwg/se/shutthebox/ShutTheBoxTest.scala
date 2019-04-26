@@ -1,6 +1,5 @@
-package de.htwg.se.shutthebox.model
+package de.htwg.se.shutthebox
 
-import de.htwg.se.shutthebox._
 import de.htwg.se.shutthebox.model._
 import org.scalatest._
 
