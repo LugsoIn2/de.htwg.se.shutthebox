@@ -1,5 +1,16 @@
 package de.htwg.se.shutthebox.model
 
-class PlayerTest {
+import org.scalatest._
+
+class PlayerTest extends WordSpec with Matchers {
+
+  val player = new Player()
+
+  "A Die" should {
+    "a value" in {
+      player.plrName shouldBe a [String]
+      player.score shouldBe a [Integer]
+    }
+  }
 
 }
