@@ -37,6 +37,7 @@ class ShutTheBoxTest extends WordSpec with Matchers {
       //die.value shouldBe between 1 and 6 ?????
     }
   }
+
 }
 
 
