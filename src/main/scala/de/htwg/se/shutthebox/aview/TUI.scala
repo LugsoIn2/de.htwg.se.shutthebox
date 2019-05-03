@@ -6,14 +6,11 @@ import de.htwg.se.shutthebox.model._
 //class TUI(field:Field, players:Array[Player], currentPlr:Player) {
 class TUI(controller:Controller) {
   var matchfield = controller.createField()
-  println(" ==== SHUT THE BOX ====")
-  println("Press \"s\" to START the game!")
-  println("Press \"n\" for next player")
-  println("Press \"r\" to ROLL dice")
-  println("Press \"q\" to QUIT game")
-  println("Press \"h\" for HELP")
-  println("Press numbers (1 - 9) to shut the cells")
+  initialize()
 
+  def initialize() : Unit = {
+    print(printHeader())
+  }
 
   def processInputLine(input: String, dice: Array[Die]): Unit = {
 
@@ -40,18 +37,30 @@ class TUI(controller:Controller) {
     //matchfield = controller.createField()
     var players = controller.createPlayers()
     var currentPlayer = players(0)
-    println("---- NEW GAME ----")
-    println()
-    println("Please enter your names!")
-    print("Player 1: ")
-    players(0).inputName()
-    println()
-    print("Player 2: ")
-    players(1).inputName()
-    println()
+    print(printStartGame())
+    players(0).inputName(1)
+    players(1).inputName(2)
     println(currentPlayer.plrName + ": IT'S YOUR TURN!")
   }
 
+  def printHeader() : String = {
+    """
+      |" ==== SHUT THE BOX ====
+      |Press "s" to START the game!
+      |Press "n" for next player
+      |Press "r" to ROLL dice
+      |Press "q" to QUIT game
+      |Press "h" for HELP
+      |Press numbers (1 - 9) to shut the cells
+      |""".stripMargin
+  }
+
+  def printStartGame() : String = {
+    """
+      |---- NEW GAME ----
+      |Please enter your names!
+      |""".stripMargin
+  }
 
 
 }
