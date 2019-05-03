@@ -8,16 +8,14 @@ class Field {
     field(i - 1).value = i
   }
 
-  def shut(number:Integer, field:Field) : Unit = {
+  def shut(number:Integer, field:Field) : Cell = {
     if (!field.field(number-1).isShut) {
       field.field(number-1).isShut = true;
     } else {
       println("This cell is already shut!")
     }
 
-    println()
-    println("|=============================================|")
-    print(" ")
+    print("\n|=============================================|\n ")
     for (i <- 0 to 8) {
       if (!field.field(i).isShut) {
         print(i + 1 + "    ")
@@ -25,9 +23,7 @@ class Field {
         print("     ")
       }
     }
-    println()
-    println("|---------------------------------------------|")
-    print(" ")
+    print("\n|---------------------------------------------|\n ")
     for (i <- 0 to 8) {
       if (field.field(i).isShut) {
         print(i + 1 + "    ")
@@ -35,7 +31,7 @@ class Field {
         print("     ")
       }
     }
-    println()
-    println("|=============================================|")
+    print("\n|=============================================|\n")
+    field.field(number-1)
   }
 }

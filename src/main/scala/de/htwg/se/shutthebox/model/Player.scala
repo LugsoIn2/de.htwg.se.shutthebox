@@ -6,14 +6,14 @@ class Player() {
   var plrName = ""
   var score = 0
 
-  def inputName(index:Integer) : String = {
+  def setName(index:Integer) : String = {
     printf("Player %d: ",index)
-    plrName = readLine()
+    plrName = "Player"//readLine()
     plrName
   }
 
   def updateScore(n:Integer) : Integer = {
     score = n
-    n
+    score
   }
 }

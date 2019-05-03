@@ -4,7 +4,8 @@ import de.htwg.se.shutthebox.aview.TUI
 import de.htwg.se.shutthebox.model._
 import de.htwg.se.shutthebox.util.Observable
 
-class Controller(var matchfield: Field, var dice: Array[Die], var players: Array[Player]) extends Observable {
+class Controller(var matchfield: Field, var dice: Array[Die]) extends Observable {
+  var players = Array(new Player, new Player)
   var currentPlayer = players(0)
 
   def createField() : Field = {
@@ -20,7 +21,7 @@ class Controller(var matchfield: Field, var dice: Array[Die], var players: Array
   }
 
   def createPlayers(): Array[Player] = {
-    players = Array(new Player, new Player)
+    currentPlayer = players(0)
     notifyObservers
     players
   }
@@ -37,7 +38,11 @@ class Controller(var matchfield: Field, var dice: Array[Die], var players: Array
       1
   }
 
-  def gridToString: String = matchfield.toString
+  def getCurrentPlayer() : Player = {
+    currentPlayer
+  }
+
+  def matchfieldToString: String = matchfield.toString
 
 
 }

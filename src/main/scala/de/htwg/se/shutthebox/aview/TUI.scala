@@ -10,7 +10,7 @@ class TUI(controller:Controller) {
 
 
 
-  def processInputLine(input: String, dice: Array[Die]): Unit = {
+  def processInputLine(input: String, dice: Array[Die]): String = {
 
     input match {
       case "s" => startGame()
@@ -29,14 +29,15 @@ class TUI(controller:Controller) {
       case "9" => matchfield.shut(9, matchfield)
       case _ => println("")
     }
+    input
   }
 
-  def startGame(): Unit = {
-    //matchfield = controller.createField()
+  def startGame(): Player = {
+    matchfield = controller.createField()
     var players = controller.createPlayers()
     print(printStartGame())
-    players(0).inputName(1)
-    players(1).inputName(2)
+    players(0).setName(1)   // problems with code coverage
+    players(1).setName(2)   // NullPointerException or infinite loop for input
     nextPlayer()
   }
 
@@ -68,13 +69,16 @@ class TUI(controller:Controller) {
       |""".stripMargin
   }
 
-  def nextPlayer(): Unit = {
+  def nextPlayer(): Player = {
     if (controller.getCurrentPlayerIndex == 0) {
       controller.setCurrentPlayer(1)
+    } else if (controller.getCurrentPlayerIndex == 1){
+      controller.setCurrentPlayer(0)
     } else {
       controller.setCurrentPlayer(0)
     }
-    print(controller.currentPlayer.toString + "IT'S YOUR TURN!")
+    print("NEXT PLAYERS TURN!")
+    controller.getCurrentPlayer()
   }
 
   def printDice(value:Int) : String = {

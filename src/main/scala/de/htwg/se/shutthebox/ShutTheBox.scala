@@ -6,7 +6,7 @@ import de.htwg.se.shutthebox.controller.Controller
 
 object ShutTheBox {
 
-  val controller = new Controller(new Field, Array(new Die, new Die), Array(new Player, new Player))
+  val controller = new Controller(new Field, Array(new Die, new Die))
   val tui = new TUI(controller)
 
 

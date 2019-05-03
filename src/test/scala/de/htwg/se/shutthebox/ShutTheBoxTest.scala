@@ -7,7 +7,7 @@ class ShutTheBoxTest extends WordSpec with Matchers {
 
   "A ShutTheBox" should {
     "a value" in {
-      
+      main.
     }
   }
 
