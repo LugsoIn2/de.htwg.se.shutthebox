@@ -5,6 +5,8 @@ import de.htwg.se.shutthebox.model._
 import de.htwg.se.shutthebox.util.Observable
 
 class Controller(var matchfield: Field, var dice: Array[Die], var players: Array[Player]) extends Observable {
+  var currentPlayer = players(0)
+
   def createField() : Field = {
     matchfield = new Field()
     notifyObservers
@@ -24,12 +26,13 @@ class Controller(var matchfield: Field, var dice: Array[Die], var players: Array
   }
 
   def setCurrentPlayer(index:Integer): Player = {
-    var currentPlayer = players(index)
+    currentPlayer = players(index)
     currentPlayer
   }
 
-
-
+  def getCurrentPlayerIndex(): Player = {
+    currentPlayer
+  }
 
   def gridToString: String = matchfield.toString
 

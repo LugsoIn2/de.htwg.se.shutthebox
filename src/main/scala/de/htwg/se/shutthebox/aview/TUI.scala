@@ -17,9 +17,9 @@ class TUI(controller:Controller) {
     input match {
       case "s" => startGame()
       case "q" => System.exit(0)
-      case "r" => printf("Die1: %d%n",dice(0).roll)
-                  printf("Die2: %d%n",dice(1).roll)
-      //case "n" => nextPlayer()
+      case "r" => print(printDice(dice(0).roll) + printDice(dice(1).roll))
+      case "n" => nextPlayer()
+      case "h" => print(printRules())
       case "1" => matchfield.shut(1, matchfield)//shut(1,matchfield)
       case "2" => matchfield.shut(2, matchfield)//shut(2,matchfield)
       case "3" => matchfield.shut(3, matchfield)
@@ -36,22 +36,30 @@ class TUI(controller:Controller) {
   def startGame(): Unit = {
     //matchfield = controller.createField()
     var players = controller.createPlayers()
-    var currentPlayer = players(0)
     print(printStartGame())
     players(0).inputName(1)
     players(1).inputName(2)
-    println(currentPlayer.plrName + ": IT'S YOUR TURN!")
+    nextPlayer()
   }
 
   def printHeader() : String = {
     """
-      |" ==== SHUT THE BOX ====
-      |Press "s" to START the game!
-      |Press "n" for next player
-      |Press "r" to ROLL dice
-      |Press "q" to QUIT game
-      |Press "h" for HELP
-      |Press numbers (1 - 9) to shut the cells
+      |╔═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════╗
+      |║  ______   ___   ___   __  __   _________   _________  ___   ___   ______        _______   ______   __     __      ║
+      |║ /_____/\ /__/\ /__/\ /_/\/_/\ /________/\ /________/\/__/\ /__/\ /_____/\     /_______/\ /_____/\ /__/\ /__/\     ║
+      |║ \::::_\/_\::\ \\  \ \\:\ \:\ \\__.::.__\/ \__.::.__\/\::\ \\  \ \\::::_\/_    \::: _  \ \\:::_ \ \\ \::\\:.\ \    ║
+      |║  \:\/___/\\::\/_\ .\ \\:\ \:\ \  \::\ \      \::\ \   \::\/_\ .\ \\:\/___/\    \::(_)  \/_\:\ \ \ \\_\::_\:_\/    ║
+      |║   \_::._\:\\:: ___::\ \\:\ \:\ \  \::\ \      \::\ \   \:: ___::\ \\::___\/_    \::  _  \ \\:\ \ \ \ _\/__\_\_/\  ║
+      |║     /____\:\\: \ \\::\ \\:\_\:\ \  \::\ \      \::\ \   \: \ \\::\ \\:\____/\    \::(_)  \ \\:\_\ \ \\ \ \ \::\ \ ║
+      |║     \_____\/ \__\/ \::\/ \_____\/   \__\/       \__\/    \__\/ \::\/ \_____\/     \_______\/ \_____\/ \_\/  \__\/ ║
+      |║                                                                                                                   ║
+      |║                                          Press "s" to START the game!                                             ║
+      |║                                           Press "n" for next player                                               ║
+      |║                                             Press "r" to ROLL dice                                                ║
+      |║                                             Press "q" to QUIT game                                                ║
+      |║                                               Press "h" for HELP                                                  ║
+      |║                                      Press numbers (1 - 9) to shut the cells                                      ║
+      |╚═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════╝
       |""".stripMargin
   }
 
@@ -59,6 +67,100 @@ class TUI(controller:Controller) {
     """
       |---- NEW GAME ----
       |Please enter your names!
+      |""".stripMargin
+  }
+
+  def nextPlayer(): Unit = {
+    if (controller.getCurrentPlayerIndex == controller.players(0)) {
+      controller.setCurrentPlayer(1)
+    } else
+      controller.setCurrentPlayer(0)
+      println(controller.currentPlayer.plrName + ": IT'S YOUR TURN!")
+  }
+
+  def printDice(value:Int) : String = {
+    value match {
+      case 1 =>
+        """
+          |╔═════════╗
+          |║         ║
+          |║    O    ║
+          |║         ║
+          |╚═════════╝
+          |""".stripMargin
+      case 2 =>
+        """
+          |╔═════════╗
+          |║ O       ║
+          |║         ║
+          |║       O ║
+          |╚═════════╝
+          |""".stripMargin
+      case 3 =>
+        """
+          |╔═════════╗
+          |║ O       ║
+          |║    O    ║
+          |║       O ║
+          |╚═════════╝
+          |""".stripMargin
+      case 4 =>
+        """
+          |╔═════════╗
+          |║ O     O ║
+          |║         ║
+          |║ O     O ║
+          |╚═════════╝
+          |""".stripMargin
+      case 5 =>
+        """
+          |╔═════════╗
+          |║ O     O ║
+          |║    O    ║
+          |║ O     O ║
+          |╚═════════╝
+          |""".stripMargin
+      case 6 =>
+        """
+          |╔═════════╗
+          |║ O     O ║
+          |║ O     O ║
+          |║ O     O ║
+          |╚═════════╝
+          |""".stripMargin
+    }
+  }
+
+  def printRules() : String = {
+    """
+      |'SHUT THE BOX' ist ein einfaches, aber sehr verlockendes Würfelspiel.
+      |Es kann als nettes Trinkspiel oder als kleines Gesellschaftsspiel für zwischendurch gespielt werden.
+      |
+      |Es besteht aus einem Würfelbrett mit 9 schwenkbaren Klappen,
+      |beschrieben mit den Ziffern 1 bis 9 und zwei Würfeln.
+      |Zu Beginn des Spiels werden die Klappen in senkrechte Position gebracht.
+      |Ziel ist es, alle Klappen umzuschwenken, um so eine möglichst geringe Teamsumme zu erreichen.
+      |Das Umschwenken ist durch Würfeln und die damit erzielten Augenzahlen möglich.
+      |
+      |In dieser Version wird mit zwei Teams gespielt. TEAM 1 ist an der Reihe und muss würfeln.
+      |Es dürfen durch das Drücken der Tasten 1-9 auf der Tastatur folgende Spielsteine umgedreht werden:
+      |
+      |- Die Summe aus beiden Würfeln
+      |- Die Differenz der beiden Würfel (grösserer Wert minus kleinerer Wert)
+      |- Das Produkt der Würfel
+      |- Die Division beider Würfel (grösserer Wert geteilt durch kleineren Wert und ohne Rest)
+      |- Die einzelnen Werte beider Würfel
+      |
+      |Nach jedem Umschwenken muss mit der LEERTASTE neu gewürfelt werden.
+      |
+      |Wenn das Team etwas würfelt, das in allen oben genannten Fällen schon umgeklappt ist,
+      |ist das TEAM 1 mit seinem Spielzug fertig und darf nicht mehr würfeln.
+      |
+      |Nun muss die Taste [ n ] gedrückt werden und TEAM 2 darf spielen.
+      |
+      |Ziel des Spiels ist es, eine NIEDRIGERE Teamsumme zu erreichen als das Gegnerteam.
+      |Somit hat das Team mit der höheren Punktzahl verloren und muss einen Kurzen trinken.
+      |Danach geht das Ganze von vorne los. :-)
       |""".stripMargin
   }
 
