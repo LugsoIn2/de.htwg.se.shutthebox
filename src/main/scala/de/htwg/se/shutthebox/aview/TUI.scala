@@ -16,7 +16,7 @@ class TUI(controller:Controller) {
       case "s" => startGame()
       case "q" => System.exit(0)
       case "r" => print(printDice(dice(0).roll) + printDice(dice(1).roll))
-      case "n" => nextPlayer()
+      case "n" => print(nextPlayer())
       case "h" => print(printRules())
       case "1" => matchfield.shut(1, matchfield)//shut(1,matchfield)
       case "2" => matchfield.shut(2, matchfield)//shut(2,matchfield)
@@ -69,11 +69,12 @@ class TUI(controller:Controller) {
   }
 
   def nextPlayer(): Unit = {
-    if (controller.getCurrentPlayerIndex == controller.players(0)) {
+    if (controller.getCurrentPlayerIndex == 0) {
       controller.setCurrentPlayer(1)
-    } else
+    } else {
       controller.setCurrentPlayer(0)
-      println(controller.currentPlayer.plrName + ": IT'S YOUR TURN!")
+    }
+    print(controller.currentPlayer.toString + "IT'S YOUR TURN!")
   }
 
   def printDice(value:Int) : String = {

@@ -17,8 +17,9 @@ class TUITest extends WordSpec with Matchers {
       tui shouldBe a [TUI]
       tui.matchfield shouldBe a [Field]
       tui.printHeader() shouldBe a [String]
+      tui.nextPlayer() shouldBe a [Unit]
       tui.printStartGame() shouldBe a [String]
-      tui.printDice(dice(0).roll) shouldBe a [String]
+      tui.printDice(1) shouldBe a [String]
       tui.printRules() shouldBe a [String]
       tui.startGame() shouldBe a [Unit]
     }

@@ -30,8 +30,11 @@ class Controller(var matchfield: Field, var dice: Array[Die], var players: Array
     currentPlayer
   }
 
-  def getCurrentPlayerIndex(): Player = {
-    currentPlayer
+  def getCurrentPlayerIndex(): Integer = {
+    if (currentPlayer == players(0))
+      0
+    else
+      1
   }
 
   def gridToString: String = matchfield.toString
