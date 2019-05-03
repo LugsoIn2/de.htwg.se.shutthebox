@@ -6,11 +6,9 @@ import de.htwg.se.shutthebox.model._
 //class TUI(field:Field, players:Array[Player], currentPlr:Player) {
 class TUI(controller:Controller) {
   var matchfield = controller.createField()
-  initialize()
+  print(printHeader())
 
-  def initialize() : Unit = {
-    print(printHeader())
-  }
+
 
   def processInputLine(input: String, dice: Array[Die]): Unit = {
 
