@@ -5,11 +5,11 @@ import org.scalatest._
 
 class ShutTheBoxTest extends WordSpec with Matchers {
 
-  "A ShutTheBox" should {
+ /* "A ShutTheBox" should {
     "a value" in {
       main.
     }
-  }
+  }*/
 
 }
 
