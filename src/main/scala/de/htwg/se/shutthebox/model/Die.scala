@@ -10,7 +10,7 @@ class Die() {
   // between 1 and 6
   // save generated number in value variable
   def roll: Integer = {
-     value = start + scala.util.Random.nextInt((end - start) + 1)
-     value
+    value = start + scala.util.Random.nextInt((end - start) + 1)
+    value
   }
 }

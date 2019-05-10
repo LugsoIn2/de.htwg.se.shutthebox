@@ -44,5 +44,4 @@ class Controller(var matchfield: Field, var dice: Array[Die]) extends Observable
 
   def matchfieldToString: String = matchfield.toString
 
-
 }
