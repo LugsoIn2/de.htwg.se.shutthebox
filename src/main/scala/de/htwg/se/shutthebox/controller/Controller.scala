@@ -154,7 +154,7 @@ class Controller(var matchfield: Field, var dice: Array[Die]) extends Observable
       dice(1).roll
       getValidShuts()
       gameState=ROLLDICE
-      shutState=SHUT0
+      shutState=SHUTSTATE0
       notifyObservers
     } else {
       print("Würfeln nicht erlaubt")
