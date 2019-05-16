@@ -9,7 +9,9 @@ import de.htwg.se.shutthebox.controller.GameState._
 class Controller(var matchfield: Field, var dice: Array[Die]) extends Observable {
   var players = Array(new Player, new Player)
   var currentPlayer = players(0)
-  var gameState = GameState.MENU
+  //var gameState = GameState.MENU
+  var gameState : GameState = MENU
+  var validNumber = Array(0,0)
 
 
   def startGame(): Unit = {
@@ -19,7 +21,8 @@ class Controller(var matchfield: Field, var dice: Array[Die]) extends Observable
     getPlayers()(0).setName(1)   // problems with code coverage
     getPlayers()(1).setName(2)   // NullPointerException or infinite loop for input
     setCurrentPlayer()
-    gameState = GameState.INGAME
+    //gameState = GameState.INGAME
+    gameState=INGAME
   }
 
 
@@ -63,39 +66,49 @@ class Controller(var matchfield: Field, var dice: Array[Die]) extends Observable
     notifyObservers
   }
 
-  def shut(i : Int) : Unit = {
-    if (gameState == GameState.ROLLDICE | gameState == GameState.INGAME) {
-      if(getValidShuts() == true) {
-        matchfield.shut(i, matchfield)
-        gameState = GameState.INGAME
-        notifyObservers
+
+  def doShut(i:Int) : Unit = {
+    if (gameState == ROLLDICE | gameState == SHUT) {
+      if (validNumber(0) == i | validNumber(1) == i) {
+        shut(i)
       } else {
-        print("Bitte erst Würfeln (shut nicht erlaubt)")
+        print("Dieser Shut ist nicht erlaubt")
       }
     } else {
       print("Bitte erst Würfeln (shut nicht erlaubt)")
     }
-
   }
 
-  def getValidShuts() : Boolean = {
-    //Aufruf der regeln methode. True wenn erlaubt, False wenn nicht
-    //Nach jedem shut wird erneut gebueft, da manchmal 2 shuts manchmal nur einer erlaubt.
-    // BSP: W1 = 2, W2 = 3 --> Erlaubt 2,3 (zwei Shuts) | 5 (ein shut) ......
-    true
+  def shut(i : Int) : Unit = {
+    matchfield.shut(i, matchfield)
+    //gameState = GameState.INGAME
+    //gameState=INGAME
+    gameState=SHUT
+    notifyObservers
+
   }
 
 
   def rollDice() : Unit = {
-    if (gameState == GameState.INGAME){
+    if (gameState == INGAME | gameState == SHUT){
       dice(0).roll
       Thread.sleep(40)
       dice(1).roll
-      gameState = GameState.ROLLDICE
+      getValidShuts()
+      //gameState = GameState.ROLLDICE
+      gameState=ROLLDICE
       notifyObservers
     } else {
       print("Würfeln nicht erlaubt")
     }
+  }
+
+  def getValidShuts() : Unit = {
+    //Aufruf der regeln methode.
+    //Soll in validNumber dann die erlaubten Zahlen schreiben
+    // 1, 3
+    validNumber(0) = 1
+    validNumber(1) = 3
   }
 
 
@@ -103,17 +116,16 @@ class Controller(var matchfield: Field, var dice: Array[Die]) extends Observable
     gameState match {
       case GameState.MENU => ""
       case GameState.ROLLDICE => rollToString
-      //case GameState.SHUT => fieldToString
+      case GameState.SHUT => fieldToString
       case GameState.INGAME => fieldToString
 
 
     }
   }
 
-  def matchfieldToString : String = matchfield.toString
-
 
   def fieldToString : String = matchfield.toString
+
   def rollToString : String =  {
     dice(0).toString + dice(1).toString
   }

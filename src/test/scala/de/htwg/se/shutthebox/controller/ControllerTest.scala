@@ -56,7 +56,7 @@ class ControllerTest extends WordSpec with Matchers {
         observer.updated should be(true)
       }
       "notify its Observer after matchfieldToString" in {
-        controller.matchfieldToString shouldBe a[String]
+        controller.fieldToString shouldBe a[String]
         observer.updated should be(true)
       }
     }
