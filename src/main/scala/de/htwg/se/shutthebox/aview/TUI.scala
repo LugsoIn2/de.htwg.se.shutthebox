@@ -1,11 +1,12 @@
 package de.htwg.se.shutthebox.aview
 import de.htwg.se.shutthebox._
-import de.htwg.se.shutthebox.controller.Controller
+import de.htwg.se.shutthebox.controller.{Controller, GameState}
 import de.htwg.se.shutthebox.model._
+import de.htwg.se.shutthebox.util.Observer
 
 //class TUI(field:Field, players:Array[Player], currentPlr:Player) {
-class TUI(controller:Controller) {
-  var matchfield = controller.createField()
+class TUI(controller:Controller) extends Observer {
+  controller.add(this)
   print(printHeader())
 
 
@@ -13,33 +14,33 @@ class TUI(controller:Controller) {
   def processInputLine(input: String, dice: Array[Die]): String = {
 
     input match {
-      case "s" => startGame()
+      case "s" => controller.startGame()
       case "q" => System.exit(0)
-      case "r" => print(printDice(dice(0).roll) + printDice(dice(1).roll))
+      case "r" => controller.rollDice()
       case "n" => print(nextPlayer())
       case "h" => print(printRules())
-      case "1" => matchfield.shut(1, matchfield)//shut(1,matchfield)
-      case "2" => matchfield.shut(2, matchfield)//shut(2,matchfield)
-      case "3" => matchfield.shut(3, matchfield)
-      case "4" => matchfield.shut(4, matchfield)
-      case "5" => matchfield.shut(5, matchfield)
-      case "6" => matchfield.shut(6, matchfield)
-      case "7" => matchfield.shut(7, matchfield)
-      case "8" => matchfield.shut(8, matchfield)
-      case "9" => matchfield.shut(9, matchfield)
+      case "1" => controller.shut(1)
+      case "2" => controller.shut(2)
+      case "3" => controller.shut(3)
+      case "4" => controller.shut(4)
+      case "5" => controller.shut(5)
+      case "6" => controller.shut(6)
+      case "7" => controller.shut(7)
+      case "8" => controller.shut(8)
+      case "9" => controller.shut(9)
       case _ => println("")
     }
     input
   }
 
-  def startGame(): Player = {
-    matchfield = controller.createField()
+  /*def startGame(): Player = {
+    controller.createField()
     var players = controller.createPlayers()
     print(printStartGame())
-    players(0).setName(1)   // problems with code coverage
-    players(1).setName(2)   // NullPointerException or infinite loop for input
+    controller.getPlayers()(0).setName(1)   // problems with code coverage
+    controller.getPlayers()(1).setName(2)   // NullPointerException or infinite loop for input
     nextPlayer()
-  }
+  }*/
 
   def printHeader() : String = {
     """
@@ -70,69 +71,11 @@ class TUI(controller:Controller) {
   }
 
   def nextPlayer(): Player = {
-    if (controller.getCurrentPlayerIndex == 0) {
-      controller.setCurrentPlayer(1)
-    } else if (controller.getCurrentPlayerIndex == 1){
-      controller.setCurrentPlayer(0)
-    } else {
-      controller.setCurrentPlayer(0)
-    }
+    controller.setCurrentPlayer()
     print("NEXT PLAYERS TURN!")
     controller.getCurrentPlayer()
   }
 
-  def printDice(value:Int) : String = {
-    value match {
-      case 1 =>
-        """
-          |╔═════════╗
-          |║         ║
-          |║    O    ║
-          |║         ║
-          |╚═════════╝
-          |""".stripMargin
-      case 2 =>
-        """
-          |╔═════════╗
-          |║ O       ║
-          |║         ║
-          |║       O ║
-          |╚═════════╝
-          |""".stripMargin
-      case 3 =>
-        """
-          |╔═════════╗
-          |║ O       ║
-          |║    O    ║
-          |║       O ║
-          |╚═════════╝
-          |""".stripMargin
-      case 4 =>
-        """
-          |╔═════════╗
-          |║ O     O ║
-          |║         ║
-          |║ O     O ║
-          |╚═════════╝
-          |""".stripMargin
-      case 5 =>
-        """
-          |╔═════════╗
-          |║ O     O ║
-          |║    O    ║
-          |║ O     O ║
-          |╚═════════╝
-          |""".stripMargin
-      case 6 =>
-        """
-          |╔═════════╗
-          |║ O     O ║
-          |║ O     O ║
-          |║ O     O ║
-          |╚═════════╝
-          |""".stripMargin
-    }
-  }
 
   def printRules() : String = {
     """
@@ -167,5 +110,7 @@ class TUI(controller:Controller) {
       |""".stripMargin
   }
 
-
+  override def update: Unit = {
+    print(controller.printOutput())
+  }
 }
