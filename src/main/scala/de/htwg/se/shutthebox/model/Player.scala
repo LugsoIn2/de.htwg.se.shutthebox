@@ -16,4 +16,11 @@ class Player() {
     score = n
     score
   }
+
+ /* override def toString : String = {
+    controller.setCurrentPlayer()
+    print("NEXT PLAYERS TURN!")
+    controller.getCurrentPlayer()
+  }*/
+
 }

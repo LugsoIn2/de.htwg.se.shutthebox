@@ -56,8 +56,7 @@ class Controller(var matchfield: Field, var dice: Array[Die]) extends Observable
     var index = 0
     if (currentPlayer == players(0)) {
       index = 0
-    }
-    else {
+    } else {
       index = 1
     }
     currentPlayer = players(index)
@@ -65,32 +64,47 @@ class Controller(var matchfield: Field, var dice: Array[Die]) extends Observable
   }
 
   def shut(i : Int) : Unit = {
-    matchfield.shut(i, matchfield)
-    notifyObservers
-    gameState = GameState.INGAME
+    if (gameState == GameState.ROLLDICE | gameState == GameState.INGAME) {
+      if(getValidShuts() == true) {
+        matchfield.shut(i, matchfield)
+        gameState = GameState.INGAME
+        notifyObservers
+      } else {
+        print("Bitte erst Würfeln (shut nicht erlaubt)")
+      }
+    } else {
+      print("Bitte erst Würfeln (shut nicht erlaubt)")
+    }
 
   }
+
+  def getValidShuts() : Boolean = {
+    //Aufruf der regeln methode. True wenn erlaubt, False wenn nicht
+    //Nach jedem shut wird erneut gebueft, da manchmal 2 shuts manchmal nur einer erlaubt.
+    // BSP: W1 = 2, W2 = 3 --> Erlaubt 2,3 (zwei Shuts) | 5 (ein shut) ......
+    true
+  }
+
 
   def rollDice() : Unit = {
-    dice(0).roll
-    Thread.sleep(20)
-    dice(1).roll
-    notifyObservers
-    gameState = GameState.SHUT
-
-
+    if (gameState == GameState.INGAME){
+      dice(0).roll
+      Thread.sleep(40)
+      dice(1).roll
+      gameState = GameState.ROLLDICE
+      notifyObservers
+    } else {
+      print("Würfeln nicht erlaubt")
+    }
   }
-  def getDieValue(index : Integer) : Integer = {
-    rollDice()
-    dice(index).value
-  }
+
 
   def printOutput() : String = {
     gameState match {
       case GameState.MENU => ""
-      case GameState.ROLL => rollToString
-      case GameState.SHUT => fieldToString
-      case GameState.INGAME => ""
+      case GameState.ROLLDICE => rollToString
+      //case GameState.SHUT => fieldToString
+      case GameState.INGAME => fieldToString
 
 
     }

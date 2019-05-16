@@ -17,7 +17,7 @@ class TUI(controller:Controller) extends Observer {
       case "s" => controller.startGame()
       case "q" => System.exit(0)
       case "r" => controller.rollDice()
-      case "n" => print(nextPlayer())
+      case "n" => controller.setCurrentPlayer()
       case "h" => print(printRules())
       case "1" => controller.shut(1)
       case "2" => controller.shut(2)
