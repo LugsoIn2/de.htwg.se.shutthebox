@@ -160,8 +160,10 @@ class Controller(var matchfield: Field, var dice: Array[Die]) extends Observable
       res = i / j
     } else if (i < j) {
       res = j / i
+    } else if (i == j) {
+      res = 1
     }
-    res.floor.toInt
+    res.toInt
   }
 
   def rollDice() : Unit = {
