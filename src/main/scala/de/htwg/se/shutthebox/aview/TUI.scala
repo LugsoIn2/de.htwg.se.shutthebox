@@ -73,7 +73,7 @@ class TUI(controller:Controller) extends Observer {
   def nextPlayer(): Player = {
     controller.setCurrentPlayer()
     print("NEXT PLAYERS TURN!")
-    controller.getCurrentPlayer()
+    controller.currentPlayer
   }
 
 

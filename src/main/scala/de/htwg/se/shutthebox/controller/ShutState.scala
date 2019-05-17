@@ -12,8 +12,8 @@ object ShutState extends Enumeration {
     SHUTSTATE4 -> "",
     SHUTSTATE5 -> "Player can shut")
 
-    def message(shutState: ShutState) = {
+    /*def message(shutState: ShutState) = {
       map(shutState)
-    }
+    }*/
 
 }

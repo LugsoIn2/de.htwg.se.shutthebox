@@ -12,6 +12,7 @@ class DieTest extends WordSpec with Matchers{
       die.roll shouldBe a [Integer]
       die.value should be >= 1
       die.value should be <= 6
+      die.toString shouldBe a [String]
 
     }
   }

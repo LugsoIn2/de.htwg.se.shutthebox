@@ -23,8 +23,7 @@ class Controller(var matchfield: Field, var dice: Array[Die]) extends Observable
 
   def startGame(): Unit = {
     createField()
-    var players = createPlayers()
-    //print(printStartGame())
+    createPlayers()
     getPlayers()(0).setName(1)   // problems with code coverage
     getPlayers()(1).setName(2)   // NullPointerException or infinite loop for input
     setCurrentPlayer()
@@ -37,15 +36,11 @@ class Controller(var matchfield: Field, var dice: Array[Die]) extends Observable
     notifyObservers
   }
 
-  def getField() : Field = {
-    matchfield
-  }
 
   def createDice(): Unit = {
     dice = Array(new Die, new Die)
     notifyObservers
   }
-
 
   def createPlayers(): Unit = {
     currentPlayer = players(0)
@@ -54,11 +49,6 @@ class Controller(var matchfield: Field, var dice: Array[Die]) extends Observable
 
   def getPlayers(): Array[Player] = {
     players
-  }
-
-  def getCurrentPlayer() : Player = {
-    notifyObservers
-    currentPlayer
   }
 
   def setCurrentPlayer(): Unit = {
@@ -178,17 +168,12 @@ class Controller(var matchfield: Field, var dice: Array[Die]) extends Observable
     }
   }
 
-
-
-
   def printOutput() : String = {
     gameState match {
       case GameState.MENU => ""
       case GameState.ROLLDICE => rollToString
       case GameState.SHUT => fieldToString
       case GameState.INGAME => fieldToString
-
-
     }
   }
 
@@ -198,5 +183,4 @@ class Controller(var matchfield: Field, var dice: Array[Die]) extends Observable
   def rollToString : String =  {
     dice(0).toString + dice(1).toString
   }
-
 }

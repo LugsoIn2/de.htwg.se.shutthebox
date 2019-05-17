@@ -11,7 +11,7 @@ object GameState extends Enumeration {
     ROLLDICE -> "Player can roll",
     SHUT -> "Player can shut")
 
-    def message(gameState: GameState) = {
+    /*def message(gameState: GameState) = {
       map(gameState)
-    }
+    }*/
 }
