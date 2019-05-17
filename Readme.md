@@ -8,3 +8,5 @@
 
 ## SHUTTHEBOX GAME
 This is a Scala project for the class Software Engineering at the University of Applied Science HTWG Konstanz.
+
+
