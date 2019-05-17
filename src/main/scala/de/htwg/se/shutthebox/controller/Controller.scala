@@ -102,17 +102,6 @@ class Controller(var matchfield: Field, var dice: Array[Die]) extends Observable
     }
   }
 
-  /*def doShut(i:Int) : Unit = {
-    if (gameState == ROLLDICE | gameState == SHUT) {
-      if (validNumber(0) == i | validNumber(1) == i | validSum == i | validDiff == i | validProd == i | validDiv == i) {
-        shut(i)
-      } else {
-        print("Dieser Shut ist nicht erlaubt")
-      }
-    } else {
-      print("Bitte erst Würfeln (shut nicht erlaubt)")
-    }
-  }*/
 
   def shut(i : Int) : Unit = {
     matchfield.shut(i, matchfield)
@@ -120,32 +109,60 @@ class Controller(var matchfield: Field, var dice: Array[Die]) extends Observable
     notifyObservers
 
   }
-/*
-  def shut(i : Int, i2 : Int) : Unit = {
-    matchfield.shut(i, matchfield)
-    if (i2 != 0) {
-      matchfield.shut(i2, matchfield)
-    }
-    //gameState = GameState.INGAME
-    //gameState=INGAME
-    gameState=SHUT
-    notifyObservers
 
-  }*/
 
 
   def getValidShuts() : Unit = {
     //Aufruf der regeln methode.
     //Soll in validNumber dann die erlaubten Zahlen schreiben
     // 1, 3
-    validNumber(0) = 3
-    validNumber(1) = 1
-    validSum = 4
-    validProd = 3
-    validDiff = 2
-    validDiv = 3
+    validNumber(0) = dice(0).value
+    validNumber(1) = dice(1).value
+    validSum = calcSum
+    validProd = calcProd
+    validDiff = calcDiff
+    validDiv = calcDiv
   }
 
+  def calcSum() : Integer = {
+    var i = dice(0).value
+    var j = dice(1).value
+
+    i + j
+  }
+
+  def calcDiff() : Integer = {
+    var res = 0
+    var i = dice(0).value
+    var j = dice(1).value
+
+    if (i > j) {
+      res = i - j
+    } else if (i < j) {
+      res = j - i
+    }
+    res
+  }
+
+  def calcProd() : Integer = {
+    var i = dice(0).value
+    var j = dice(1).value
+
+    i * j
+  }
+
+  def calcDiv() : Integer = {
+    var res = 0
+    var i = dice(0).value
+    var j = dice(1).value
+
+    if (i > j) {
+      res = i / j
+    } else if (i < j) {
+      res = j / i
+    }
+    res.floor.toInt
+  }
 
   def rollDice() : Unit = {
     if (gameState == INGAME | gameState == SHUT){
