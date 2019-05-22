@@ -11,7 +11,7 @@ class ControllerTest extends WordSpec with Matchers {
     "observed by an Observer" should {
       val matchfield = new Field()
       val dice = Array(new Die, new Die)
-      val controller = new Controller(matchfield, dice)
+      val controller = new Controller()
       val observer = new Observer {
         var updated: Boolean = false
 
@@ -21,7 +21,7 @@ class ControllerTest extends WordSpec with Matchers {
       }
       controller.add(observer)
       "notify its Observer after creation" in {
-        controller.createField() shouldBe a [BoxedUnit]
+        controller.createField(0) shouldBe a [BoxedUnit]
         observer.updated should be(true)
         controller.matchfield shouldBe a[Field]
         matchfield.field shouldBe a[Array[Cell]]
@@ -60,7 +60,7 @@ class ControllerTest extends WordSpec with Matchers {
         observer.updated should be(true)
       }
       "a value" in {
-        controller.startGame() shouldBe a [BoxedUnit]
+        controller.startGame(0) shouldBe a [BoxedUnit]
         controller.doShut(1) shouldBe a [BoxedUnit]
         controller.doShut(2) shouldBe a [BoxedUnit]
         controller.doShut(3) shouldBe a [BoxedUnit]

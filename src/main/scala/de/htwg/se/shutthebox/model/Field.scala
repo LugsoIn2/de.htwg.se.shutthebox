@@ -1,15 +1,15 @@
 package de.htwg.se.shutthebox.model
 
 // Field, which implements 9 cells in List
-class Field extends FieldInterface {
+class Field extends AbstractField {
 
-  val field = Array.ofDim[Cell](9)
+  override val field = Array.ofDim[Cell](9)
   for (i <- 1 to 9) {
     field(i - 1) = new Cell()
     field(i - 1).value = i
   }
 
-  def shut(number:Integer, field:Field) : Cell = {
+  override def shut(number:Integer, field:AbstractField) : Cell = {
     if (!field.field(number-1).isShut) {
       field.field(number-1).isShut = true;
     }

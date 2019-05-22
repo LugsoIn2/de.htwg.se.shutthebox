@@ -17,25 +17,30 @@ class TUI(controller:Controller) extends Observer {
       input match {
         case "ss" => controller.startGame(0)
         case "sb" => controller.startGame(1)
+        case "z" => controller.cmdUnShut() // Undo
+                    controller.printOutput()
+        case "y" => controller.cmdRedoShut() // Redo
+
         case "q" => System.exit(0)
         case "r" => controller.rollDice()
         case "n" => controller.setCurrentPlayer()
         case "h" => print(printRules())
-        case "1" => controller.doShut(1)
-        case "2" => controller.doShut(2)
-        case "3" => controller.doShut(3)
-        case "4" => controller.doShut(4)
-        case "5" => controller.doShut(5)
-        case "6" => controller.doShut(6)
-        case "7" => controller.doShut(7)
-        case "8" => controller.doShut(8)
-        case "9" => controller.doShut(9)
+        case "1" => controller.cmdShut(1)
+        case "2" => controller.cmdShut(2)
+        case "3" => controller.cmdShut(3)
+        case "4" => controller.cmdShut(4)
+        case "5" => controller.cmdShut(5)
+        case "6" => controller.cmdShut(6)
+        case "7" => controller.cmdShut(7)
+        case "8" => controller.cmdShut(8)
+        case "9" => controller.cmdShut(9)
         case "10" => if (controller.getField().isInstanceOf[BigField])
-                        controller.doShut(10)
+                        controller.cmdShut(10)
         case "11" => if (controller.getField().isInstanceOf[BigField])
-                        controller.doShut(11)
+                        controller.cmdShut(11)
         case "12" => if (controller.getField().isInstanceOf[BigField])
-                        controller.doShut(12)
+                        controller.cmdShut(12)
+        case default => ""
       }
       input
   }

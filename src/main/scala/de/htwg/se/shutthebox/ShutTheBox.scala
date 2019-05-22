@@ -6,7 +6,7 @@ import de.htwg.se.shutthebox.controller.Controller
 
 object ShutTheBox {
 
-  val controller = new Controller(new FieldInterface, Array(new Die, new Die))
+  val controller = new Controller()
   val tui = new TUI(controller)
   controller.notifyObservers
 

@@ -9,7 +9,7 @@ class TUITest extends WordSpec with Matchers {
   val matchfield = new Field()
   val dice = Array.ofDim[Die](2)
   val players = Array.ofDim[Player](2)
-  val controller = new Controller(matchfield, dice)
+  val controller = new Controller()
   val tui = new TUI(controller)
 
   "A TUI" should {

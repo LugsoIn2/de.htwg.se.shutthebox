@@ -1,16 +1,20 @@
 package de.htwg.se.shutthebox.controller
 
+import java.util
+import scala.collection.mutable.Stack
+
 import de.htwg.se.shutthebox.aview.TUI
 import de.htwg.se.shutthebox.model._
-import de.htwg.se.shutthebox.util.Observable
+import de.htwg.se.shutthebox.util.{Observable, UndoManager}
 import de.htwg.se.shutthebox.controller.GameState._
 import de.htwg.se.shutthebox.controller.ShutState._
 
 
-class Controller(var matchfield: Field, var dice: Array[Die]) extends Observable {
+class Controller() extends Observable{
   var players = Array(new Player, new Player)
   var currentPlayer = players(0)
-  //var gameState = GameState.MENU
+  var matchfield : AbstractField = _
+  var dice = Array(new Die, new Die)
   var gameState : GameState = MENU
   var shutState : ShutState = SHUTSTATE0
 
@@ -19,6 +23,10 @@ class Controller(var matchfield: Field, var dice: Array[Die]) extends Observable
   var validDiff = 0
   var validProd = 0
   var validDiv = 0
+
+  private val undoManager = new UndoManager
+  private var lastShut = Stack[Int]()
+  private var tmpLastShut = Stack[Int]()
 
 
   def startGame(t:Integer): Unit = {
@@ -41,7 +49,7 @@ class Controller(var matchfield: Field, var dice: Array[Die]) extends Observable
     notifyObservers
   }
 
-  def getField() : Field = {
+  def getField() : AbstractField = {
     matchfield
   }
 
@@ -76,7 +84,35 @@ class Controller(var matchfield: Field, var dice: Array[Die]) extends Observable
     notifyObservers
   }
 
+  def cmdShut(value:Int) = {
+    undoManager.doStep(new SetCommand(value, this))
+  }
 
+  def cmdUnShut() = {
+    undoManager.undoStep
+  }
+
+  def cmdRedoShut() = {
+    undoManager.redoStep
+  }
+
+  def redoShut(): Unit = {
+    if (!tmpLastShut.isEmpty) {
+    doShut(tmpLastShut.top)
+    tmpLastShut.pop()
+  }
+    notifyObservers
+  }
+
+  def undoShut(): Unit = {
+    if (!lastShut.isEmpty) {
+      shutState = SHUTSTATE0
+      matchfield.field(lastShut.top - 1).isShut = false;
+      tmpLastShut.push(lastShut.top)
+      lastShut.pop()
+    }
+    notifyObservers
+  }
   def doShut(i:Int) : Unit = {
     if (gameState == ROLLDICE | gameState == SHUT) {
 
@@ -109,6 +145,8 @@ class Controller(var matchfield: Field, var dice: Array[Die]) extends Observable
 
   def shut(i : Int) : Unit = {
     matchfield.shut(i, matchfield)
+    lastShut.push(i)
+    //tmpLastShut.push(i)
     gameState=SHUT
     notifyObservers
 
@@ -171,6 +209,8 @@ class Controller(var matchfield: Field, var dice: Array[Die]) extends Observable
   }
 
   def rollDice() : Unit = {
+    lastShut.clear()
+    tmpLastShut.clear()
     if (gameState == INGAME | gameState == SHUT){
       dice(0).roll
       Thread.sleep(38)
