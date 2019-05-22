@@ -11,6 +11,7 @@ class FieldTest extends WordSpec with Matchers {
       field shouldBe a [Field]
       field.field shouldBe a [Array[Cell]]
       field.shut(1, field) shouldBe a [Cell]
+      field.toString shouldBe a [String]
     }
   }
 
