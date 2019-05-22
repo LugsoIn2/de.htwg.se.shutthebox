@@ -21,8 +21,9 @@ class Controller(var matchfield: Field, var dice: Array[Die]) extends Observable
   var validDiv = 0
 
 
-  def startGame(): Unit = {
-    createField()
+  def startGame(t:Integer): Unit = {
+    //t 0 = SmallField, t 1 = BigField
+    createField(t)
     var players = createPlayers()
     //print(printStartGame())
     getPlayers()(0).setName(1)   // problems with code coverage
@@ -32,8 +33,11 @@ class Controller(var matchfield: Field, var dice: Array[Die]) extends Observable
   }
 
 
-  def createField() : Unit = {
-    matchfield = new Field()
+  def createField(t:Integer) : Unit = {
+    if (t == 0)
+      matchfield = new Field()
+    else
+      matchfield = new BigField()
     notifyObservers
   }
 
