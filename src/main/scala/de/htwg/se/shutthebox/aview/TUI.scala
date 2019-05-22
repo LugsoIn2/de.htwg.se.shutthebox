@@ -13,24 +13,31 @@ class TUI(controller:Controller) extends Observer {
 
   def processInputLine(input: String, dice: Array[Die]): String = {
 
-    input match {
-      case "s" => controller.startGame()
-      case "q" => System.exit(0)
-      case "r" => controller.rollDice()
-      case "n" => controller.setCurrentPlayer()
-      case "h" => print(printRules())
-      case "1" => controller.doShut(1)
-      case "2" => controller.doShut(2)
-      case "3" => controller.doShut(3)
-      case "4" => controller.doShut(4)
-      case "5" => controller.doShut(5)
-      case "6" => controller.doShut(6)
-      case "7" => controller.doShut(7)
-      case "8" => controller.doShut(8)
-      case "9" => controller.doShut(9)
-      case _ => println("")
-    }
-    input
+
+      input match {
+        case "ss" => controller.startGame(0)
+        case "sb" => controller.startGame(1)
+        case "q" => System.exit(0)
+        case "r" => controller.rollDice()
+        case "n" => controller.setCurrentPlayer()
+        case "h" => print(printRules())
+        case "1" => controller.doShut(1)
+        case "2" => controller.doShut(2)
+        case "3" => controller.doShut(3)
+        case "4" => controller.doShut(4)
+        case "5" => controller.doShut(5)
+        case "6" => controller.doShut(6)
+        case "7" => controller.doShut(7)
+        case "8" => controller.doShut(8)
+        case "9" => controller.doShut(9)
+        case "10" => if (controller.getField().isInstanceOf[BigField])
+                        controller.doShut(10)
+        case "11" => if (controller.getField().isInstanceOf[BigField])
+                        controller.doShut(11)
+        case "12" => if (controller.getField().isInstanceOf[BigField])
+                        controller.doShut(12)
+      }
+      input
   }
 
   /*def startGame(): Player = {
