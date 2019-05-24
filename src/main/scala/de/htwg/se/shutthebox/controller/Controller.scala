@@ -125,6 +125,7 @@ class Controller() extends Observable{
   def undoShut(): Unit = {
     if (!lastShut.isEmpty) {
       shutState = SHUTSTATE0
+      gameState = UNDOSTATE
       matchfield.field(lastShut.top - 1).isShut = false;
       tmpLastShut.push(lastShut.top)
       lastShut.pop()
@@ -132,7 +133,7 @@ class Controller() extends Observable{
     notifyObservers
   }
   def doShut(i:Int) : Unit = {
-    if (gameState == ROLLDICE | gameState == SHUT) {
+    if (gameState == ROLLDICE | gameState == SHUT | gameState == UNDOSTATE) {
 
       if((validNumber(0) == i | validNumber(1) == i) & shutState == SHUTSTATE0) {
         shut(i)
@@ -251,6 +252,7 @@ class Controller() extends Observable{
       case GameState.ROLLDICE => rollToString
       case GameState.SHUT => fieldToString
       case GameState.INGAME => fieldToString
+      case GameState.UNDOSTATE => fieldToString
 
 
     }
