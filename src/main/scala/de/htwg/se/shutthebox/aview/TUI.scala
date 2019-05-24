@@ -3,10 +3,12 @@ import de.htwg.se.shutthebox._
 import de.htwg.se.shutthebox.controller.{Controller, GameState}
 import de.htwg.se.shutthebox.model._
 import de.htwg.se.shutthebox.util.Observer
+import de.htwg.se.shutthebox.controller._
+import scala.swing.Reactor
 
 //class TUI(field:Field, players:Array[Player], currentPlr:Player) {
-class TUI(controller:Controller) extends Observer {
-  controller.add(this)
+class TUI(controller:Controller) extends Reactor {
+  listenTo(controller)
   print(printHeader())
 
 
@@ -45,15 +47,6 @@ class TUI(controller:Controller) extends Observer {
       }
       input
   }
-
-  /*def startGame(): Player = {
-    controller.createField()
-    var players = controller.createPlayers()
-    print(printStartGame())
-    controller.getPlayers()(0).setName(1)   // problems with code coverage
-    controller.getPlayers()(1).setName(2)   // NullPointerException or infinite loop for input
-    nextPlayer()
-  }*/
 
   def printHeader() : String = {
     """
@@ -149,7 +142,14 @@ class TUI(controller:Controller) extends Observer {
       |""".stripMargin
   }
 
-  override def update: Unit = {
+  /*override def update: Unit = {
     print(controller.printOutput())
+  }*/
+
+  reactions += {
+    case event: DiceRolled => print(controller.printOutput())
+    case event: CellShut => print(controller.printOutput())
+    case event: Undone => print(controller.printOutput())
+    case event: Redone => print(controller.printOutput())
   }
 }

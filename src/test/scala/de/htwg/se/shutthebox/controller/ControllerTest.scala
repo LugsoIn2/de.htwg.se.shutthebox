@@ -19,7 +19,7 @@ class ControllerTest extends WordSpec with Matchers {
 
         override def update: Unit = updated = true
       }
-      controller.add(observer)
+      //controller.add(observer)
       "notify its Observer after creation" in {
         controller.createField(0) shouldBe a [BoxedUnit]
         observer.updated should be(true)

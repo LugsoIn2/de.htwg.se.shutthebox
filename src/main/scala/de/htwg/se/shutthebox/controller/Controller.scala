@@ -8,9 +8,10 @@ import de.htwg.se.shutthebox.model._
 import de.htwg.se.shutthebox.util.{Observable, UndoManager}
 import de.htwg.se.shutthebox.controller.GameState._
 import de.htwg.se.shutthebox.controller.ShutState._
+import scala.swing.Publisher
 
 
-class Controller() extends Observable{
+class Controller() extends Publisher {
   var players = Array(new Player, new Player)
   var currentPlayer = players(0)
   var matchfield : AbstractField = _
@@ -46,7 +47,7 @@ class Controller() extends Observable{
       matchfield = new Field()
     else
       matchfield = new BigField()
-    notifyObservers
+    publish(new FieldCreated)
   }
 
   def getField() : AbstractField = {
@@ -55,13 +56,13 @@ class Controller() extends Observable{
 
   def createDice(): Unit = {
     dice = Array(new Die, new Die)
-    notifyObservers
+    publish(new DiceCreated)
   }
 
 
   def createPlayers(): Unit = {
     currentPlayer = players(0)
-    notifyObservers
+    publish(new PlayersCreated)
   }
 
   def getPlayers(): Array[Player] = {
@@ -69,7 +70,6 @@ class Controller() extends Observable{
   }
 
   def getCurrentPlayer() : Player = {
-    notifyObservers
     currentPlayer
   }
 
@@ -81,7 +81,7 @@ class Controller() extends Observable{
     if (currentPlayer == players(0)) {
       currentPlayer = players(1)
     }
-    notifyObservers
+    publish(new CurrentPlayerSet)
   }
 
   def getScore() : Int = {
@@ -119,7 +119,7 @@ class Controller() extends Observable{
     doShut(tmpLastShut.top)
     tmpLastShut.pop()
   }
-    notifyObservers
+    publish(new Redone)
   }
 
   def undoShut(): Unit = {
@@ -130,7 +130,7 @@ class Controller() extends Observable{
       tmpLastShut.push(lastShut.top)
       lastShut.pop()
     }
-    notifyObservers
+    publish(new Undone)
   }
   def doShut(i:Int) : Unit = {
     if (gameState == ROLLDICE | gameState == SHUT | gameState == UNDOSTATE) {
@@ -167,7 +167,7 @@ class Controller() extends Observable{
     lastShut.push(i)
     //tmpLastShut.push(i)
     gameState=SHUT
-    notifyObservers
+    publish(new CellShut)
 
   }
 
@@ -237,14 +237,11 @@ class Controller() extends Observable{
       getValidShuts()
       gameState=ROLLDICE
       shutState=SHUTSTATE0
-      notifyObservers
+      publish(new DiceRolled)
     } else {
       print("Würfeln nicht erlaubt")
     }
   }
-
-
-
 
   def printOutput() : String = {
     gameState match {
@@ -257,7 +254,6 @@ class Controller() extends Observable{
 
     }
   }
-
 
   def fieldToString : String = matchfield.toString
 
