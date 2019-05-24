@@ -15,7 +15,8 @@ class TUI(controller:Controller) extends Observer {
 
 
       input match {
-        case "ss" => controller.startGame(0)
+        case "ss" => print(printStartGame)
+                     controller.startGame(0)
         case "sb" => controller.startGame(1)
         case "z" => controller.cmdUnShut() // Undo
                     controller.printOutput()
@@ -23,7 +24,7 @@ class TUI(controller:Controller) extends Observer {
 
         case "q" => System.exit(0)
         case "r" => controller.rollDice()
-        case "n" => controller.setCurrentPlayer()
+        case "n" => nextPlayer()
         case "h" => print(printRules())
         case "1" => controller.cmdShut(1)
         case "2" => controller.cmdShut(2)
@@ -83,9 +84,35 @@ class TUI(controller:Controller) extends Observer {
   }
 
   def nextPlayer(): Player = {
+    if (controller.getCurrentPlayer == controller.getPlayers()(1)) {
+      print(printScoreBoard)
+    }
     controller.setCurrentPlayer()
     print("NEXT PLAYERS TURN!")
     controller.getCurrentPlayer()
+  }
+
+  def printScoreBoard : String = {
+    var output = "\n"
+    output += "========= SCOREBOARD ==========\n"
+    output += controller.getPlayers()(0).plrName
+    output += ": "
+    output += controller.getPlayers()(0).score + "\n"
+    output += controller.getPlayers()(1).plrName
+    output += ": "
+    output += controller.getPlayers()(1).score + "\n"
+    output += "==================================\n"
+
+    if (controller.getPlayers()(0).score < controller.getPlayers()(1).score) {
+      output += controller.getPlayers()(0).plrName
+      output += " wins!!!\n"
+    } else if (controller.getPlayers()(0).score > controller.getPlayers()(1).score) {
+      output += controller.getPlayers()(1).plrName
+      output += " wins!!!\n"
+    } else {
+      output += "The game ends in a draw! :-(\n"
+    }
+    output
   }
 
 

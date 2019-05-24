@@ -32,11 +32,11 @@ class Controller() extends Observable{
   def startGame(t:Integer): Unit = {
     //t 0 = SmallField, t 1 = BigField
     createField(t)
-    var players = createPlayers()
+    createPlayers()
     //print(printStartGame())
     getPlayers()(0).setName(1)   // problems with code coverage
     getPlayers()(1).setName(2)   // NullPointerException or infinite loop for input
-    setCurrentPlayer()
+    //setCurrentPlayer()
     gameState=INGAME
   }
 
@@ -74,15 +74,33 @@ class Controller() extends Observable{
   }
 
   def setCurrentPlayer(): Unit = {
-    var index = 0
+
+    currentPlayer.updateScore(getScore())
+    resetMatchfield()
+
     if (currentPlayer == players(0)) {
-      index = 0
-    } else {
-      index = 1
+      currentPlayer = players(1)
     }
-    currentPlayer = players(index)
     notifyObservers
   }
+
+  def getScore() : Int = {
+    var score = 0
+    for (i <- 1 to matchfield.field.size) {
+      score += i
+      if (matchfield.field(i-1).isShut == true) {
+        score -= i
+      }
+    }
+    score
+  }
+
+  def resetMatchfield() : Unit = {
+    for (i <- 1 to matchfield.field.size) {
+      matchfield.field(i-1).isShut = false;
+    }
+  }
+
 
   def cmdShut(value:Int) = {
     undoManager.doStep(new SetCommand(value, this))
