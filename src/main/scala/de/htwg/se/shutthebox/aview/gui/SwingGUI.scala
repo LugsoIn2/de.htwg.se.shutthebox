@@ -11,6 +11,10 @@ class CellClicked(val row: Int, val column: Int) extends Event
 class SwingGUI(controller : Controller) extends Frame {
   listenTo(controller)
 
+  peer.setDefaultCloseOperation(3)
+
+
+  var ref_controller = controller
 
   title = "HTWG - SHUT THE BOX"
   size = new Dimension(800, 600)
@@ -18,7 +22,10 @@ class SwingGUI(controller : Controller) extends Frame {
   resizable = false
   background = java.awt.Color.white
 
-  contents = new MainMenuPanel
+  this.close
+  var mainMenuPanel = new MainMenuPanel(this)
+
+  contents = mainMenuPanel
 
 
   visible = true

@@ -36,7 +36,7 @@ class ControllerTest extends WordSpec with Matchers {
         controller.dice(1).end should be(6)
       }
       "notify its Observer after creating players" in {
-        controller.createPlayers() shouldBe a [BoxedUnit]
+        controller.createPlayers(false) shouldBe a [BoxedUnit]
         controller.players(0).plrName shouldBe a[String]
         controller.players(0).score shouldBe a[Integer]
         controller.players(1).plrName shouldBe a[String]
@@ -60,7 +60,7 @@ class ControllerTest extends WordSpec with Matchers {
         observer.updated should be(true)
       }
       "a value" in {
-        controller.startGame(0) shouldBe a [BoxedUnit]
+        controller.startGame(0, false) shouldBe a [BoxedUnit]
         controller.doShut(1) shouldBe a [BoxedUnit]
         controller.doShut(2) shouldBe a [BoxedUnit]
         controller.doShut(3) shouldBe a [BoxedUnit]
@@ -77,7 +77,7 @@ class ControllerTest extends WordSpec with Matchers {
         controller.printOutput() shouldBe a [String]
         controller.getValidShuts() shouldBe a [BoxedUnit]
         controller.getPlayers() shouldBe a [Array[Player]]
-        controller.createPlayers() shouldBe a [BoxedUnit]
+        controller.createPlayers(false) shouldBe a [BoxedUnit]
       }
       "notify its Observer after shut" in {
         controller.shut(1) shouldBe a [BoxedUnit]

@@ -18,8 +18,10 @@ class TUI(controller:Controller) extends Reactor {
 
       input match {
         case "ss" => print(printStartGame)
-                     controller.startGame(0)
-        case "sb" => controller.startGame(1)
+                     controller.startGame(0, false)
+        case "sb" => controller.startGame(1, false)
+        case "ssai" => controller.startGame(0, true)
+        case "sbai" => controller.startGame(1, true)
         case "z" => controller.cmdUnShut() // Undo
                     controller.printOutput()
         case "y" => controller.cmdRedoShut() // Redo
@@ -76,13 +78,9 @@ class TUI(controller:Controller) extends Reactor {
       |""".stripMargin
   }
 
-  def nextPlayer(): Player = {
-    if (controller.getCurrentPlayer == controller.getPlayers()(1)) {
-      print(printScoreBoard)
-    }
+  def nextPlayer(): Unit = {
+    print("NEXT PLAYERS TURN!\n")
     controller.setCurrentPlayer()
-    print("NEXT PLAYERS TURN!")
-    controller.getCurrentPlayer()
   }
 
   def printScoreBoard : String = {
@@ -151,5 +149,6 @@ class TUI(controller:Controller) extends Reactor {
     case event: CellShut => print(controller.printOutput())
     case event: Undone => print(controller.printOutput())
     case event: Redone => print(controller.printOutput())
+    case event: ShowScoreBoard => print(printScoreBoard)
   }
 }

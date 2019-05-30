@@ -12,8 +12,10 @@ import scala.swing.Publisher
 
 
 class Controller() extends Publisher {
-  var players = Array(new Player, new Player)
+  //var players = Array(new Player, new Player)
+  var players = Array.ofDim[Player](2)
   var currentPlayer = players(0)
+  var currentPlayerIndex = 0 // to determine, when to show scoreboard
   var matchfield : AbstractField = _
   var dice = Array(new Die, new Die)
   var gameState : GameState = MENU
@@ -30,10 +32,11 @@ class Controller() extends Publisher {
   private var tmpLastShut = Stack[Int]()
 
 
-  def startGame(t:Integer): Unit = {
+  def startGame(t:Integer, ai:Boolean): Unit = {
     //t 0 = SmallField, t 1 = BigField
+    //ai 0 = no AI, ai 1 = AI
     createField(t)
-    createPlayers()
+    createPlayers(ai)
     //print(printStartGame())
     getPlayers()(0).setName(1)   // problems with code coverage
     getPlayers()(1).setName(2)   // NullPointerException or infinite loop for input
@@ -60,8 +63,16 @@ class Controller() extends Publisher {
   }
 
 
-  def createPlayers(): Unit = {
+  def createPlayers(ai:Boolean): Unit = {
+    players(0) = new Player()
+    if (ai) {
+      players(1) = new AI(this)
+    }
+    else {
+      players(1) = new Player()
+    }
     currentPlayer = players(0)
+    currentPlayerIndex = 0
     publish(new PlayersCreated)
   }
 
@@ -74,14 +85,24 @@ class Controller() extends Publisher {
   }
 
   def setCurrentPlayer(): Unit = {
+    currentPlayerIndex += 1
 
+    if (currentPlayerIndex < 2) {
     currentPlayer.updateScore(getScore())
     resetMatchfield()
 
     if (currentPlayer == players(0)) {
       currentPlayer = players(1)
+      if (currentPlayer.isInstanceOf[AI]) {
+        players(1).asInstanceOf[AI].think()
+      }
     }
-    publish(new CurrentPlayerSet)
+      publish(new CurrentPlayerSet)
+  } else {
+      currentPlayer.updateScore(getScore())
+      publish(new ShowScoreBoard)
+    }
+
   }
 
   def getScore() : Int = {
@@ -92,6 +113,7 @@ class Controller() extends Publisher {
         score -= i
       }
     }
+    publish(new ScoreUpdated)
     score
   }
 
@@ -132,7 +154,8 @@ class Controller() extends Publisher {
     }
     publish(new Undone)
   }
-  def doShut(i:Int) : Unit = {
+  def doShut(i:Int) : String = {
+    var message = " "
     if (gameState == ROLLDICE | gameState == SHUT | gameState == UNDOSTATE) {
 
       if((validNumber(0) == i | validNumber(1) == i) & shutState == SHUTSTATE0) {
@@ -154,11 +177,14 @@ class Controller() extends Publisher {
         shut(i)
         shutState = SHUTSTATE4
       } else {
-        print("Dieser Shut ist nicht erlaubt")
+        message = "This shut is not allowed"
+        println(message)
       }
     } else {
-      print("Bitte erst Würfeln (shut nicht erlaubt)")
+      message = "Please roll the dice first!"
+      println(message)
     }
+    message
   }
 
 
@@ -227,20 +253,23 @@ class Controller() extends Publisher {
     res.toInt
   }
 
-  def rollDice() : Unit = {
+  def rollDice() : String = {
+    var message = " "
     lastShut.clear()
     tmpLastShut.clear()
     if (gameState == INGAME | gameState == SHUT){
       dice(0).roll
-      Thread.sleep(38)
+      Thread.sleep(100)
       dice(1).roll
       getValidShuts()
       gameState=ROLLDICE
       shutState=SHUTSTATE0
       publish(new DiceRolled)
     } else {
-      print("Würfeln nicht erlaubt")
+      message = "Dice roll not allowed!"
+      println(message)
     }
+    message
   }
 
   def printOutput() : String = {
@@ -250,8 +279,6 @@ class Controller() extends Publisher {
       case GameState.SHUT => fieldToString
       case GameState.INGAME => fieldToString
       case GameState.UNDOSTATE => fieldToString
-
-
     }
   }
 
