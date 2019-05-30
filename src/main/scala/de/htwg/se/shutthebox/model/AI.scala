@@ -1,10 +1,13 @@
 package de.htwg.se.shutthebox.model
 
+import de.htwg.se.shutthebox.ShutTheBox
+import de.htwg.se.shutthebox.aview.gui.SwingGUI
 import de.htwg.se.shutthebox.controller.Controller
-import util.control.Breaks._
+
 
 class AI(controller:Controller) extends Player {
 
+  var gui = ShutTheBox.gui
   var validShuts = Array.ofDim[Int](4)
   var singleShuts = Array.ofDim[Int](2)
 
@@ -12,6 +15,11 @@ class AI(controller:Controller) extends Player {
     printf("Player %d: ",index)
     plrName = "AI"//readLine()
     plrName
+  }
+
+  def updateGUI() : Unit = {
+    ShutTheBox.gui.repaint()
+    ShutTheBox.gui.validate()
   }
 
   def randomTimeMillis(min:Int, max:Int) : Int = {
@@ -35,6 +43,7 @@ class AI(controller:Controller) extends Player {
   }
 
   def analyze() : Unit = {
+    updateGUI()
     println("AI is thinking")
     Thread.sleep(randomTimeMillis(500, 2000))
 
@@ -71,6 +80,7 @@ class AI(controller:Controller) extends Player {
 
 
   def think(): Unit = {
+    updateGUI()
     Thread.sleep(randomTimeMillis(500, 2000))
     controller.rollDice()
     Thread.sleep(randomTimeMillis(500, 2000))

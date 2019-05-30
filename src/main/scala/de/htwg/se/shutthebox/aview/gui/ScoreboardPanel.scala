@@ -1,6 +1,7 @@
 package de.htwg.se.shutthebox.aview.gui
 
 import scala.swing._
+import scala.swing.event.ButtonClicked
 
 class ScoreboardPanel(mainFrame:SwingGUI) extends GridPanel(5,1) {
 
@@ -19,7 +20,10 @@ class ScoreboardPanel(mainFrame:SwingGUI) extends GridPanel(5,1) {
   }
 
   var lbl_plr2 = new Label {
-    text = "Player 1 - " + controller.players(1).plrName + ": " + controller.players(1).score
+    text = "Player 2 - " + controller.players(1).plrName + ": " + controller.players(1).score
+  }
+  var btn_backtomenu = new Button {
+    text = "Go back to Main Menu"
   }
 
   var lbl_winner = new Label {
@@ -32,9 +36,18 @@ class ScoreboardPanel(mainFrame:SwingGUI) extends GridPanel(5,1) {
     }
   }
 
+  listenTo(btn_backtomenu)
+
   contents += lbl_scoreboard
   contents += lbl_plr1
   contents += lbl_plr2
   contents += lbl_winner
+  contents += btn_backtomenu
+
+  reactions += {
+    case ButtonClicked(b) if b == btn_backtomenu =>
+      mainFrame.contents = mainFrame.mainMenuPanel
+      mainFrame.repaint()
+  }
 
 }

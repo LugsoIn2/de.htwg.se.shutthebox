@@ -36,7 +36,6 @@ class IngamePanel(mainFrame:SwingGUI) extends GridBagPanel {
   }
 
   def nextPlayer(): Unit = {
-    mainFrame.repaint()
     controller.setCurrentPlayer()
     //lbl_message.text = "NEXT PLAYERS TURN!"
     mainFrame.repaint()
@@ -91,22 +90,7 @@ class IngamePanel(mainFrame:SwingGUI) extends GridBagPanel {
   add(lbl_dice, constraints(0, 13, gridwidth=12, fill=GridBagPanel.Fill.Horizontal))
   add(lbl_message, constraints(0, 14, gridwidth=12, fill=GridBagPanel.Fill.Horizontal))
   add(btn_nextPlr, constraints(0, 15, gridwidth=12, fill=GridBagPanel.Fill.Horizontal))
-
-
-  //add(new Button("Button @ (2,1)"),
-  //  constraints(2, 1))
-  //add(new Button("Button @ (2,2)"),
-  //  constraints(2, 2))
-  //add(new CheckBox("Check me!"),
-  //  constraints(0, 2))
-  //add(new TextField { columns = 32 },
-  //  constraints(1, 0, weightx=1.0, fill=GridBagPanel.Fill.Horizontal))
-  //add(new ScrollPane(new TextArea),
-  //  constraints(1, 1, gridheight=3, weighty = 1.0,
-   //   fill=GridBagPanel.Fill.Both))
-  //add(Button("Close") { sys.exit(0) },
-    //constraints(0, 4, gridwidth=3, fill=GridBagPanel.Fill.Horizontal))
-
+  
 
   reactions += {
     case ButtonClicked(b) if b == numButtons(0) =>
