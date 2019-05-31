@@ -94,6 +94,9 @@ class Controller() extends Publisher {
     if (currentPlayer == players(0)) {
       currentPlayer = players(1)
       if (currentPlayer.isInstanceOf[AI]) {
+        // set states, so AI is able to roll the dice
+        gameState = INGAME
+        shutState = SHUTSTATE0
         players(1).asInstanceOf[AI].think()
       }
     }
@@ -102,6 +105,8 @@ class Controller() extends Publisher {
       currentPlayer.updateScore(getScore())
       publish(new ShowScoreBoard)
     }
+    gameState = INGAME
+    shutState = SHUTSTATE0
 
   }
 
@@ -193,29 +198,50 @@ class Controller() extends Publisher {
     lastShut.push(i)
     //tmpLastShut.push(i)
     gameState=SHUT
+
+    // check, if field is completely shut
+    var allShut = true
+    for (i <- 0 to matchfield.field.size-1) {
+      if (!matchfield.field(i).isShut) {
+        allShut = false
+      }
+    }
     publish(new CellShut)
-
+    if (allShut)
+      publish(new AllCellsShut)
   }
-
 
 
   def getValidShuts() : Unit = {
     //Aufruf der regeln methode.
     //Soll in validNumber dann die erlaubten Zahlen schreiben
     // 1, 3
-    validNumber(0) = dice(0).value
-    validNumber(1) = dice(1).value
+    if (!matchfield.field(dice(0).value-1).isShut && !matchfield.field(dice(1).value-1).isShut) {
+      validNumber(0) = dice(0).value
+      validNumber(1) = dice(1).value
+    } else {
+      validNumber(0) = 0
+      validNumber(1) = 0
+    }
     validSum = calcSum
     validProd = calcProd
     validDiff = calcDiff
     validDiv = calcDiv
+
+
+
   }
 
   def calcSum() : Integer = {
+    var res = 0
     var i = dice(0).value
     var j = dice(1).value
 
-    i + j
+    res = i + j
+
+    //if (res <=0 | res > matchfield.field.size)
+    //  res = 0
+    res
   }
 
   def calcDiff() : Integer = {
@@ -228,14 +254,20 @@ class Controller() extends Publisher {
     } else if (i < j) {
       res = j - i
     }
+    //if (res <=0 | res > matchfield.field.size)
+    //  res = 0
     res
   }
 
   def calcProd() : Integer = {
+    var res = 0
     var i = dice(0).value
     var j = dice(1).value
 
-    i * j
+    res = i * j
+    //if (res <= 0 | res > matchfield.field.size)
+    //  res = 0
+    res
   }
 
   def calcDiv() : Integer = {
@@ -250,6 +282,8 @@ class Controller() extends Publisher {
     } else if (i == j) {
       res = 1
     }
+    //if (res <=0 | res > matchfield.field.size)
+     // res = 0
     res.toInt
   }
 

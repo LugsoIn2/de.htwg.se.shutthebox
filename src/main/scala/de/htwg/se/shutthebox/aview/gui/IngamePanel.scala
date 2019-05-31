@@ -36,9 +36,10 @@ class IngamePanel(mainFrame:SwingGUI) extends GridBagPanel {
   }
 
   def nextPlayer(): Unit = {
-    controller.setCurrentPlayer()
-    //lbl_message.text = "NEXT PLAYERS TURN!"
+    updateScore()
+    updateMatchfield()
     mainFrame.repaint()
+    controller.setCurrentPlayer()
   }
 
   def updateMatchfield(): Unit = {
@@ -155,9 +156,7 @@ class IngamePanel(mainFrame:SwingGUI) extends GridBagPanel {
       mainFrame.repaint()
 
     case ButtonClicked(b) if b == btn_nextPlr =>
-      mainFrame.repaint()
       nextPlayer()
-      mainFrame.repaint()
   }
 
   reactions += {

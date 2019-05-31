@@ -27,9 +27,6 @@ class AI(controller:Controller) extends Player {
     value
   }
 
-  def aiRoll(): Unit = {
-    controller.rollDice()
-  }
 
   def getValidShuts() : Unit = {
     validShuts = Array(controller.validSum, controller.validDiff, controller.validProd, controller.validDiv)
@@ -43,8 +40,7 @@ class AI(controller:Controller) extends Player {
   }
 
   def analyze() : Unit = {
-    updateGUI()
-    println("AI is thinking")
+    println("AI is thinking ...")
     Thread.sleep(randomTimeMillis(500, 2000))
 
     var currentMax = validShuts.max
@@ -58,19 +54,22 @@ class AI(controller:Controller) extends Player {
         think()
       } else {
         validShuts(currentMaxIndex) = 0
-        // if the two single dice values aren't already shut
-        if (!controller.matchfield.field(singleShuts(0)-1).isShut && !controller.matchfield.field(singleShuts(1)-1).isShut) {
-          // shut the single die values
-          controller.doShut(singleShuts(0))
-          Thread.sleep(700) // so human player can follow along
-          controller.doShut(singleShuts(1))
-          think()
-        }
-        else if(!controller.matchfield.field(singleShuts(0)-1).isShut | !controller.matchfield.field(singleShuts(1)-1).isShut) {
-          analyze()
-        } else {
+
+        if (singleShuts(0) != 0 && singleShuts(1) != 0) {
+          // if the two single dice values aren't already shut
+          if (!controller.matchfield.field(singleShuts(0) - 1).isShut && !controller.matchfield.field(singleShuts(1) - 1).isShut) {
+            // shut the single die values
+            controller.doShut(singleShuts(0))
+            Thread.sleep(700) // so human player can follow along
+            controller.doShut(singleShuts(1))
+            think()
+          }
+
+          else if (!controller.matchfield.field(singleShuts(0) - 1).isShut | !controller.matchfield.field(singleShuts(1) - 1).isShut) {
+            analyze()
+          }
+        } else
           giveUp()
-        }
       }
     } else {
       validShuts(currentMaxIndex) = 0 // set current max to 0, if result > matchfield
@@ -80,8 +79,6 @@ class AI(controller:Controller) extends Player {
 
 
   def think(): Unit = {
-    updateGUI()
-    Thread.sleep(randomTimeMillis(500, 2000))
     controller.rollDice()
     Thread.sleep(randomTimeMillis(500, 2000))
     getValidShuts()

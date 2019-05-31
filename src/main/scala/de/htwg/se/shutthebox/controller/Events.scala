@@ -10,5 +10,6 @@ import scala.swing.event.Event
   class Redone extends Event
   class Undone extends Event
   class CellShut extends Event
+  class AllCellsShut extends Event
   class ScoreUpdated extends Event
   class ShowScoreBoard extends Event

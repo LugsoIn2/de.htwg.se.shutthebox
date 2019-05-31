@@ -150,5 +150,6 @@ class TUI(controller:Controller) extends Reactor {
     case event: Undone => print(controller.printOutput())
     case event: Redone => print(controller.printOutput())
     case event: ShowScoreBoard => print(printScoreBoard)
+    case event: AllCellsShut => print("All cells shut!!! :-)")
   }
 }
