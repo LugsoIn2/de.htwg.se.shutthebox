@@ -1,6 +1,8 @@
 package de.htwg.se.shutthebox.aview.gui
 
 import java.awt.Color
+import java.io.File
+
 import scala.swing._
 import scala.swing.event.ButtonClicked
 import de.htwg.se.shutthebox.controller.controllerComponent._
@@ -14,7 +16,7 @@ class IngamePanel(mainFrame:SwingGUI) extends GridPanel(6,1) {
   border = new EmptyBorder(20, 20, 20,20)
 
   override def paintComponent(g: Graphics2D): Unit = {
-    g.drawImage(mainFrame.resizedTexture("textures\\bgIngame.png", mainFrame.size.width-16, mainFrame.size.height-48).getImage(), 0, 0, null)
+    g.drawImage(mainFrame.resizedTexture("textures" + File.separator + "bgIngame.png", mainFrame.size.width-16, mainFrame.size.height-48).getImage(), 0, 0, null)
   }
 
   var controller = mainFrame.ref_controller
@@ -22,21 +24,21 @@ class IngamePanel(mainFrame:SwingGUI) extends GridPanel(6,1) {
 
   var textures = Array.ofDim[ImageIcon](26)
   for (i <- 0 to 11) {
-    textures(i) = mainFrame.resizedTexture("textures\\cell_" + (i+1) + ".png", 32, 64)
+    textures(i) = mainFrame.resizedTexture("textures" + File.separator + "cell_" + (i+1) + ".png", 32, 64)
   }
   for (i <- 12 to 23) {
-    textures(i) = mainFrame.resizedTexture("textures\\cell_shut_" + (i-11) + ".png", 32, 64)
+    textures(i) = mainFrame.resizedTexture("textures" + File.separator + "cell_shut_" + (i-11) + ".png", 32, 64)
   }
-  textures(24) = mainFrame.resizedTexture("textures\\cell_placeholder.png", 32, 64)
+  textures(24) = mainFrame.resizedTexture("textures" + File.separator + "cell_placeholder.png", 32, 64)
 
   var diceTextures = Array.ofDim[ImageIcon](6)
   for (i <- 1 to 6) {
-    diceTextures(i-1) = mainFrame.resizedTexture("textures\\Dice" + i + ".png",105, 105)
+    diceTextures(i-1) = mainFrame.resizedTexture("textures" + File.separator + "Dice" + i + ".png",105, 105)
   }
 
 
   var lbl_plr = new Label {
-    icon = mainFrame.resizedTexture("textures\\Player.png", 147, 33)
+    icon = mainFrame.resizedTexture("textures" + File.separator + "Player.png", 147, 33)
     horizontalTextPosition = Alignment.Center
     verticalTextPosition = Alignment.Center
     font = new Font("Courier New", 1, 20)
@@ -44,10 +46,10 @@ class IngamePanel(mainFrame:SwingGUI) extends GridPanel(6,1) {
     text = controller.currentPlayer.plrName
   }
   var lbl_score_header = new Label {
-    icon = mainFrame.resizedTexture("textures\\SCORE.png", 274, 32)
+    icon = mainFrame.resizedTexture("textures" + File.separator + "SCORE.png", 274, 32)
   }
   var lbl_score = new Label {
-    icon = mainFrame.resizedTexture("textures\\ScoreNum.png", 90, 32)
+    icon = mainFrame.resizedTexture("textures" + File.separator + "ScoreNum.png", 90, 32)
     horizontalTextPosition = Alignment.Center
     verticalTextPosition = Alignment.Center
     font = new Font("Courier New", 1, 30)
@@ -61,14 +63,14 @@ class IngamePanel(mainFrame:SwingGUI) extends GridPanel(6,1) {
     contentAreaFilled = false
     borderPainted = false
     focusPainted = false
-    icon = mainFrame.resizedTexture("textures\\undo.png", 38, 33)
+    icon = mainFrame.resizedTexture("textures" + File.separator + "undo.png", 38, 33)
   }
   var btn_redo = new Button {
     opaque = false
     contentAreaFilled = false
     borderPainted = false
     focusPainted = false
-    icon = mainFrame.resizedTexture("textures\\redo.png", 38, 33)
+    icon = mainFrame.resizedTexture("textures" + File.separator + "redo.png", 38, 33)
   }
 
   var pnl_top_undoRedo = new GridPanel(1,2) {
@@ -93,11 +95,11 @@ class IngamePanel(mainFrame:SwingGUI) extends GridPanel(6,1) {
     numButtons(i - 1).contentAreaFilled = false
     numButtons(i - 1).focusPainted = false
     numButtons(i - 1).borderPainted = false
-    numButtons(i - 1).icon = mainFrame.resizedTexture("textures\\cell_" + i + ".png",32,64)
+    numButtons(i - 1).icon = mainFrame.resizedTexture("textures" + File.separator + "cell_" + i + ".png",32,64)
     listenTo(numButtons(i-1))
   }
   var numLabels = Array.ofDim[Label](12)
-  var imageIcon = new ImageIcon("textures\\cell_placeholder.png")
+  var imageIcon = new ImageIcon("textures" + File.separator + "cell_placeholder.png")
   var image = imageIcon.getImage(); // transform it
   var newimg = image.getScaledInstance(32, 64,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
   imageIcon = new ImageIcon(newimg);  // transform it back
@@ -139,7 +141,7 @@ class IngamePanel(mainFrame:SwingGUI) extends GridPanel(6,1) {
     contentAreaFilled = false
     borderPainted = false
     focusPainted = false
-    icon = mainFrame.resizedTexture("textures\\rollbutton.png", 160, 95)
+    icon = mainFrame.resizedTexture("textures" + File.separator + "rollbutton.png", 160, 95)
   }
 
   var pnl_dice = new GridPanel(1,3) {
@@ -153,7 +155,7 @@ class IngamePanel(mainFrame:SwingGUI) extends GridPanel(6,1) {
     contentAreaFilled = false
     borderPainted = false
     focusPainted = false
-    icon = mainFrame.resizedTexture("textures\\back_ingame.png", 112, 33)
+    icon = mainFrame.resizedTexture("textures" + File.separator + "back_ingame.png", 112, 33)
   }
 
   var btn_sound = new Button {
@@ -161,7 +163,7 @@ class IngamePanel(mainFrame:SwingGUI) extends GridPanel(6,1) {
     contentAreaFilled = false
     borderPainted = false
     focusPainted = false
-    icon = mainFrame.resizedTexture("textures\\Sound_on.png", 68, 48)
+    icon = mainFrame.resizedTexture("textures" + File.separator + "Sound_on.png", 68, 48)
     var activated = true
   }
 
@@ -190,15 +192,10 @@ class IngamePanel(mainFrame:SwingGUI) extends GridPanel(6,1) {
     for (i <- 0 to controller.matchfield.field.size-1) {
       if (controller.matchfield.field(i).isShut) {
         numButtons(i).icon = textures(24)
-        //numButtons(i).text = " "
-        //numLabels(i).icon = resizedTexture("textures\\cell_shut_" + (i+1) + ".png", 32, 64)
         numLabels(i).icon = textures(i+12)
-        //numLabels(i).text = (i+1).toString
       }
       else {
-        //numButtons(i).icon = resizedTexture("textures\\cell_" + (i+1) + ".png", 32, 64)
         numButtons(i).icon = textures(i)
-        //numLabels(i).icon = resizedTexture("textures\\cell_placeholder.png", 32, 64)
         numLabels(i).icon = textures(24)
       }
     }
@@ -227,7 +224,7 @@ class IngamePanel(mainFrame:SwingGUI) extends GridPanel(6,1) {
     contentAreaFilled = false
     borderPainted = false
     focusPainted = false
-    icon = mainFrame.resizedTexture("textures\\nextplayer.png", 185, 38)
+    icon = mainFrame.resizedTexture("textures" + File.separator + "nextplayer.png", 185, 38)
   }
   listenTo(btn_nextPlr)
 
@@ -248,57 +245,46 @@ class IngamePanel(mainFrame:SwingGUI) extends GridPanel(6,1) {
   reactions += {
     case ButtonClicked(b) if b == numButtons(0) =>
       lbl_message.text = controller.doShut(1)
-      //numLabels(0).text = "1"
       mainFrame.repaint()
 
     case ButtonClicked(b) if b == numButtons(1) =>
       lbl_message.text = controller.doShut(2)
-      //numLabels(1).text = "2"
       mainFrame.repaint()
 
     case ButtonClicked(b) if b == numButtons(2) =>
       lbl_message.text = controller.doShut(3)
-      //numLabels(2).text = "3"
       mainFrame.repaint()
 
     case ButtonClicked(b) if b == numButtons(3) =>
       lbl_message.text = controller.doShut(4)
-      //numLabels(3).text = "4"
       mainFrame.repaint()
 
     case ButtonClicked(b) if b == numButtons(4) =>
       lbl_message.text = controller.doShut(5)
-      //numLabels(4).text = "5"
       mainFrame.repaint()
 
     case ButtonClicked(b) if b == numButtons(5) =>
       lbl_message.text = controller.doShut(6)
-      //numLabels(5).text = "6"
       mainFrame.repaint()
 
     case ButtonClicked(b) if b == numButtons(6) =>
       lbl_message.text = controller.doShut(7)
-      //numLabels(6).text = "7"
       mainFrame.repaint()
 
     case ButtonClicked(b) if b == numButtons(7) =>
       lbl_message.text = controller.doShut(8)
-      //numLabels(7).text = "8"
       mainFrame.repaint()
 
     case ButtonClicked(b) if b == numButtons(8) =>
       lbl_message.text = controller.doShut(9)
-      //numLabels(8).text = "9"
       mainFrame.repaint()
 
     case ButtonClicked(b) if b == numButtons(10) =>
       lbl_message.text = controller.doShut(11)
-      //numLabels(10).text = "11"
       mainFrame.repaint()
 
     case ButtonClicked(b) if b == numButtons(11) =>
       lbl_message.text = controller.doShut(12)
-      //numLabels(11).text = "12"
       mainFrame.repaint()
   }
 
@@ -319,10 +305,10 @@ class IngamePanel(mainFrame:SwingGUI) extends GridPanel(6,1) {
     case ButtonClicked(b) if b == btn_sound =>
       if (!btn_sound.activated) {
         btn_sound.activated = true
-        btn_sound.icon = mainFrame.resizedTexture("textures\\Sound_on.png", 68, 48)
+        btn_sound.icon = mainFrame.resizedTexture("textures" + File.separator + "Sound_on.png", 68, 48)
       } else {
         btn_sound.activated = false
-        btn_sound.icon = mainFrame.resizedTexture("textures\\Sound_off.png", 68, 48)
+        btn_sound.icon = mainFrame.resizedTexture("textures" + File.separator + "Sound_off.png", 68, 48)
       }
 
     case ButtonClicked(b) if b == btn_quit =>
@@ -331,7 +317,6 @@ class IngamePanel(mainFrame:SwingGUI) extends GridPanel(6,1) {
   }
 
   reactions += {
-    //case event: DiceRolled => lbl_dice.text = controller.dice(0).value + ", " + controller.dice(1).value
     case event: DiceRolled => lbl_die1.icon = diceTextures(controller.dice(0).value-1)
                               lbl_die2.icon = diceTextures(controller.dice(1).value-1)
     case event: CellShut => updateMatchfield()

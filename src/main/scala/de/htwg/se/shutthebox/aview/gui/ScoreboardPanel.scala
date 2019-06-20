@@ -1,6 +1,7 @@
 package de.htwg.se.shutthebox.aview.gui
 
 import java.awt.Color
+import java.io.File
 
 import javax.swing.border.EmptyBorder
 
@@ -18,11 +19,11 @@ class ScoreboardPanel(mainFrame:SwingGUI) extends GridPanel(5,1) {
   var courierFont = new Font("Courier New", 1, 36)
 
   override def paintComponent(g: Graphics2D): Unit = {
-    g.drawImage(mainFrame.resizedTexture("textures\\background.png", mainFrame.size.width-16, mainFrame.size.height-48).getImage(), 0, 0, null)
+    g.drawImage(mainFrame.resizedTexture("textures" + File.separator + "background.png", mainFrame.size.width-16, mainFrame.size.height-48).getImage(), 0, 0, null)
   }
 
   var lbl_scoreboard = new Label {
-    icon = mainFrame.resizedTexture("textures\\scoreboard_header.png", 780, 148)
+    icon = mainFrame.resizedTexture("textures" + File.separator + "scoreboard_header.png", 780, 148)
   }
 
   var lbl_plr1 = new Label {
@@ -54,7 +55,7 @@ class ScoreboardPanel(mainFrame:SwingGUI) extends GridPanel(5,1) {
     contentAreaFilled = false
     borderPainted = false
     focusPainted = false
-    icon = mainFrame.resizedTexture("textures\\Back.png", 269, 78)
+    icon = mainFrame.resizedTexture("textures" + File.separator + "Back.png", 269, 78)
   }
 
   listenTo(btn_back)

@@ -1,5 +1,7 @@
 package de.htwg.se.shutthebox.aview.gui
 
+import java.io.File
+
 import javax.swing.border.EmptyBorder
 
 import scala.swing._
@@ -15,13 +17,13 @@ class NewGamePanel(mainFrame:SwingGUI) extends GridPanel(5,1) {
   listenTo(controller)
 
   override def paintComponent(g: Graphics2D): Unit = {
-    g.drawImage(mainFrame.resizedTexture("textures\\background.png", mainFrame.size.width-16, mainFrame.size.height-48).getImage(), 0, 0, null)
+    g.drawImage(mainFrame.resizedTexture("textures" + File.separator + "background.png", mainFrame.size.width-16, mainFrame.size.height-48).getImage(), 0, 0, null)
   }
 
   var lbl_placeholder = new Label
 
   var lbl_newGame = new Label {
-    icon = mainFrame.resizedTexture("textures\\newGameHeader.png", 780, 148)
+    icon = mainFrame.resizedTexture("textures" + File.separator + "newGameHeader.png", 780, 148)
   }
 
   var btn_1vs1 = new Button {
@@ -29,28 +31,28 @@ class NewGamePanel(mainFrame:SwingGUI) extends GridPanel(5,1) {
     contentAreaFilled = false
     borderPainted = false
     focusPainted = false
-    icon = mainFrame.resizedTexture("textures\\1VS1.png", 278, 116)
+    icon = mainFrame.resizedTexture("textures" + File.separator + "1VS1.png", 278, 116)
   }
   var btn_1vsAI = new Button {
     opaque = false
     contentAreaFilled = false
     borderPainted = false
     focusPainted = false
-    icon = mainFrame.resizedTexture("textures\\1VSAi.png", 278, 116)
+    icon = mainFrame.resizedTexture("textures" + File.separator + "1VSAi.png", 278, 116)
   }
   var btn_back = new Button {
     opaque = false
     contentAreaFilled = false
     borderPainted = false
     focusPainted = false
-    icon = mainFrame.resizedTexture("textures\\Back.png", 269, 78)
+    icon = mainFrame.resizedTexture("textures" + File.separator + "Back.png", 269, 78)
   }
   var btn_bigField = new Button {
     opaque = false
     contentAreaFilled = false
     borderPainted = false
     focusPainted = false
-    icon = mainFrame.resizedTexture("textures\\bigmatchfield_uncheck.png", 800, 113)
+    icon = mainFrame.resizedTexture("textures" + File.separator + "bigmatchfield_uncheck.png", 800, 113)
     var activated = false
   }
 
@@ -59,7 +61,7 @@ class NewGamePanel(mainFrame:SwingGUI) extends GridPanel(5,1) {
     contentAreaFilled = false
     focusPainted = false
     borderPainted = false
-    icon = mainFrame.resizedTexture("textures\\Sound_on.png", 68, 48)
+    icon = mainFrame.resizedTexture("textures" + File.separator + "Sound_on.png", 68, 48)
     var activated = true
   }
 
@@ -113,19 +115,19 @@ class NewGamePanel(mainFrame:SwingGUI) extends GridPanel(5,1) {
     case ButtonClicked(b) if b == btn_bigField =>
       if (!btn_bigField.activated) {
         btn_bigField.activated = true
-        btn_bigField.icon = mainFrame.resizedTexture("textures\\bigmatchfield_check.png", 800, 113)
+        btn_bigField.icon = mainFrame.resizedTexture("textures" + File.separator + "bigmatchfield_check.png", 800, 113)
       } else {
         btn_bigField.activated = false
-        btn_bigField.icon = mainFrame.resizedTexture("textures\\bigmatchfield_uncheck.png", 800, 113)
+        btn_bigField.icon = mainFrame.resizedTexture("textures" + File.separator + "bigmatchfield_uncheck.png", 800, 113)
       }
 
     case ButtonClicked(b) if b == btn_sound =>
       if (!btn_sound.activated) {
         btn_sound.activated = true
-        btn_sound.icon = mainFrame.resizedTexture("textures\\Sound_on.png", 68, 48)
+        btn_sound.icon = mainFrame.resizedTexture("textures" + File.separator + "Sound_on.png", 68, 48)
       } else {
         btn_sound.activated = false
-        btn_sound.icon = mainFrame.resizedTexture("textures\\Sound_off.png", 68, 48)
+        btn_sound.icon = mainFrame.resizedTexture("textures" + File.separator + "Sound_off.png", 68, 48)
       }
   }
 }

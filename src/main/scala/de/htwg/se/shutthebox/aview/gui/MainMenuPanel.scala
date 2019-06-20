@@ -1,6 +1,8 @@
 package de.htwg.se.shutthebox.aview.gui
 
 
+import java.io.File
+
 import javax.swing.border.EmptyBorder
 
 import scala.swing._
@@ -13,13 +15,13 @@ class MainMenuPanel(mainFrame:SwingGUI) extends GridPanel(5,1) {
   preferredSize = new Dimension(1024, 768)
 
   override def paintComponent(g: Graphics2D): Unit = {
-    g.drawImage(mainFrame.resizedTexture("textures\\background.png", mainFrame.size.width-16, mainFrame.size.height-48).getImage(), 0, 0, null)
+    g.drawImage(mainFrame.resizedTexture("textures" + File.separator + "background.png", mainFrame.size.width-16, mainFrame.size.height-48).getImage(), 0, 0, null)
   }
 
   var lbl_placeholder = new Label
 
   var lbl_shutTheBox = new Label {
-    icon = mainFrame.resizedTexture("textures\\header.png", 780, 148)
+    icon = mainFrame.resizedTexture("textures" + File.separator + "header.png", 780, 148)
   }
 
   var btn_newGame = new Button {
@@ -27,7 +29,7 @@ class MainMenuPanel(mainFrame:SwingGUI) extends GridPanel(5,1) {
     contentAreaFilled = false
     borderPainted = false
     focusPainted = false
-    icon = mainFrame.resizedTexture("textures\\newGame.png", 442, 100)
+    icon = mainFrame.resizedTexture("textures" + File.separator + "newGame.png", 442, 100)
   }
 
   var btn_rules = new Button {
@@ -35,14 +37,14 @@ class MainMenuPanel(mainFrame:SwingGUI) extends GridPanel(5,1) {
     contentAreaFilled = false
     borderPainted = false
     focusPainted = false
-    icon = mainFrame.resizedTexture("textures\\howToPlay.png", 360, 90)
+    icon = mainFrame.resizedTexture("textures" + File.separator + "howToPlay.png", 360, 90)
   }
   var btn_quit = new Button {
     opaque = false
     contentAreaFilled = false
     borderPainted = false
     focusPainted = false
-    icon = mainFrame.resizedTexture("textures\\quit.png", 268, 78)
+    icon = mainFrame.resizedTexture("textures" + File.separator + "quit.png", 268, 78)
   }
   var pnl_rules = new RulesPanel(mainFrame)
   var pnl_newGame = new NewGamePanel(mainFrame)
