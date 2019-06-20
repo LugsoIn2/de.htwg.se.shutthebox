@@ -18,13 +18,13 @@ class ControllerTest extends WordSpec with Matchers {
 
 
       "a value" in {
-        controller.startGame(0, false) shouldBe a [BoxedUnit]
+        controller.startGame(0, ai = false) shouldBe a [BoxedUnit]
         controller.createField(0) shouldBe a [BoxedUnit]
         controller.createField(1) shouldBe a [BoxedUnit]
         controller.getField() shouldBe a [AbstractField]
         controller.createDice() shouldBe a [BoxedUnit]
         controller.createPlayers(false) shouldBe a [BoxedUnit]
-        controller.getPlayers() shouldBe a [Array[Player]]
+        controller.getPlayers() shouldBe a [Array[_]]
         controller.getCurrentPlayer() shouldBe a [Player]
         controller.setCurrentPlayer() shouldBe a [BoxedUnit]
         controller.getScore() shouldBe a [Integer]
@@ -95,12 +95,12 @@ class ControllerTest extends WordSpec with Matchers {
         controller.createField(0) shouldBe a [BoxedUnit]
         //        observer.updated should be(true)
         controller.matchfield shouldBe a[Field]
-        matchfield.field shouldBe a[Array[Cell]]
+        matchfield.field shouldBe a[Array[_]]
       }
       "notify its Observer after dice creation" in {
         controller.createDice() shouldBe a [BoxedUnit]
         //        observer.updated should be(true)
-        controller.dice shouldBe a[Array[Die]]
+        controller.dice shouldBe a[Array[_]]
         controller.dice(0).start should be(1)
         controller.dice(0).end should be(6)
         controller.dice(1).start should be(1)
