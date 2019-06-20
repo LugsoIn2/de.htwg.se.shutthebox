@@ -1,17 +1,16 @@
-package de.htwg.se.shutthebox.controller
+package de.htwg.se.shutthebox.controller.controllerComponent.controllerBaseImpl
 
-import java.util
-import scala.collection.mutable.Stack
-
-import de.htwg.se.shutthebox.aview.TUI
+import de.htwg.se.shutthebox.controller.controllerComponent.GameState._
+import de.htwg.se.shutthebox.controller.controllerComponent.ShutState.{apply => _, _}
+import de.htwg.se.shutthebox.controller.controllerComponent._
 import de.htwg.se.shutthebox.model._
-import de.htwg.se.shutthebox.util.{Observable, UndoManager}
-import de.htwg.se.shutthebox.controller.GameState._
-import de.htwg.se.shutthebox.controller.ShutState._
+import de.htwg.se.shutthebox.util.UndoManager
+
+import scala.collection.mutable.Stack
 import scala.swing.Publisher
 
 
-class Controller() extends Publisher {
+class Controller() extends ControllerInterface with Publisher {
   //var players = Array(new Player, new Player)
   var players = Array.ofDim[Player](2)
   var currentPlayer = players(0)

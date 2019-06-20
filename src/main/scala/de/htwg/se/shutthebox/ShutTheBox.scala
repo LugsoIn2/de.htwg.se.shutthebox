@@ -1,9 +1,10 @@
 package de.htwg.se.shutthebox
 import de.htwg.se.shutthebox.aview._
+
 import scala.io.StdIn.readLine
 import de.htwg.se.shutthebox.model._
-import de.htwg.se.shutthebox.controller.Controller
 import de.htwg.se.shutthebox.aview.gui.SwingGUI
+import de.htwg.se.shutthebox.controller.controllerComponent.controllerBaseImpl.Controller
 import javax.swing.SwingUtilities
 
 

@@ -2,7 +2,7 @@ package de.htwg.se.shutthebox.model
 
 import de.htwg.se.shutthebox.ShutTheBox
 import de.htwg.se.shutthebox.aview.gui.SwingGUI
-import de.htwg.se.shutthebox.controller.Controller
+import de.htwg.se.shutthebox.controller.controllerComponent.controllerBaseImpl.Controller
 import javax.swing.SwingUtilities
 
 import scala.concurrent.Future

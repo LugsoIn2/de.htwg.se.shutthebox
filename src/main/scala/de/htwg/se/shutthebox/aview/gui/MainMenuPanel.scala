@@ -1,8 +1,6 @@
 package de.htwg.se.shutthebox.aview.gui
 
-import java.awt.Color
 
-import javax.swing.{ImageIcon}
 import javax.swing.border.EmptyBorder
 
 import scala.swing._

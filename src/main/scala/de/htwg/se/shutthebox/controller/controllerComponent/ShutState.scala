@@ -1,4 +1,4 @@
-package de.htwg.se.shutthebox.controller
+package de.htwg.se.shutthebox.controller.controllerComponent
 
 object ShutState extends Enumeration {
   type ShutState = Value

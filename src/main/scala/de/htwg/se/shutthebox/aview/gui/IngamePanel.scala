@@ -1,13 +1,11 @@
 package de.htwg.se.shutthebox.aview.gui
 
-import java.awt.{Color, GridBagConstraints}
-import java.awt.image.BufferedImage
-
+import java.awt.Color
 import scala.swing._
 import scala.swing.event.ButtonClicked
-import de.htwg.se.shutthebox.controller._
+import de.htwg.se.shutthebox.controller.controllerComponent._
 import javax.swing.border.EmptyBorder
-import javax.swing.{BorderFactory, ImageIcon, JLabel}
+import javax.swing.{BorderFactory, ImageIcon}
 
 
 class IngamePanel(mainFrame:SwingGUI) extends GridPanel(6,1) {

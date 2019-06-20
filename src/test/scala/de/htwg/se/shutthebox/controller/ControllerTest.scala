@@ -1,5 +1,6 @@
 package de.htwg.se.shutthebox.controller
 
+import de.htwg.se.shutthebox.controller.controllerComponent.controllerBaseImpl.Controller
 import org.scalatest._
 import de.htwg.se.shutthebox.util._
 import de.htwg.se.shutthebox.model._

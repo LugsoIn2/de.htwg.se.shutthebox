@@ -1,4 +1,4 @@
-package de.htwg.se.shutthebox.controller
+package de.htwg.se.shutthebox.controller.controllerComponent.controllerBaseImpl
 
 import de.htwg.se.shutthebox.util.Command
 

@@ -1,9 +1,11 @@
 package de.htwg.se.shutthebox.aview
 import de.htwg.se.shutthebox._
-import de.htwg.se.shutthebox.controller.{Controller, GameState}
 import de.htwg.se.shutthebox.model._
 import de.htwg.se.shutthebox.util.Observer
 import de.htwg.se.shutthebox.controller._
+import de.htwg.se.shutthebox.controller.controllerComponent.controllerBaseImpl.Controller
+import de.htwg.se.shutthebox.controller.controllerComponent._
+
 import scala.swing.Reactor
 
 //class TUI(field:Field, players:Array[Player], currentPlr:Player) {

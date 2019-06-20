@@ -1,13 +1,9 @@
 package de.htwg.se.shutthebox.aview.gui
 
 import scala.swing._
-import scala.swing.Swing.LineBorder
-import scala.swing.event._
-import de.htwg.se.shutthebox.controller._
+import de.htwg.se.shutthebox.controller.controllerComponent.controllerBaseImpl.Controller
 import javax.swing.ImageIcon
 
-
-import scala.io.Source._
 
 class SwingGUI(controller : Controller) extends Frame {
   listenTo(controller)
