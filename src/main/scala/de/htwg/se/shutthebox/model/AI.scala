@@ -3,13 +3,18 @@ package de.htwg.se.shutthebox.model
 import de.htwg.se.shutthebox.ShutTheBox
 import de.htwg.se.shutthebox.aview.gui.SwingGUI
 import de.htwg.se.shutthebox.controller.Controller
+import javax.swing.SwingUtilities
 
+import scala.concurrent.Future
+import scala.concurrent.ExecutionContext.Implicits._
+import scala.swing.Swing
 
 class AI(controller:Controller) extends Player {
 
   var gui = ShutTheBox.gui
   var validShuts = Array.ofDim[Int](4)
   var singleShuts = Array.ofDim[Int](2)
+  var allowFuture = false
 
   override def setName(index:Integer) : String = {
     printf("Player %d: ",index)
@@ -17,16 +22,10 @@ class AI(controller:Controller) extends Player {
     plrName
   }
 
-  def updateGUI() : Unit = {
-    ShutTheBox.gui.repaint()
-    ShutTheBox.gui.validate()
-  }
-
   def randomTimeMillis(min:Int, max:Int) : Int = {
     var value = min + scala.util.Random.nextInt((max - min) + 1)
     value
   }
-
 
   def getValidShuts() : Unit = {
     validShuts = Array(controller.validSum, controller.validDiff, controller.validProd, controller.validDiv)
@@ -39,51 +38,58 @@ class AI(controller:Controller) extends Player {
     controller.setCurrentPlayer()
   }
 
-  def analyze() : Unit = {
-    println("AI is thinking ...")
-    Thread.sleep(randomTimeMillis(500, 2000))
+  def analyze() : Future[Unit] = Future {
+    if (allowFuture) {
+      println("AI is thinking ...")
+      Thread.sleep(randomTimeMillis(500, 2000))
 
-    var currentMax = validShuts.max
-    var currentMaxIndex = validShuts.indexOf(validShuts.max)
+      var currentMax = validShuts.max
+      var currentMaxIndex = validShuts.indexOf(validShuts.max)
 
-   // if maximum is in range of matchfield
-    if (currentMax > 0 && currentMax <= controller.matchfield.field.size ) {
-      // if the cell isn't already shut
-      if (!controller.matchfield.field(currentMax-1).isShut) {
-        controller.doShut(validShuts.max)
-        think()
+     // if maximum is in range of matchfield
+      if (currentMax > 0 && currentMax <= controller.matchfield.field.size ) {
+        // if the cell isn't already shut
+        if (!controller.matchfield.field(currentMax-1).isShut) {
+          controller.doShut(validShuts.max)
+          think()
+        } else {
+          validShuts(currentMaxIndex) = 0
+
+          if (singleShuts(0) != 0 && singleShuts(1) != 0) {
+            // if the two single dice values aren't already shut
+            if (!controller.matchfield.field(singleShuts(0) - 1).isShut && !controller.matchfield.field(singleShuts(1) - 1).isShut) {
+              // shut the single die values
+              controller.doShut(singleShuts(0))
+              Thread.sleep(700) // so human player can follow along
+              controller.doShut(singleShuts(1))
+              think()
+            }
+
+            else if (!controller.matchfield.field(singleShuts(0) - 1).isShut | !controller.matchfield.field(singleShuts(1) - 1).isShut) {
+              analyze()
+            }
+          } else
+            giveUp()
+        }
       } else {
-        validShuts(currentMaxIndex) = 0
-
-        if (singleShuts(0) != 0 && singleShuts(1) != 0) {
-          // if the two single dice values aren't already shut
-          if (!controller.matchfield.field(singleShuts(0) - 1).isShut && !controller.matchfield.field(singleShuts(1) - 1).isShut) {
-            // shut the single die values
-            controller.doShut(singleShuts(0))
-            Thread.sleep(700) // so human player can follow along
-            controller.doShut(singleShuts(1))
-            think()
-          }
-
-          else if (!controller.matchfield.field(singleShuts(0) - 1).isShut | !controller.matchfield.field(singleShuts(1) - 1).isShut) {
-            analyze()
-          }
-        } else
-          giveUp()
+        validShuts(currentMaxIndex) = 0 // set current max to 0, if result > matchfield
+        analyze()
       }
-    } else {
-      validShuts(currentMaxIndex) = 0 // set current max to 0, if result > matchfield
-      analyze()
     }
   }
 
+  analyze onComplete {
+    case result => Swing.onEDT {
+      gui.repaint()
+    }
+  }
 
   def think(): Unit = {
+    gui.repaint()
     controller.rollDice()
     Thread.sleep(randomTimeMillis(500, 2000))
     getValidShuts()
+    allowFuture = true
     analyze()
   }
-
-
 }

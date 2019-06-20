@@ -1,49 +1,61 @@
 package de.htwg.se.shutthebox.aview.gui
 
+import java.awt.Color
+
+import javax.swing.{ImageIcon}
+import javax.swing.border.EmptyBorder
+
 import scala.swing._
 import scala.swing.event.ButtonClicked
 
 class MainMenuPanel(mainFrame:SwingGUI) extends GridPanel(5,1) {
 
-  preferredSize = new Dimension(800, 600)
+  vGap = 10
+  border = new EmptyBorder(40, 80, 20,80)
+  preferredSize = new Dimension(1024, 768)
+
+  override def paintComponent(g: Graphics2D): Unit = {
+    g.drawImage(mainFrame.resizedTexture("textures\\background.png", mainFrame.size.width-16, mainFrame.size.height-48).getImage(), 0, 0, null)
+  }
+
+  var lbl_placeholder = new Label
 
   var lbl_shutTheBox = new Label {
-    text = "SHUT THE BOX"
-    font = new Font("Verdana", 1, 72)
-    preferredSize = new Dimension(800, 128)
+    icon = mainFrame.resizedTexture("textures\\header.png", 780, 148)
   }
 
   var btn_newGame = new Button {
-    text = "New Game"
-    preferredSize = new Dimension(64, 128)
-    visible = true
+    opaque = false
+    contentAreaFilled = false
+    borderPainted = false
+    focusPainted = false
+    icon = mainFrame.resizedTexture("textures\\newGame.png", 442, 100)
   }
-  var btn_options = new Button {
-    text = "Options"
-    preferredSize = new Dimension(64, 128)
-    visible = true
-  }
+
   var btn_rules = new Button {
-    text = "How to play"
-    preferredSize = new Dimension(64, 128)
-    visible = true
+    opaque = false
+    contentAreaFilled = false
+    borderPainted = false
+    focusPainted = false
+    icon = mainFrame.resizedTexture("textures\\howToPlay.png", 360, 90)
   }
   var btn_quit = new Button {
-    text = "Quit Game"
-    preferredSize = new Dimension(64, 128)
-    visible = true
+    opaque = false
+    contentAreaFilled = false
+    borderPainted = false
+    focusPainted = false
+    icon = mainFrame.resizedTexture("textures\\quit.png", 268, 78)
   }
   var pnl_rules = new RulesPanel(mainFrame)
   var pnl_newGame = new NewGamePanel(mainFrame)
 
   contents += lbl_shutTheBox
+  contents += lbl_placeholder
   contents += btn_newGame
-  contents += btn_options
   contents += btn_rules
   contents += btn_quit
 
   listenTo(btn_newGame)
-  listenTo(btn_options)
   listenTo(btn_rules)
   listenTo(btn_quit)
 
