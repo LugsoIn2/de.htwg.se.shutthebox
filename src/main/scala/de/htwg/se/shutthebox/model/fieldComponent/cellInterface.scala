@@ -1,4 +1,4 @@
-package de.htwg.se.shutthebox.model.cellComponent
+package de.htwg.se.shutthebox.model.fieldComponent
 
 trait cellInterface {
   var value:Int

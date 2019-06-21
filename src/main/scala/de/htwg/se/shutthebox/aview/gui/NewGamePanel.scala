@@ -2,6 +2,7 @@ package de.htwg.se.shutthebox.aview.gui
 
 import java.io.File
 
+import de.htwg.se.shutthebox.controller.controllerComponent.controllerBaseImpl.Controller
 import javax.swing.border.EmptyBorder
 
 import scala.swing._
@@ -13,34 +14,34 @@ class NewGamePanel(mainFrame:SwingGUI) extends GridPanel(5,1) {
   border = new EmptyBorder(40, 80, 20,80)
   preferredSize = new Dimension(1024, 768)
 
-  var controller = mainFrame.ref_controller
+  var controller:Controller = mainFrame.ref_controller
   listenTo(controller)
 
   override def paintComponent(g: Graphics2D): Unit = {
-    g.drawImage(mainFrame.resizedTexture("textures" + File.separator + "background.png", mainFrame.size.width-16, mainFrame.size.height-48).getImage(), 0, 0, null)
+    g.drawImage(mainFrame.resizedTexture("textures" + File.separator + "background.png", mainFrame.size.width-16, mainFrame.size.height-48).getImage, 0, 0, null)
   }
 
   var lbl_placeholder = new Label
 
-  var lbl_newGame = new Label {
+  var lbl_newGame:Label = new Label {
     icon = mainFrame.resizedTexture("textures" + File.separator + "newGameHeader.png", 780, 148)
   }
 
-  var btn_1vs1 = new Button {
+  var btn_1vs1:Button = new Button {
     opaque = false
     contentAreaFilled = false
     borderPainted = false
     focusPainted = false
     icon = mainFrame.resizedTexture("textures" + File.separator + "1VS1.png", 278, 116)
   }
-  var btn_1vsAI = new Button {
+  var btn_1vsAI:Button = new Button {
     opaque = false
     contentAreaFilled = false
     borderPainted = false
     focusPainted = false
     icon = mainFrame.resizedTexture("textures" + File.separator + "1VSAi.png", 278, 116)
   }
-  var btn_back = new Button {
+  var btn_back:Button = new Button {
     opaque = false
     contentAreaFilled = false
     borderPainted = false
@@ -57,21 +58,21 @@ class NewGamePanel(mainFrame:SwingGUI) extends GridPanel(5,1) {
   }
 
   var btn_sound = new Button {
+    var activated = true
     opaque = false
     contentAreaFilled = false
     focusPainted = false
     borderPainted = false
     icon = mainFrame.resizedTexture("textures" + File.separator + "Sound_on.png", 68, 48)
-    var activated = true
   }
 
-  var pnl_modeSelect = new BorderPanel() {
+  var pnl_modeSelect:BorderPanel = new BorderPanel() {
     opaque = false
     add(btn_1vs1, BorderPanel.Position.West)
     add(btn_1vsAI, BorderPanel.Position.East)
   }
 
-  var pnl_backSound = new BorderPanel() {
+  var pnl_backSound:BorderPanel = new BorderPanel() {
     opaque = false
     add(btn_back, BorderPanel.Position.Center)
     add(btn_sound, BorderPanel.Position.South)
@@ -98,17 +99,17 @@ class NewGamePanel(mainFrame:SwingGUI) extends GridPanel(5,1) {
   reactions += {
     case ButtonClicked(b) if b == btn_1vs1 =>
       if (!btn_bigField.activated)
-        controller.startGame(0, false)
+        controller.startGame(0, ai = false)
       else
-        controller.startGame(1, false)
+        controller.startGame(1, ai = false)
       mainFrame.contents = new IngamePanel(mainFrame)
       mainFrame.repaint()
 
     case ButtonClicked(b) if b == btn_1vsAI =>
       if (!btn_bigField.activated)
-        controller.startGame(0, true)
+        controller.startGame(0, ai = true)
       else
-        controller.startGame(1, true)
+        controller.startGame(1, ai = true)
       mainFrame.contents = new IngamePanel(mainFrame)
       mainFrame.repaint()
 
@@ -122,11 +123,11 @@ class NewGamePanel(mainFrame:SwingGUI) extends GridPanel(5,1) {
       }
 
     case ButtonClicked(b) if b == btn_sound =>
-      if (!btn_sound.activated) {
-        btn_sound.activated = true
+      if (!btn_sound.selected) {
+        btn_sound.selected = true
         btn_sound.icon = mainFrame.resizedTexture("textures" + File.separator + "Sound_on.png", 68, 48)
       } else {
-        btn_sound.activated = false
+        btn_sound.selected = false
         btn_sound.icon = mainFrame.resizedTexture("textures" + File.separator + "Sound_off.png", 68, 48)
       }
   }

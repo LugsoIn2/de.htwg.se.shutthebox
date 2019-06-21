@@ -1,6 +1,5 @@
 package de.htwg.se.shutthebox.model.fieldComponent.fieldBaseImpl
 
-import de.htwg.se.shutthebox.model.cellComponent.cellBaseImpl.Cell
 import de.htwg.se.shutthebox.model.fieldComponent.fieldInterface
 
 // Field, which implements 9 cells in List

@@ -1,4 +1,4 @@
-package de.htwg.se.shutthebox.model.aiComponent
+package de.htwg.se.shutthebox.model.playerComponent
 
 import scala.concurrent.Future
 import scala.swing.Frame

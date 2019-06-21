@@ -1,4 +1,4 @@
-package de.htwg.se.shutthebox.model.dieComponent
+package de.htwg.se.shutthebox.model.fieldComponent
 
 trait dieInterface {
   val start:Int

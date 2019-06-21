@@ -1,6 +1,6 @@
-package de.htwg.se.shutthebox.model.dieComponent.dieBaseImpl
+package de.htwg.se.shutthebox.model.fieldComponent.fieldBaseImpl
 
-import de.htwg.se.shutthebox.model.dieComponent.dieInterface
+import de.htwg.se.shutthebox.model.fieldComponent.dieInterface
 
 //Dice to roll
 class Die() extends dieInterface {

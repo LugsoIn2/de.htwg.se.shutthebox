@@ -4,10 +4,9 @@ import de.htwg.se.shutthebox.controller.controllerComponent.controllerBaseImpl.C
 import org.scalatest._
 import de.htwg.se.shutthebox.util._
 import de.htwg.se.shutthebox.model._
-import de.htwg.se.shutthebox.model.dieComponent.dieBaseImpl.Die
 import de.htwg.se.shutthebox.model.fieldComponent.fieldInterface
-import de.htwg.se.shutthebox.model.fieldComponent.fieldBaseImpl.Field
-import de.htwg.se.shutthebox.model.fieldComponent.fieldBaseImpl2.BigField
+import de.htwg.se.shutthebox.model.fieldComponent.fieldBaseImpl.{Die, Field}
+import de.htwg.se.shutthebox.model.fieldComponent.fieldAdvancedImpl.BigField
 import de.htwg.se.shutthebox.model.playerComponent.playerImpl.Player
 
 import scala.runtime.BoxedUnit
@@ -80,8 +79,8 @@ class ControllerTest extends WordSpec with Matchers {
         controller.calcDiff shouldBe a [Integer]
         controller.calcProd shouldBe a [Integer]
         controller.calcDiv shouldBe a [Integer]
-        controller.rollDice() shouldBe a [String]
-        controller.printOutput() shouldBe a [String]
+        controller.rollDice shouldBe a [String]
+        controller.printOutput shouldBe a [String]
         controller.fieldToString shouldBe a [String]
         controller.rollToString shouldBe a [String]
 

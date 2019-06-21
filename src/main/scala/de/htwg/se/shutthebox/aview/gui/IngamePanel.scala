@@ -6,6 +6,7 @@ import java.io.File
 import scala.swing._
 import scala.swing.event.ButtonClicked
 import de.htwg.se.shutthebox.controller.controllerComponent._
+import de.htwg.se.shutthebox.controller.controllerComponent.controllerBaseImpl.Controller
 import javax.swing.border.EmptyBorder
 import javax.swing.{BorderFactory, ImageIcon}
 
@@ -16,13 +17,13 @@ class IngamePanel(mainFrame:SwingGUI) extends GridPanel(6,1) {
   border = new EmptyBorder(20, 20, 20,20)
 
   override def paintComponent(g: Graphics2D): Unit = {
-    g.drawImage(mainFrame.resizedTexture("textures" + File.separator + "bgIngame.png", mainFrame.size.width-16, mainFrame.size.height-48).getImage(), 0, 0, null)
+    g.drawImage(mainFrame.resizedTexture("textures" + File.separator + "bgIngame.png", mainFrame.size.width-16, mainFrame.size.height-48).getImage, 0, 0, null)
   }
 
-  var controller = mainFrame.ref_controller
+  var controller:Controller = mainFrame.ref_controller
   listenTo(controller)
 
-  var textures = Array.ofDim[ImageIcon](26)
+  var textures:Array[ImageIcon] = Array.ofDim[ImageIcon](26)
   for (i <- 0 to 11) {
     textures(i) = mainFrame.resizedTexture("textures" + File.separator + "cell_" + (i+1) + ".png", 32, 64)
   }
@@ -31,13 +32,13 @@ class IngamePanel(mainFrame:SwingGUI) extends GridPanel(6,1) {
   }
   textures(24) = mainFrame.resizedTexture("textures" + File.separator + "cell_placeholder.png", 32, 64)
 
-  var diceTextures = Array.ofDim[ImageIcon](6)
+  var diceTextures:Array[ImageIcon] = Array.ofDim[ImageIcon](6)
   for (i <- 1 to 6) {
     diceTextures(i-1) = mainFrame.resizedTexture("textures" + File.separator + "Dice" + i + ".png",105, 105)
   }
 
 
-  var lbl_plr = new Label {
+  var lbl_plr:Label = new Label {
     icon = mainFrame.resizedTexture("textures" + File.separator + "Player.png", 147, 33)
     horizontalTextPosition = Alignment.Center
     verticalTextPosition = Alignment.Center
@@ -45,27 +46,27 @@ class IngamePanel(mainFrame:SwingGUI) extends GridPanel(6,1) {
     foreground = Color.WHITE
     text = controller.currentPlayer.plrName
   }
-  var lbl_score_header = new Label {
+  var lbl_score_header:Label = new Label {
     icon = mainFrame.resizedTexture("textures" + File.separator + "SCORE.png", 274, 32)
   }
-  var lbl_score = new Label {
+  var lbl_score:Label = new Label {
     icon = mainFrame.resizedTexture("textures" + File.separator + "ScoreNum.png", 90, 32)
     horizontalTextPosition = Alignment.Center
     verticalTextPosition = Alignment.Center
     font = new Font("Courier New", 1, 30)
     foreground = Color.WHITE
-    text = controller.getScore().toString
+    text = controller.getScore.toString
   }
-  var lbl_placeholder = new Label
+  var lbl_placeholder:Label = new Label
 
-  var btn_undo = new Button {
+  var btn_undo:Button = new Button {
     opaque = false
     contentAreaFilled = false
     borderPainted = false
     focusPainted = false
     icon = mainFrame.resizedTexture("textures" + File.separator + "undo.png", 38, 33)
   }
-  var btn_redo = new Button {
+  var btn_redo:Button = new Button {
     opaque = false
     contentAreaFilled = false
     borderPainted = false
@@ -73,13 +74,13 @@ class IngamePanel(mainFrame:SwingGUI) extends GridPanel(6,1) {
     icon = mainFrame.resizedTexture("textures" + File.separator + "redo.png", 38, 33)
   }
 
-  var pnl_top_undoRedo = new GridPanel(1,2) {
+  var pnl_top_undoRedo:GridPanel = new GridPanel(1,2) {
     opaque = false
     contents += btn_undo
     contents += btn_redo
   }
 
-  var pnl_top = new GridPanel(0,3) {
+  var pnl_top:GridPanel = new GridPanel(0,3) {
     opaque = false
     contents += lbl_plr
     contents += lbl_score_header
@@ -88,7 +89,7 @@ class IngamePanel(mainFrame:SwingGUI) extends GridPanel(6,1) {
     contents += lbl_score
   }
 
-  var numButtons = Array.ofDim[Button](12)
+  var numButtons:Array[Button] = Array.ofDim[Button](12)
   for (i <- 1 to 12) {
     numButtons(i - 1) = new Button()
     numButtons(i - 1).opaque = false
@@ -98,45 +99,45 @@ class IngamePanel(mainFrame:SwingGUI) extends GridPanel(6,1) {
     numButtons(i - 1).icon = mainFrame.resizedTexture("textures" + File.separator + "cell_" + i + ".png",32,64)
     listenTo(numButtons(i-1))
   }
-  var numLabels = Array.ofDim[Label](12)
-  var imageIcon = new ImageIcon("textures" + File.separator + "cell_placeholder.png")
-  var image = imageIcon.getImage(); // transform it
-  var newimg = image.getScaledInstance(32, 64,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
-  imageIcon = new ImageIcon(newimg);  // transform it back
+  var numLabels:Array[Label] = Array.ofDim[Label](12)
+  var imageIcon:ImageIcon = new ImageIcon("textures" + File.separator + "cell_placeholder.png")
+  var image:Image = imageIcon.getImage // transform it
+  var newimg:Image = image.getScaledInstance(32, 64,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
+  imageIcon = new ImageIcon(newimg)  // transform it back
   for (i <- 1 to 12) {
     numLabels(i - 1) = new Label()
     numButtons(i - 1).opaque = false
     numLabels(i - 1).icon = imageIcon
   }
 
-  var pnl_matchfield_cells = new GridPanel(1,0) {
+  var pnl_matchfield_cells:GridPanel = new GridPanel(1,0) {
     opaque = false
-    for(i <- 0 to controller.matchfield.field.size-1) {
+    for(i <- controller.matchfield.field.indices) {
       contents += numButtons(i)
     }
   }
 
-  var pnl_matchfield_shutcells = new GridPanel(1,0) {
+  var pnl_matchfield_shutcells:GridPanel = new GridPanel(1,0) {
     opaque = false
-    for(i <- 0 to controller.matchfield.field.size-1) {
+    for(i <- controller.matchfield.field.indices) {
       contents += numLabels(i)
     }
   }
 
-  var pnl_matchfield = new GridPanel(0,1) {
+  var pnl_matchfield:GridPanel = new GridPanel(0,1) {
     border = BorderFactory.createLineBorder(new Color(0, 63, 45), 3, true)
     opaque = false
     contents += pnl_matchfield_cells
     contents += pnl_matchfield_shutcells
   }
 
-  var lbl_die1 = new Label {
+  var lbl_die1:Label = new Label {
     icon = diceTextures(0)
   }
-  var lbl_die2 = new Label {
+  var lbl_die2:Label = new Label {
     icon = diceTextures(0)
   }
-  var btn_roll = new Button {
+  var btn_roll:Button = new Button {
     opaque = false
     contentAreaFilled = false
     borderPainted = false
@@ -144,13 +145,13 @@ class IngamePanel(mainFrame:SwingGUI) extends GridPanel(6,1) {
     icon = mainFrame.resizedTexture("textures" + File.separator + "rollbutton.png", 160, 95)
   }
 
-  var pnl_dice = new GridPanel(1,3) {
+  var pnl_dice:GridPanel = new GridPanel(1,3) {
     opaque = false
     contents += lbl_die1
     contents += lbl_die2
   }
 
-  var btn_quit = new Button {
+  var btn_quit:Button = new Button {
     opaque = false
     contentAreaFilled = false
     borderPainted = false
@@ -158,16 +159,17 @@ class IngamePanel(mainFrame:SwingGUI) extends GridPanel(6,1) {
     icon = mainFrame.resizedTexture("textures" + File.separator + "back_ingame.png", 112, 33)
   }
 
-  var btn_sound = new Button {
-    opaque = false;
+  var btn_sound = new ToggleButton {
+    var activated = true
+    opaque = false
     contentAreaFilled = false
     borderPainted = false
     focusPainted = false
     icon = mainFrame.resizedTexture("textures" + File.separator + "Sound_on.png", 68, 48)
-    var activated = true
+
   }
 
-  var pnl_bottom = new BorderPanel {
+  var pnl_bottom:BorderPanel = new BorderPanel {
     opaque = false
     add(btn_quit, BorderPanel.Position.West)
     add(btn_sound, BorderPanel.Position.East)
@@ -176,7 +178,7 @@ class IngamePanel(mainFrame:SwingGUI) extends GridPanel(6,1) {
 
 
   def updateScore(): Unit = {
-    lbl_score.text = controller.getScore().toString
+    lbl_score.text = controller.getScore.toString
     mainFrame.repaint()
   }
 
@@ -189,7 +191,7 @@ class IngamePanel(mainFrame:SwingGUI) extends GridPanel(6,1) {
   }
 
   def updateMatchfield(): Unit = {
-    for (i <- 0 to controller.matchfield.field.size-1) {
+    for (i <- controller.matchfield.field.indices) {
       if (controller.matchfield.field(i).isShut) {
         numButtons(i).icon = textures(24)
         numLabels(i).icon = textures(i+12)
@@ -212,14 +214,14 @@ class IngamePanel(mainFrame:SwingGUI) extends GridPanel(6,1) {
   listenTo(btn_quit)
 
 
-  var lbl_message = new Label(" ") {
+  var lbl_message:Label = new Label(" ") {
     opaque = false
     foreground = new Color(250, 56, 60)
     font = new Font("Courier New", 1, 20)
   }
 
 
-  var btn_nextPlr = new Button {
+  var btn_nextPlr:Button = new Button {
     opaque = false
     contentAreaFilled = false
     borderPainted = false
@@ -228,7 +230,7 @@ class IngamePanel(mainFrame:SwingGUI) extends GridPanel(6,1) {
   }
   listenTo(btn_nextPlr)
 
-  var pnl_message_nextPlr = new BorderPanel {
+  var pnl_message_nextPlr:BorderPanel = new BorderPanel {
     opaque = false
     add(lbl_message, BorderPanel.Position.Center)
     add(btn_nextPlr, BorderPanel.Position.South)
@@ -290,7 +292,7 @@ class IngamePanel(mainFrame:SwingGUI) extends GridPanel(6,1) {
 
   reactions += {
     case ButtonClicked(b) if b == btn_roll =>
-      lbl_message.text = controller.rollDice()
+      lbl_message.text = controller.rollDice
       mainFrame.repaint()
 
     case ButtonClicked(b) if b == btn_undo =>

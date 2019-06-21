@@ -5,8 +5,8 @@ import de.htwg.se.shutthebox.util.Observer
 import de.htwg.se.shutthebox.controller._
 import de.htwg.se.shutthebox.controller.controllerComponent.controllerBaseImpl.Controller
 import de.htwg.se.shutthebox.controller.controllerComponent._
-import de.htwg.se.shutthebox.model.dieComponent.dieBaseImpl.Die
-import de.htwg.se.shutthebox.model.fieldComponent.fieldBaseImpl2.BigField
+import de.htwg.se.shutthebox.model.fieldComponent.fieldBaseImpl.Die
+import de.htwg.se.shutthebox.model.fieldComponent.fieldAdvancedImpl.BigField
 
 import scala.swing.Reactor
 
@@ -27,11 +27,11 @@ class TUI(controller:Controller) extends Reactor {
         case "ssai" => controller.startGame(0, ai = true)
         case "sbai" => controller.startGame(1, ai = true)
         case "z" => controller.cmdUnShut() // Undo
-                    controller.printOutput()
+                    controller.printOutput
         case "y" => controller.cmdRedoShut() // Redo
 
         case "q" => System.exit(0)
-        case "r" => controller.rollDice()
+        case "r" => controller.rollDice
         case "n" => nextPlayer()
         case "h" => print(printRules())
         case "1" => controller.cmdShut(1)
@@ -144,15 +144,11 @@ class TUI(controller:Controller) extends Reactor {
       |""".stripMargin
   }
 
-  /*override def update: Unit = {
-    print(controller.printOutput())
-  }*/
-
   reactions += {
-    case event: DiceRolled => print(controller.printOutput())
-    case event: CellShut => print(controller.printOutput())
-    case event: Undone => print(controller.printOutput())
-    case event: Redone => print(controller.printOutput())
+    case event: DiceRolled => print(controller.printOutput)
+    case event: CellShut => print(controller.printOutput)
+    case event: Undone => print(controller.printOutput)
+    case event: Redone => print(controller.printOutput)
     case event: ShowScoreBoard => print(printScoreBoard)
     case event: AllCellsShut => print("All cells shut!!! :-)")
   }

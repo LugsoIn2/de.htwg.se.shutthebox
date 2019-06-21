@@ -1,8 +1,8 @@
-package de.htwg.se.shutthebox.model.aiComponent.aiBaseImpl
+package de.htwg.se.shutthebox.model.playerComponent.aiBaseImpl
 
 import de.htwg.se.shutthebox.ShutTheBox
 import de.htwg.se.shutthebox.controller.controllerComponent.controllerBaseImpl.Controller
-import de.htwg.se.shutthebox.model.aiComponent.aiInterface
+import de.htwg.se.shutthebox.model.playerComponent.aiInterface
 import de.htwg.se.shutthebox.model.playerComponent.playerImpl.Player
 
 import scala.concurrent.ExecutionContext.Implicits._
@@ -86,7 +86,7 @@ class AI(controller:Controller) extends Player with aiInterface {
 
   def think(): Unit = {
     gui.repaint()
-    controller.rollDice()
+    controller.rollDice
     Thread.sleep(randomTimeMillis(500, 2000))
     calcValidShuts()
     allowFuture = true

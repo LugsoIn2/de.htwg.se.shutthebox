@@ -1,6 +1,6 @@
-package de.htwg.se.shutthebox.model.fieldComponent.fieldBaseImpl2
+package de.htwg.se.shutthebox.model.fieldComponent.fieldAdvancedImpl
 
-import de.htwg.se.shutthebox.model.cellComponent.cellBaseImpl.Cell
+import de.htwg.se.shutthebox.model.fieldComponent.fieldBaseImpl.Cell
 import de.htwg.se.shutthebox.model.fieldComponent.fieldInterface
 
 class BigField extends fieldInterface {

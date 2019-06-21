@@ -4,11 +4,10 @@ import de.htwg.se.shutthebox.controller.controllerComponent.GameState._
 import de.htwg.se.shutthebox.controller.controllerComponent.ShutState.{apply => _, _}
 import de.htwg.se.shutthebox.controller.controllerComponent._
 import de.htwg.se.shutthebox.model._
-import de.htwg.se.shutthebox.model.aiComponent.aiBaseImpl.AI
-import de.htwg.se.shutthebox.model.dieComponent.dieBaseImpl.Die
+import de.htwg.se.shutthebox.model.playerComponent.aiBaseImpl.AI
 import de.htwg.se.shutthebox.model.fieldComponent.fieldInterface
-import de.htwg.se.shutthebox.model.fieldComponent.fieldBaseImpl.Field
-import de.htwg.se.shutthebox.model.fieldComponent.fieldBaseImpl2.BigField
+import de.htwg.se.shutthebox.model.fieldComponent.fieldBaseImpl.{Die, Field}
+import de.htwg.se.shutthebox.model.fieldComponent.fieldAdvancedImpl.BigField
 import de.htwg.se.shutthebox.model.playerComponent.playerImpl.Player
 import de.htwg.se.shutthebox.model.playerComponent.playerInterface
 import de.htwg.se.shutthebox.util.UndoManager
@@ -104,7 +103,7 @@ class Controller() extends ControllerInterface with Publisher {
         // set states, so AI is able to roll the dice
         gameState = INGAME
         shutState = SHUTSTATE0
-        players(1).asInstanceOf[AI].think()
+        players(1).asInstanceOf[AI] think()
       }
     }
       publish(new CurrentPlayerSet)
