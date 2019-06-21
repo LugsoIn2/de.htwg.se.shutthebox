@@ -60,5 +60,5 @@ class Controller extends ControllerInterface {
 
   override def fieldToString: String = ""
 
-  override def rollToString: String = rollToString
+  override def rollToString: String = ""
 }
