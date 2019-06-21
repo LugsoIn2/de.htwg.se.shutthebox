@@ -1,20 +1,20 @@
-package de.htwg.se.shutthebox.model.fieldComponent.fieldBaseImpl
+package de.htwg.se.shutthebox.model.fieldComponent.fieldBaseImpl2
 
-import de.htwg.se.shutthebox.model.Cell
-import de.htwg.se.shutthebox.model.fieldComponent.AbstractField
+import de.htwg.se.shutthebox.model.cellComponent.cellBaseImpl.Cell
+import de.htwg.se.shutthebox.model.fieldComponent.fieldInterface
 
-class BigField extends AbstractField {
+class BigField extends fieldInterface {
 
 
-  override val field = Array.ofDim[Cell](12)
+  override val field:Array[Cell] = Array.ofDim[Cell](12)
   for (i <- 1 to 12) {
     field(i - 1) = new Cell()
     field(i - 1).value = i
   }
 
-  override def shut(number:Integer, field:AbstractField) : Cell = {
+  override def shut(number:Integer, field:fieldInterface) : Cell = {
     if (!field.field(number-1).isShut) {
-      field.field(number-1).isShut = true;
+      field.field(number-1).isShut = true
     }
     field.field(number-1)
   }

@@ -1,6 +1,7 @@
 package de.htwg.se.shutthebox.model
 
-import de.htwg.se.shutthebox.model.fieldComponent.fieldBaseImpl.BigField
+import de.htwg.se.shutthebox.model.cellComponent.cellBaseImpl.Cell
+import de.htwg.se.shutthebox.model.fieldComponent.fieldBaseImpl2.BigField
 import org.scalatest.{Matchers, WordSpec}
 
 class BigFieldTest extends WordSpec with Matchers{

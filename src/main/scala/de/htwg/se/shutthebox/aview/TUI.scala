@@ -5,7 +5,8 @@ import de.htwg.se.shutthebox.util.Observer
 import de.htwg.se.shutthebox.controller._
 import de.htwg.se.shutthebox.controller.controllerComponent.controllerBaseImpl.Controller
 import de.htwg.se.shutthebox.controller.controllerComponent._
-import de.htwg.se.shutthebox.model.fieldComponent.fieldBaseImpl.BigField
+import de.htwg.se.shutthebox.model.dieComponent.dieBaseImpl.Die
+import de.htwg.se.shutthebox.model.fieldComponent.fieldBaseImpl2.BigField
 
 import scala.swing.Reactor
 
@@ -20,11 +21,11 @@ class TUI(controller:Controller) extends Reactor {
 
 
       input match {
-        case "ss" => print(printStartGame)
-                     controller.startGame(0, false)
-        case "sb" => controller.startGame(1, false)
-        case "ssai" => controller.startGame(0, true)
-        case "sbai" => controller.startGame(1, true)
+        case "ss" => print(printStartGame())
+                     controller.startGame(0, ai = false)
+        case "sb" => controller.startGame(1, ai = false)
+        case "ssai" => controller.startGame(0, ai = true)
+        case "sbai" => controller.startGame(1, ai = true)
         case "z" => controller.cmdUnShut() // Undo
                     controller.printOutput()
         case "y" => controller.cmdRedoShut() // Redo
@@ -42,11 +43,11 @@ class TUI(controller:Controller) extends Reactor {
         case "7" => controller.cmdShut(7)
         case "8" => controller.cmdShut(8)
         case "9" => controller.cmdShut(9)
-        case "10" => if (controller.getField().isInstanceOf[BigField])
+        case "10" => if (controller.getField.isInstanceOf[BigField])
                         controller.cmdShut(10)
-        case "11" => if (controller.getField().isInstanceOf[BigField])
+        case "11" => if (controller.getField.isInstanceOf[BigField])
                         controller.cmdShut(11)
-        case "12" => if (controller.getField().isInstanceOf[BigField])
+        case "12" => if (controller.getField.isInstanceOf[BigField])
                         controller.cmdShut(12)
         case default => ""
       }
@@ -89,19 +90,19 @@ class TUI(controller:Controller) extends Reactor {
   def printScoreBoard : String = {
     var output = "\n"
     output += "========= SCOREBOARD ==========\n"
-    output += controller.getPlayers()(0).plrName
+    output += controller.getPlayers(0).plrName
     output += ": "
-    output += controller.getPlayers()(0).score + "\n"
-    output += controller.getPlayers()(1).plrName
+    output += controller.getPlayers(0).score + "\n"
+    output += controller.getPlayers(1).plrName
     output += ": "
-    output += controller.getPlayers()(1).score + "\n"
+    output += controller.getPlayers(1).score + "\n"
     output += "==================================\n"
 
-    if (controller.getPlayers()(0).score < controller.getPlayers()(1).score) {
-      output += controller.getPlayers()(0).plrName
+    if (controller.getPlayers(0).score < controller.getPlayers(1).score) {
+      output += controller.getPlayers(0).plrName
       output += " wins!!!\n"
-    } else if (controller.getPlayers()(0).score > controller.getPlayers()(1).score) {
-      output += controller.getPlayers()(1).plrName
+    } else if (controller.getPlayers(0).score > controller.getPlayers(1).score) {
+      output += controller.getPlayers(1).plrName
       output += " wins!!!\n"
     } else {
       output += "The game ends in a draw! :-(\n"

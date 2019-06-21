@@ -2,6 +2,7 @@ package de.htwg.se.shutthebox.model
 
 import java.io.ByteArrayInputStream
 
+import de.htwg.se.shutthebox.model.playerComponent.playerImpl.Player
 import org.scalatest._
 
 class PlayerTest extends WordSpec with Matchers {

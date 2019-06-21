@@ -1,14 +1,13 @@
-package de.htwg.se.shutthebox.model
+package de.htwg.se.shutthebox.model.dieComponent.dieBaseImpl
+
+import de.htwg.se.shutthebox.model.dieComponent.dieInterface
 
 //Dice to roll
-class Die() {
+class Die() extends dieInterface {
   val start = 1
   val end   = 6
   var value = 1
 
-  // Function to roll the die, generate random number
-  // between 1 and 6
-  // save generated number in value variable
   def roll: Integer = {
      value = start + scala.util.Random.nextInt((end - start) + 1)
      value

@@ -1,5 +1,6 @@
 package de.htwg.se.shutthebox.model
 
+import de.htwg.se.shutthebox.model.cellComponent.cellBaseImpl.Cell
 import org.scalatest._
 
 class CellTest extends WordSpec with Matchers {

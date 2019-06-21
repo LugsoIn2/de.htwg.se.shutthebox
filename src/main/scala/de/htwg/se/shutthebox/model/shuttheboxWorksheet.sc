@@ -1,10 +1,10 @@
-import de.htwg.se.shutthebox.model.Cell
+import de.htwg.se.shutthebox.model.cellComponent.cellBaseImpl.Cell
 
 case class Field()
 
-val field1 = (Array.ofDim[Int](9))
+val field1 = Array.ofDim[Int](9)
 for (i <- 0 to 8) {
-  field1(i) = i+1;
+  field1(i) = i+1
 }
 
 field1

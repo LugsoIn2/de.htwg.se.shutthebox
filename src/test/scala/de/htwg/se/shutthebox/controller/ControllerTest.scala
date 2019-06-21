@@ -4,8 +4,11 @@ import de.htwg.se.shutthebox.controller.controllerComponent.controllerBaseImpl.C
 import org.scalatest._
 import de.htwg.se.shutthebox.util._
 import de.htwg.se.shutthebox.model._
-import de.htwg.se.shutthebox.model.fieldComponent.AbstractField
-import de.htwg.se.shutthebox.model.fieldComponent.fieldBaseImpl.{BigField, Field}
+import de.htwg.se.shutthebox.model.dieComponent.dieBaseImpl.Die
+import de.htwg.se.shutthebox.model.fieldComponent.fieldInterface
+import de.htwg.se.shutthebox.model.fieldComponent.fieldBaseImpl.Field
+import de.htwg.se.shutthebox.model.fieldComponent.fieldBaseImpl2.BigField
+import de.htwg.se.shutthebox.model.playerComponent.playerImpl.Player
 
 import scala.runtime.BoxedUnit
 
@@ -24,13 +27,13 @@ class ControllerTest extends WordSpec with Matchers {
         controller.startGame(0, ai = false) shouldBe a [BoxedUnit]
         controller.createField(0) shouldBe a [BoxedUnit]
         controller.createField(1) shouldBe a [BoxedUnit]
-        controller.getField() shouldBe a [AbstractField]
+        controller.getField shouldBe a [fieldInterface]
         controller.createDice() shouldBe a [BoxedUnit]
         controller.createPlayers(false) shouldBe a [BoxedUnit]
-        controller.getPlayers() shouldBe a [Array[_]]
-        controller.getCurrentPlayer() shouldBe a [Player]
+        controller.getPlayers shouldBe a [Array[_]]
+        controller.getCurrentPlayer shouldBe a [Player]
         controller.setCurrentPlayer() shouldBe a [BoxedUnit]
-        controller.getScore() shouldBe a [Integer]
+        controller.getScore shouldBe a [Integer]
         controller.resetMatchfield() shouldBe a [BoxedUnit]
         controller.cmdShut(1) shouldBe a [BoxedUnit]
         controller.cmdShut(2) shouldBe a [BoxedUnit]
@@ -72,11 +75,11 @@ class ControllerTest extends WordSpec with Matchers {
         controller.shut(10) shouldBe a [BoxedUnit]
         controller.shut(11) shouldBe a [BoxedUnit]
         controller.shut(12) shouldBe a [BoxedUnit]
-        controller.getValidShuts() shouldBe a [BoxedUnit]
-        controller.calcSum() shouldBe a [Integer]
-        controller.calcDiff() shouldBe a [Integer]
-        controller.calcProd() shouldBe a [Integer]
-        controller.calcDiv() shouldBe a [Integer]
+        controller.calcValidShuts() shouldBe a [BoxedUnit]
+        controller.calcSum shouldBe a [Integer]
+        controller.calcDiff shouldBe a [Integer]
+        controller.calcProd shouldBe a [Integer]
+        controller.calcDiv shouldBe a [Integer]
         controller.rollDice() shouldBe a [String]
         controller.printOutput() shouldBe a [String]
         controller.fieldToString shouldBe a [String]

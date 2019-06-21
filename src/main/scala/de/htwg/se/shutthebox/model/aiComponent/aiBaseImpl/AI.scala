@@ -1,23 +1,23 @@
-package de.htwg.se.shutthebox.model
+package de.htwg.se.shutthebox.model.aiComponent.aiBaseImpl
 
 import de.htwg.se.shutthebox.ShutTheBox
-import de.htwg.se.shutthebox.aview.gui.SwingGUI
 import de.htwg.se.shutthebox.controller.controllerComponent.controllerBaseImpl.Controller
-import javax.swing.SwingUtilities
+import de.htwg.se.shutthebox.model.aiComponent.aiInterface
+import de.htwg.se.shutthebox.model.playerComponent.playerImpl.Player
 
-import scala.concurrent.Future
 import scala.concurrent.ExecutionContext.Implicits._
-import scala.swing.Swing
+import scala.concurrent.Future
+import scala.swing.{Frame, Swing}
 
-class AI(controller:Controller) extends Player {
+class AI(controller:Controller) extends Player with aiInterface {
 
-  var gui = ShutTheBox.gui
-  var validShuts = Array.ofDim[Int](4)
-  var singleShuts = Array.ofDim[Int](2)
+  var gui:Frame = ShutTheBox.gui
+  var validShuts:Array[Int] = Array.ofDim[Int](4)
+  var singleShuts:Array[Int] = Array.ofDim[Int](2)
   var allowFuture = false
 
   override def setName(index:Integer) : String = {
-    printf("Player %d: ",index)
+    printf("Player " + index + ":")
     plrName = "AI"//readLine()
     plrName
   }
@@ -27,18 +27,18 @@ class AI(controller:Controller) extends Player {
     value
   }
 
-  def getValidShuts() : Unit = {
+  def calcValidShuts(): Unit = {
     validShuts = Array(controller.validSum, controller.validDiff, controller.validProd, controller.validDiv)
     singleShuts = controller.validNumber
   }
 
-  def giveUp() : Unit = {
+  def giveUp(): Unit = {
     println("That's it! :-(")
     Thread.sleep(2000)
     controller.setCurrentPlayer()
   }
 
-  def analyze() : Future[Unit] = Future {
+  def analyze(): Future[Unit] = Future {
     if (allowFuture) {
       println("AI is thinking ...")
       Thread.sleep(randomTimeMillis(500, 2000))
@@ -47,7 +47,7 @@ class AI(controller:Controller) extends Player {
       var currentMaxIndex = validShuts.indexOf(validShuts.max)
 
      // if maximum is in range of matchfield
-      if (currentMax > 0 && currentMax <= controller.matchfield.field.size ) {
+      if (currentMax > 0 && currentMax <= controller.matchfield.field.length ) {
         // if the cell isn't already shut
         if (!controller.matchfield.field(currentMax-1).isShut) {
           controller.doShut(validShuts.max)
@@ -79,7 +79,7 @@ class AI(controller:Controller) extends Player {
   }
 
   analyze onComplete {
-    case result => Swing.onEDT {
+    result => Swing.onEDT {
       gui.repaint()
     }
   }
@@ -88,7 +88,7 @@ class AI(controller:Controller) extends Player {
     gui.repaint()
     controller.rollDice()
     Thread.sleep(randomTimeMillis(500, 2000))
-    getValidShuts()
+    calcValidShuts()
     allowFuture = true
     analyze()
   }

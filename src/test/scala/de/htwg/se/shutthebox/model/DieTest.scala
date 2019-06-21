@@ -1,5 +1,6 @@
 package de.htwg.se.shutthebox.model
 
+import de.htwg.se.shutthebox.model.dieComponent.dieBaseImpl.Die
 import org.scalatest._
 
 class DieTest extends WordSpec with Matchers{

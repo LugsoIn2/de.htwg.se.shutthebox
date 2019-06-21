@@ -4,20 +4,26 @@ import de.htwg.se.shutthebox.controller.controllerComponent.GameState._
 import de.htwg.se.shutthebox.controller.controllerComponent.ShutState.{apply => _, _}
 import de.htwg.se.shutthebox.controller.controllerComponent._
 import de.htwg.se.shutthebox.model._
-import de.htwg.se.shutthebox.model.fieldComponent.AbstractField
-import de.htwg.se.shutthebox.model.fieldComponent.fieldBaseImpl.{BigField, Field}
+import de.htwg.se.shutthebox.model.aiComponent.aiBaseImpl.AI
+import de.htwg.se.shutthebox.model.dieComponent.dieBaseImpl.Die
+import de.htwg.se.shutthebox.model.fieldComponent.fieldInterface
+import de.htwg.se.shutthebox.model.fieldComponent.fieldBaseImpl.Field
+import de.htwg.se.shutthebox.model.fieldComponent.fieldBaseImpl2.BigField
+import de.htwg.se.shutthebox.model.playerComponent.playerImpl.Player
+import de.htwg.se.shutthebox.model.playerComponent.playerInterface
 import de.htwg.se.shutthebox.util.UndoManager
 
+import scala.collection.mutable
 import scala.collection.mutable.Stack
 import scala.swing.Publisher
 
 
 class Controller() extends ControllerInterface with Publisher {
   //var players = Array(new Player, new Player)
-  var players = Array.ofDim[Player](2)
-  var currentPlayer = players(0)
+  var players:Array[Player] = Array.ofDim[Player](2)
+  var currentPlayer:Player = players(0)
   var currentPlayerIndex = 0 // to determine, when to show scoreboard
-  var matchfield : AbstractField = _
+  var matchfield : fieldInterface = _
   var dice = Array(new Die, new Die)
   var gameState : GameState = MENU
   var shutState : ShutState = SHUTSTATE0
@@ -29,8 +35,8 @@ class Controller() extends ControllerInterface with Publisher {
   var validDiv = 0
 
   private val undoManager = new UndoManager
-  private var lastShut = Stack[Int]()
-  private var tmpLastShut = Stack[Int]()
+  private var lastShut = mutable.Stack[Int]()
+  private var tmpLastShut = mutable.Stack[Int]()
 
 
   def startGame(t:Integer, ai:Boolean): Unit = {
@@ -39,8 +45,8 @@ class Controller() extends ControllerInterface with Publisher {
     createField(t)
     createPlayers(ai)
     //print(printStartGame())
-    getPlayers()(0).setName(1)   // problems with code coverage
-    getPlayers()(1).setName(2)   // NullPointerException or infinite loop for input
+    getPlayers(0).setName(1)   // problems with code coverage
+    getPlayers(1).setName(2)   // NullPointerException or infinite loop for input
     //setCurrentPlayer()
     gameState=INGAME
   }
@@ -54,7 +60,7 @@ class Controller() extends ControllerInterface with Publisher {
     publish(new FieldCreated)
   }
 
-  def getField() : AbstractField = {
+  def getField : fieldInterface = {
     matchfield
   }
 
@@ -77,11 +83,11 @@ class Controller() extends ControllerInterface with Publisher {
     publish(new PlayersCreated)
   }
 
-  def getPlayers(): Array[Player] = {
+  def getPlayers: Array[Player] = {
     players
   }
 
-  def getCurrentPlayer() : Player = {
+  def getCurrentPlayer : Player = {
     currentPlayer
   }
 
@@ -89,7 +95,7 @@ class Controller() extends ControllerInterface with Publisher {
     currentPlayerIndex += 1
 
     if (currentPlayerIndex < 2) {
-    currentPlayer.updateScore(getScore())
+    currentPlayer.updateScore(getScore)
     resetMatchfield()
 
     if (currentPlayer == players(0)) {
@@ -103,7 +109,7 @@ class Controller() extends ControllerInterface with Publisher {
     }
       publish(new CurrentPlayerSet)
   } else {
-      currentPlayer.updateScore(getScore())
+      currentPlayer.updateScore(getScore)
       publish(new ShowScoreBoard)
     }
     gameState = INGAME
@@ -111,11 +117,11 @@ class Controller() extends ControllerInterface with Publisher {
 
   }
 
-  def getScore() : Int = {
+  def getScore : Int = {
     var score = 0
-    for (i <- 1 to matchfield.field.size) {
+    for (i <- 1 to matchfield.field.length) {
       score += i
-      if (matchfield.field(i-1).isShut == true) {
+      if (matchfield.field(i - 1).isShut) {
         score -= i
       }
     }
@@ -124,26 +130,26 @@ class Controller() extends ControllerInterface with Publisher {
   }
 
   def resetMatchfield() : Unit = {
-    for (i <- 1 to matchfield.field.size) {
-      matchfield.field(i-1).isShut = false;
+    for (i <- 1 to matchfield.field.length) {
+      matchfield.field(i-1).isShut = false
     }
   }
 
 
-  def cmdShut(value:Int) = {
+  def cmdShut(value:Int) : Unit = {
     undoManager.doStep(new SetCommand(value, this))
   }
 
-  def cmdUnShut() = {
+  def cmdUnShut() : Unit = {
     undoManager.undoStep
   }
 
-  def cmdRedoShut() = {
+  def cmdRedoShut() : Unit = {
     undoManager.redoStep
   }
 
   def redoShut(): Unit = {
-    if (!tmpLastShut.isEmpty) {
+    if (tmpLastShut.nonEmpty) {
     doShut(tmpLastShut.top)
     tmpLastShut.pop()
   }
@@ -151,10 +157,10 @@ class Controller() extends ControllerInterface with Publisher {
   }
 
   def undoShut(): Unit = {
-    if (!lastShut.isEmpty) {
+    if (lastShut.nonEmpty) {
       shutState = SHUTSTATE0
       gameState = UNDOSTATE
-      matchfield.field(lastShut.top - 1).isShut = false;
+      matchfield.field(lastShut.top - 1).isShut = false
       tmpLastShut.push(lastShut.top)
       lastShut.pop()
     }
@@ -202,7 +208,7 @@ class Controller() extends ControllerInterface with Publisher {
 
     // check, if field is completely shut
     var allShut = true
-    for (i <- 0 to matchfield.field.size-1) {
+    for (i <- matchfield.field.indices) {
       if (!matchfield.field(i).isShut) {
         allShut = false
       }
@@ -213,7 +219,7 @@ class Controller() extends ControllerInterface with Publisher {
   }
 
 
-  def getValidShuts() : Unit = {
+  def calcValidShuts() : Unit = {
     //Aufruf der regeln methode.
     //Soll in validNumber dann die erlaubten Zahlen schreiben
     // 1, 3
@@ -233,7 +239,7 @@ class Controller() extends ControllerInterface with Publisher {
 
   }
 
-  def calcSum() : Integer = {
+  def calcSum : Integer = {
     var res = 0
     var i = dice(0).value
     var j = dice(1).value
@@ -245,7 +251,7 @@ class Controller() extends ControllerInterface with Publisher {
     res
   }
 
-  def calcDiff() : Integer = {
+  def calcDiff : Integer = {
     var res = 0
     var i = dice(0).value
     var j = dice(1).value
@@ -260,7 +266,7 @@ class Controller() extends ControllerInterface with Publisher {
     res
   }
 
-  def calcProd() : Integer = {
+  def calcProd : Integer = {
     var res = 0
     var i = dice(0).value
     var j = dice(1).value
@@ -271,7 +277,7 @@ class Controller() extends ControllerInterface with Publisher {
     res
   }
 
-  def calcDiv() : Integer = {
+  def calcDiv : Integer = {
     var res = 0
     var i = dice(0).value
     var j = dice(1).value
@@ -283,12 +289,10 @@ class Controller() extends ControllerInterface with Publisher {
     } else if (i == j) {
       res = 1
     }
-    //if (res <=0 | res > matchfield.field.size)
-     // res = 0
-    res.toInt
+    res
   }
 
-  def rollDice() : String = {
+  def rollDice : String = {
     var message = " "
     lastShut.clear()
     tmpLastShut.clear()
@@ -296,7 +300,7 @@ class Controller() extends ControllerInterface with Publisher {
       dice(0).roll
       Thread.sleep(100)
       dice(1).roll
-      getValidShuts()
+      calcValidShuts()
       gameState=ROLLDICE
       shutState=SHUTSTATE0
       publish(new DiceRolled)
@@ -307,7 +311,7 @@ class Controller() extends ControllerInterface with Publisher {
     message
   }
 
-  def printOutput() : String = {
+  def printOutput : String = {
     gameState match {
       case GameState.MENU => ""
       case GameState.ROLLDICE => rollToString

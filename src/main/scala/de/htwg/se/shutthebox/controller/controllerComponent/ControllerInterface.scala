@@ -1,29 +1,29 @@
 package de.htwg.se.shutthebox.controller.controllerComponent
 
-import de.htwg.se.shutthebox.model.Player
-import de.htwg.se.shutthebox.model.fieldComponent.AbstractField
+import de.htwg.se.shutthebox.model.fieldComponent.fieldInterface
+import de.htwg.se.shutthebox.model.playerComponent.playerImpl.Player
 
 import scala.swing.Publisher
 
 trait ControllerInterface extends Publisher {
   def startGame(t:Integer, ai:Boolean): Unit
   def createField(t:Integer):Unit
-  def getField:AbstractField
-  def createDice:Unit
+  def getField:fieldInterface
+  def createDice():Unit
   def createPlayers(ai:Boolean): Unit
   def getPlayers: Array[Player]
   def getCurrentPlayer : Player
-  def setCurrentPlayer : Unit
+  def setCurrentPlayer() : Unit
   def getScore : Int
-  def resetMatchfield : Unit
+  def resetMatchfield() : Unit
   def cmdShut(value:Int):Unit
-  def cmdUnShut : Unit
-  def cmdRedoShut : Unit
-  def redoShut : Unit
-  def undoShut : Unit
+  def cmdUnShut() : Unit
+  def cmdRedoShut() : Unit
+  def redoShut() : Unit
+  def undoShut() : Unit
   def doShut(i:Int) : String
   def shut(i:Int) : Unit
-  def getValidShuts : Unit
+  def calcValidShuts() : Unit
   def calcSum : Integer
   def calcDiff : Integer
   def calcProd : Integer

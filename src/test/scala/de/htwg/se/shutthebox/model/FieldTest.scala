@@ -1,5 +1,6 @@
 package de.htwg.se.shutthebox.model
 
+import de.htwg.se.shutthebox.model.cellComponent.cellBaseImpl.Cell
 import de.htwg.se.shutthebox.model.fieldComponent.fieldBaseImpl.Field
 import org.scalatest._
 
