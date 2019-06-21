@@ -1,7 +1,9 @@
 package de.htwg.se.shutthebox.controller.controllerComponent.controllerMockImpl
 
 import de.htwg.se.shutthebox.controller.controllerComponent.ControllerInterface
-import de.htwg.se.shutthebox.model.{AbstractField, Field, Player}
+import de.htwg.se.shutthebox.model.fieldComponent.AbstractField
+import de.htwg.se.shutthebox.model.Player
+import de.htwg.se.shutthebox.model.fieldComponent.fieldBaseImpl.Field
 
 class Controller extends ControllerInterface {
 

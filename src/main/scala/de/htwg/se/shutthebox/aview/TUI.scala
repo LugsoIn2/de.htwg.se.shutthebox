@@ -5,6 +5,7 @@ import de.htwg.se.shutthebox.util.Observer
 import de.htwg.se.shutthebox.controller._
 import de.htwg.se.shutthebox.controller.controllerComponent.controllerBaseImpl.Controller
 import de.htwg.se.shutthebox.controller.controllerComponent._
+import de.htwg.se.shutthebox.model.fieldComponent.fieldBaseImpl.BigField
 
 import scala.swing.Reactor
 

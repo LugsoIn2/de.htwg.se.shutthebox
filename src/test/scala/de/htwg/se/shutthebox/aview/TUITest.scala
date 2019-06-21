@@ -3,6 +3,7 @@ import de.htwg.se.shutthebox.aview._
 import de.htwg.se.shutthebox.controller._
 import de.htwg.se.shutthebox.controller.controllerComponent.controllerBaseImpl.Controller
 import de.htwg.se.shutthebox.model._
+import de.htwg.se.shutthebox.model.fieldComponent.fieldBaseImpl.Field
 import org.scalatest._
 
 import scala.runtime.BoxedUnit

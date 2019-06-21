@@ -4,6 +4,8 @@ import de.htwg.se.shutthebox.controller.controllerComponent.GameState._
 import de.htwg.se.shutthebox.controller.controllerComponent.ShutState.{apply => _, _}
 import de.htwg.se.shutthebox.controller.controllerComponent._
 import de.htwg.se.shutthebox.model._
+import de.htwg.se.shutthebox.model.fieldComponent.AbstractField
+import de.htwg.se.shutthebox.model.fieldComponent.fieldBaseImpl.{BigField, Field}
 import de.htwg.se.shutthebox.util.UndoManager
 
 import scala.collection.mutable.Stack

@@ -4,6 +4,8 @@ import de.htwg.se.shutthebox.controller.controllerComponent.controllerBaseImpl.C
 import org.scalatest._
 import de.htwg.se.shutthebox.util._
 import de.htwg.se.shutthebox.model._
+import de.htwg.se.shutthebox.model.fieldComponent.AbstractField
+import de.htwg.se.shutthebox.model.fieldComponent.fieldBaseImpl.{BigField, Field}
 
 import scala.runtime.BoxedUnit
 

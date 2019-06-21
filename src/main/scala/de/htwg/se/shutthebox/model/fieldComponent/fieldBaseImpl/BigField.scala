@@ -1,4 +1,7 @@
-package de.htwg.se.shutthebox.model
+package de.htwg.se.shutthebox.model.fieldComponent.fieldBaseImpl
+
+import de.htwg.se.shutthebox.model.Cell
+import de.htwg.se.shutthebox.model.fieldComponent.AbstractField
 
 class BigField extends AbstractField {
 

@@ -1,6 +1,7 @@
 package de.htwg.se.shutthebox.controller.controllerComponent
 
-import de.htwg.se.shutthebox.model.{AbstractField, Player}
+import de.htwg.se.shutthebox.model.Player
+import de.htwg.se.shutthebox.model.fieldComponent.AbstractField
 
 import scala.swing.Publisher
 
