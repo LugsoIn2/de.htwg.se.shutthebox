@@ -57,6 +57,8 @@ trait ControllerInterface extends Publisher {
   def printOutput : String
   def fieldToString : String
   def rollToString : String
+  def load: Unit
+  def save:Unit
 }
 
 import scala.swing.event.Event

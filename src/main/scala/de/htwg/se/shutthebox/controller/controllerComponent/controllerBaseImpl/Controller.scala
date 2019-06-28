@@ -11,6 +11,7 @@ import de.htwg.se.shutthebox.model.playerComponent.aiBaseImpl.AI
 import de.htwg.se.shutthebox.model.fieldComponent.fieldInterface
 import de.htwg.se.shutthebox.model.fieldComponent.fieldBaseImpl.{Die, Field}
 import de.htwg.se.shutthebox.model.fieldComponent.fieldAdvancedImpl.BigField
+import de.htwg.se.shutthebox.model.fileIoComponent.FileIOInterface
 import de.htwg.se.shutthebox.model.playerComponent.playerImpl.Player
 import de.htwg.se.shutthebox.model.playerComponent.playerInterface
 import de.htwg.se.shutthebox.util.UndoManager
@@ -39,6 +40,7 @@ class Controller @Inject() extends ControllerInterface with Publisher {
   private var tmpLastShut = mutable.Stack[Int]()
 
   val injector = Guice.createInjector(new ShutTheBoxModule)
+  val fileIo = injector.instance[FileIOInterface]
 
 
   def startGame(t:Integer, ai:Boolean): Unit = {
@@ -326,6 +328,17 @@ class Controller @Inject() extends ControllerInterface with Publisher {
 
   def rollToString : String =  {
     dice(0).toString + dice(1).toString
+  }
+
+  def save:Unit = {
+    fileIo.save(matchfield)
+    //gameState = LOADED
+    publish(new CellShut)
+  }
+
+  def load:Unit = {
+    matchfield = fileIo.load
+    publish(new CellShut)
   }
 
 }

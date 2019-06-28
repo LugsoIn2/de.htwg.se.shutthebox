@@ -12,13 +12,14 @@ class SwingGUI(controller : ControllerInterface) extends Frame {
 
   peer.setDefaultCloseOperation(3)
 
-  def resizedTexture(path:String, width:Int, height:Int): ImageIcon = {
+  def resizedTexture(path: String, width: Int, height: Int): ImageIcon = {
     var imageIcon = new ImageIcon(path)
     var image = imageIcon.getImage(); // transform it
-    var newimg = image.getScaledInstance(width, height,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
-    imageIcon = new ImageIcon(newimg);  // transform it back
+    var newimg = image.getScaledInstance(width, height, java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
+    imageIcon = new ImageIcon(newimg); // transform it back
     imageIcon
   }
+
   var ref_controller = controller
   title = "HTWG - SHUT THE BOX"
   size = new Dimension(1024, 768)
@@ -27,4 +28,22 @@ class SwingGUI(controller : ControllerInterface) extends Frame {
   var mainMenuPanel = new MainMenuPanel(this)
   contents = mainMenuPanel
   visible = true
+
+  menuBar = new MenuBar {
+    contents += new Menu("File") {
+      contents += new MenuItem(new Action("Load") {
+        def apply {
+          controller.load
+        }
+      })
+
+      contents += new MenuItem(new Action("Save") {
+        def apply {
+          controller.save
+        }
+      })
+
+    }
+    visible = true
+  }
 }
