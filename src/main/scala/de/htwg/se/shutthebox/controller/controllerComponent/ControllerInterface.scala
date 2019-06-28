@@ -59,6 +59,7 @@ trait ControllerInterface extends Publisher {
   def rollToString : String
   def load: Unit
   def save:Unit
+  def update:Unit
 }
 
 import scala.swing.event.Event
@@ -74,3 +75,4 @@ class CellShut extends Event
 class AllCellsShut extends Event
 class ScoreUpdated extends Event
 class ShowScoreBoard extends Event
+class AIThink extends Event

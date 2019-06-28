@@ -75,12 +75,12 @@ class Controller @Inject() extends ControllerInterface with Publisher {
 
 
   def createPlayers(ai:Boolean): Unit = {
-    players(0) = injector.instance[playerInterface](Names.named("player"))
+    players(0) = injector.instance[playerInterface](Names.named("player1"))
     if (ai) {
       players(1) = new AI(this)
     }
     else {
-      players(1) = injector.instance[playerInterface](Names.named("player"))
+      players(1) = injector.instance[playerInterface](Names.named("player2"))
     }
     currentPlayer = players(0)
     currentPlayerIndex = 0
@@ -99,20 +99,21 @@ class Controller @Inject() extends ControllerInterface with Publisher {
     currentPlayerIndex += 1
 
     if (currentPlayerIndex < 2) {
-    currentPlayer.updateScore(getScore)
-    resetMatchfield()
 
-    if (currentPlayer == players(0)) {
-      currentPlayer = players(1)
-      if (currentPlayer.isInstanceOf[AI]) {
-        // set states, so AI is able to roll the dice
-        gameState = INGAME
-        shutState = SHUTSTATE0
-        players(1).asInstanceOf[AI] think()
+      currentPlayer.updateScore(getScore)
+      resetMatchfield()
+
+      if (currentPlayer == players(0)) {
+        currentPlayer = players(1)
+        if (currentPlayer.isInstanceOf[AI]) {
+          // set states, so AI is able to roll the dice
+          gameState = INGAME
+          shutState = SHUTSTATE0
+          players(1).asInstanceOf[AI] think()
+        }
       }
-    }
       publish(new CurrentPlayerSet)
-  } else {
+    } else {
       currentPlayer.updateScore(getScore)
       publish(new ShowScoreBoard)
     }
@@ -154,9 +155,9 @@ class Controller @Inject() extends ControllerInterface with Publisher {
 
   def redoShut(): Unit = {
     if (tmpLastShut.nonEmpty) {
-    doShut(tmpLastShut.top)
-    tmpLastShut.pop()
-  }
+      doShut(tmpLastShut.top)
+      tmpLastShut.pop()
+    }
     publish(new Redone)
   }
 
@@ -341,4 +342,8 @@ class Controller @Inject() extends ControllerInterface with Publisher {
     publish(new CellShut)
   }
 
+
+  def update() : Unit = {
+    publish(new AIThink)
+  }
 }

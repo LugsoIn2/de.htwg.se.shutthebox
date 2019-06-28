@@ -11,7 +11,7 @@ import scala.swing.{Frame, Swing}
 
 class AI(controller:Controller) extends Player with aiInterface {
 
-  var gui:Frame = ShutTheBox.gui
+  //var gui:Frame = ShutTheBox.gui
   var validShuts:Array[Int] = Array.ofDim[Int](4)
   var singleShuts:Array[Int] = Array.ofDim[Int](2)
   var allowFuture = false
@@ -79,13 +79,13 @@ class AI(controller:Controller) extends Player with aiInterface {
   }
 
   analyze onComplete {
-    result => Swing.onEDT {
-      gui.repaint()
-    }
+    result => controller.update()//Swing.onEDT //{
+      //gui.repaint()
+    //}
   }
 
   def think(): Unit = {
-    gui.repaint()
+    //gui.repaint()
     controller.rollDice
     Thread.sleep(randomTimeMillis(500, 2000))
     calcValidShuts()
