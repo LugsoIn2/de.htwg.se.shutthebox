@@ -4,7 +4,6 @@ import scala.concurrent.Future
 import scala.swing.Frame
 
 trait aiInterface {
-  var gui:Frame
   var validShuts:Array[Int]
   var singleShuts:Array[Int]
   var allowFuture:Boolean

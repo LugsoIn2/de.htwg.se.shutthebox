@@ -176,17 +176,10 @@ class IngamePanel(mainFrame:SwingGUI) extends GridPanel(6,1) {
   }
 
 
-
-  def updateScore(): Unit = {
-    lbl_score.text = controller.getScore.toString
-    mainFrame.repaint()
-  }
-
   def nextPlayer(): Unit = {
-    updateScore()
+    controller.setCurrentPlayer()
     updateMatchfield()
     mainFrame.repaint()
-    controller.setCurrentPlayer()
 
   }
 
@@ -203,6 +196,7 @@ class IngamePanel(mainFrame:SwingGUI) extends GridPanel(6,1) {
     }
     lbl_message.text = ""
     lbl_plr.text = controller.currentPlayer.plrName
+    lbl_score.text = controller.getScore.toString
     mainFrame.repaint()
   }
 
@@ -326,10 +320,10 @@ class IngamePanel(mainFrame:SwingGUI) extends GridPanel(6,1) {
     case event: DiceRolled => lbl_die1.icon = diceTextures(controller.dice(0).value-1)
                               lbl_die2.icon = diceTextures(controller.dice(1).value-1)
     case event: CellShut => updateMatchfield()
-                            updateScore()
     case event: CurrentPlayerSet => updateMatchfield()
     case event: Undone => updateMatchfield()
     case event: Redone => updateMatchfield()
     case event: ShowScoreBoard => mainFrame.contents = new ScoreboardPanel(mainFrame)
+    case event: AIThink => updateMatchfield()
   }
 }
