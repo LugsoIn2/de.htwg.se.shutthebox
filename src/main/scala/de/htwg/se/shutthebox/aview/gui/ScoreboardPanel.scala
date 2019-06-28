@@ -3,6 +3,7 @@ package de.htwg.se.shutthebox.aview.gui
 import java.awt.Color
 import java.io.File
 
+import de.htwg.se.shutthebox.controller.controllerComponent.ControllerInterface
 import de.htwg.se.shutthebox.controller.controllerComponent.controllerBaseImpl.Controller
 import javax.swing.border.EmptyBorder
 
@@ -11,7 +12,7 @@ import scala.swing.event.ButtonClicked
 
 class ScoreboardPanel(mainFrame:SwingGUI) extends GridPanel(5,1) {
 
-  var controller:Controller = mainFrame.ref_controller
+  var controller:ControllerInterface = mainFrame.ref_controller
 
   vGap = 10
   border = new EmptyBorder(40, 80, 20,80)

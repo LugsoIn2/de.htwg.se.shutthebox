@@ -20,7 +20,7 @@ class IngamePanel(mainFrame:SwingGUI) extends GridPanel(6,1) {
     g.drawImage(mainFrame.resizedTexture("textures" + File.separator + "bgIngame.png", mainFrame.size.width-16, mainFrame.size.height-48).getImage, 0, 0, null)
   }
 
-  var controller:Controller = mainFrame.ref_controller
+  var controller:ControllerInterface = mainFrame.ref_controller
   listenTo(controller)
 
   var textures:Array[ImageIcon] = Array.ofDim[ImageIcon](26)
@@ -279,6 +279,10 @@ class IngamePanel(mainFrame:SwingGUI) extends GridPanel(6,1) {
 
     case ButtonClicked(b) if b == numButtons(8) =>
       lbl_message.text = controller.doShut(9)
+      mainFrame.repaint()
+
+    case ButtonClicked(b) if b == numButtons(9) =>
+      lbl_message.text = controller.doShut(10)
       mainFrame.repaint()
 
     case ButtonClicked(b) if b == numButtons(10) =>

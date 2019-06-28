@@ -53,10 +53,15 @@ class RulesPanel(mainFrame:SwingGUI) extends GridPanel(3,1) {
       |Otherwise, after each player has taken one turn, the winner of the round is the player with the lowest score.
     """.stripMargin
 
-  var lbl_rules = new Label {
-    font = new Font("Courier New", 1, 10)
-    foreground = Color.WHITE
-    text = convertToMultiline(rulesText)
+  var scrllPne_rules = new ScrollPane {
+    opaque = false
+    var lbl_rules = new Label() {
+      text = convertToMultiline(rulesText)
+      font = new Font("Courier New", 1, 20)
+      foreground = Color.WHITE
+      background = new Color(0, 63, 45)
+    }
+    contents = lbl_rules
   }
   var btn_back = new Button {
     opaque = false
@@ -71,7 +76,7 @@ class RulesPanel(mainFrame:SwingGUI) extends GridPanel(3,1) {
   }
 
   contents += lbl_header
-  contents += lbl_rules
+  contents += scrllPne_rules
   contents += btn_back
 
   listenTo(btn_back)

@@ -1,11 +1,13 @@
 package de.htwg.se.shutthebox.aview.gui
 
+import de.htwg.se.shutthebox.controller.controllerComponent.ControllerInterface
+
 import scala.swing._
 import de.htwg.se.shutthebox.controller.controllerComponent.controllerBaseImpl.Controller
 import javax.swing.ImageIcon
 
 
-class SwingGUI(controller : Controller) extends Frame {
+class SwingGUI(controller : ControllerInterface) extends Frame {
   listenTo(controller)
 
   peer.setDefaultCloseOperation(3)

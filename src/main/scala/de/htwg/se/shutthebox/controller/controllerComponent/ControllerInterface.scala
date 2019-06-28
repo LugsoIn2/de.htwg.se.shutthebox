@@ -1,18 +1,43 @@
 package de.htwg.se.shutthebox.controller.controllerComponent
 
+import de.htwg.se.shutthebox.controller.controllerComponent.GameState.{GameState, MENU}
+import de.htwg.se.shutthebox.controller.controllerComponent.ShutState.{SHUTSTATE0, ShutState}
+import de.htwg.se.shutthebox.model.fieldComponent.fieldBaseImpl.Die
 import de.htwg.se.shutthebox.model.fieldComponent.fieldInterface
 import de.htwg.se.shutthebox.model.playerComponent.playerImpl.Player
+import de.htwg.se.shutthebox.model.playerComponent.playerInterface
+import de.htwg.se.shutthebox.util.UndoManager
 
+import scala.collection.mutable
 import scala.swing.Publisher
 
 trait ControllerInterface extends Publisher {
+
+  var players:Array[playerInterface]
+  var currentPlayer:playerInterface
+  var currentPlayerIndex : Int // to determine, when to show scoreboard
+  var matchfield : fieldInterface
+  var dice : Array[Die]
+ /* var gameState : GameState
+  var shutState : ShutState
+
+  var validNumber : Array[Int]
+  var validSum : Int
+  var validDiff : Int
+  var validProd : Int
+  var validDiv : Int
+
+  private val undoManager = new UndoManager
+  private var lastShut = mutable.Stack[Int]()
+  private var tmpLastShut = mutable.Stack[Int]()*/
+
   def startGame(t:Integer, ai:Boolean): Unit
   def createField(t:Integer):Unit
   def getField:fieldInterface
   def createDice():Unit
   def createPlayers(ai:Boolean): Unit
-  def getPlayers: Array[Player]
-  def getCurrentPlayer : Player
+  def getPlayers: Array[playerInterface]
+  def getCurrentPlayer : playerInterface
   def setCurrentPlayer() : Unit
   def getScore : Int
   def resetMatchfield() : Unit

@@ -24,7 +24,7 @@ class TUITest extends WordSpec with Matchers {
       //tui.nextPlayer() shouldBe a [BoxedUnit]
       tui.printStartGame() shouldBe a [String]
       tui.printRules() shouldBe a [String]
-      tui.processInputLine("input", dice) shouldBe a [String]
+      tui.processInputLine("input") shouldBe a [String]
     }
   }
 }

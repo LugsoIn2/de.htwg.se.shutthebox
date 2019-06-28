@@ -11,13 +11,13 @@ import de.htwg.se.shutthebox.model.fieldComponent.fieldAdvancedImpl.BigField
 import scala.swing.Reactor
 
 //class TUI(field:Field, players:Array[Player], currentPlr:Player) {
-class TUI(controller:Controller) extends Reactor {
+class TUI(controller:ControllerInterface) extends Reactor {
   listenTo(controller)
   print(printHeader())
 
 
 
-  def processInputLine(input: String, dice: Array[Die]): String = {
+  def processInputLine(input: String): String = {
 
 
       input match {

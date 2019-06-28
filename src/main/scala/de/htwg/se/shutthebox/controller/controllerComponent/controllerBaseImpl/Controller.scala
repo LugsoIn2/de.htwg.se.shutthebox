@@ -2,8 +2,11 @@ package de.htwg.se.shutthebox.controller.controllerComponent.controllerBaseImpl
 
 import de.htwg.se.shutthebox.controller.controllerComponent.GameState._
 import de.htwg.se.shutthebox.controller.controllerComponent.ShutState.{apply => _, _}
+import com.google.inject.{Guice, Inject}
+import com.google.inject.name.Names
+import de.htwg.se.shutthebox.ShutTheBoxModule
+import net.codingwell.scalaguice.InjectorExtensions._
 import de.htwg.se.shutthebox.controller.controllerComponent._
-import de.htwg.se.shutthebox.model._
 import de.htwg.se.shutthebox.model.playerComponent.aiBaseImpl.AI
 import de.htwg.se.shutthebox.model.fieldComponent.fieldInterface
 import de.htwg.se.shutthebox.model.fieldComponent.fieldBaseImpl.{Die, Field}
@@ -13,14 +16,12 @@ import de.htwg.se.shutthebox.model.playerComponent.playerInterface
 import de.htwg.se.shutthebox.util.UndoManager
 
 import scala.collection.mutable
-import scala.collection.mutable.Stack
 import scala.swing.Publisher
 
 
-class Controller() extends ControllerInterface with Publisher {
-  //var players = Array(new Player, new Player)
-  var players:Array[Player] = Array.ofDim[Player](2)
-  var currentPlayer:Player = players(0)
+class Controller @Inject() extends ControllerInterface with Publisher {
+  var players:Array[playerInterface] = Array.ofDim[playerInterface](2)
+  var currentPlayer:playerInterface = players(0)
   var currentPlayerIndex = 0 // to determine, when to show scoreboard
   var matchfield : fieldInterface = _
   var dice = Array(new Die, new Die)
@@ -36,6 +37,8 @@ class Controller() extends ControllerInterface with Publisher {
   private val undoManager = new UndoManager
   private var lastShut = mutable.Stack[Int]()
   private var tmpLastShut = mutable.Stack[Int]()
+
+  val injector = Guice.createInjector(new ShutTheBoxModule)
 
 
   def startGame(t:Integer, ai:Boolean): Unit = {
@@ -53,9 +56,9 @@ class Controller() extends ControllerInterface with Publisher {
 
   def createField(t:Integer) : Unit = {
     if (t == 0)
-      matchfield = new Field()
+      matchfield = injector.instance[fieldInterface](Names.named("normal"))
     else
-      matchfield = new BigField()
+      matchfield = injector.instance[fieldInterface](Names.named("big"))
     publish(new FieldCreated)
   }
 
@@ -70,23 +73,23 @@ class Controller() extends ControllerInterface with Publisher {
 
 
   def createPlayers(ai:Boolean): Unit = {
-    players(0) = new Player()
+    players(0) = injector.instance[playerInterface](Names.named("player"))
     if (ai) {
       players(1) = new AI(this)
     }
     else {
-      players(1) = new Player()
+      players(1) = injector.instance[playerInterface](Names.named("player"))
     }
     currentPlayer = players(0)
     currentPlayerIndex = 0
     publish(new PlayersCreated)
   }
 
-  def getPlayers: Array[Player] = {
+  def getPlayers: Array[playerInterface] = {
     players
   }
 
-  def getCurrentPlayer : Player = {
+  def getCurrentPlayer : playerInterface = {
     currentPlayer
   }
 
@@ -202,7 +205,6 @@ class Controller() extends ControllerInterface with Publisher {
   def shut(i : Int) : Unit = {
     matchfield.shut(i, matchfield)
     lastShut.push(i)
-    //tmpLastShut.push(i)
     gameState=SHUT
 
     // check, if field is completely shut
