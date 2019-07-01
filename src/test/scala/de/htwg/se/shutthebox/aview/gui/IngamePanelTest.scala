@@ -20,6 +20,8 @@ import scala.runtime.BoxedUnit
 class IngamePanelTest extends WordSpec with Matchers {
 
   val controller = new Controller()
+  controller.createField(0)
+  controller.createPlayers(true)
   var gui = new SwingGUI(controller)
   var ingamepnl = new IngamePanel(gui)
 
