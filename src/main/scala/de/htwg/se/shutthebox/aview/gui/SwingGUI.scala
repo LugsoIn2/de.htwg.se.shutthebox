@@ -10,7 +10,7 @@ import javax.swing.ImageIcon
 class SwingGUI(controller : ControllerInterface) extends Frame {
   listenTo(controller)
 
-  peer.setDefaultCloseOperation(3)
+  //peer.setDefaultCloseOperation(3)
 
   def resizedTexture(path: String, width: Int, height: Int): ImageIcon = {
     var imageIcon = new ImageIcon(path)
@@ -30,7 +30,7 @@ class SwingGUI(controller : ControllerInterface) extends Frame {
   visible = true
 
   menuBar = new MenuBar {
-    contents += new Menu("File") {
+    contents += new Menu("Game") {
       contents += new MenuItem(new Action("Load") {
         def apply {
           controller.load
@@ -40,6 +40,12 @@ class SwingGUI(controller : ControllerInterface) extends Frame {
       contents += new MenuItem(new Action("Save") {
         def apply {
           controller.save
+        }
+      })
+
+      contents += new MenuItem(new Action("Exit") {
+        def apply {
+          System.exit(0)
         }
       })
 
