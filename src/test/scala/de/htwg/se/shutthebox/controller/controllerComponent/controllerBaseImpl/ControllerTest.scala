@@ -1,13 +1,11 @@
-package de.htwg.se.shutthebox.controller
+package de.htwg.se.shutthebox.controller.controllerComponent.controllerBaseImpl
 
-import de.htwg.se.shutthebox.controller.controllerComponent.controllerBaseImpl.Controller
-import org.scalatest._
-import de.htwg.se.shutthebox.util._
-import de.htwg.se.shutthebox.model._
-import de.htwg.se.shutthebox.model.fieldComponent.fieldInterface
-import de.htwg.se.shutthebox.model.fieldComponent.fieldBaseImpl.{Die, Field}
+import de.htwg.se.shutthebox.util.UndoManager
 import de.htwg.se.shutthebox.model.fieldComponent.fieldAdvancedImpl.BigField
+import de.htwg.se.shutthebox.model.fieldComponent.fieldBaseImpl.{Die, Field}
+import de.htwg.se.shutthebox.model.fieldComponent.fieldInterface
 import de.htwg.se.shutthebox.model.playerComponent.playerImpl.Player
+import org.scalatest._
 
 import scala.runtime.BoxedUnit
 
@@ -16,10 +14,11 @@ class ControllerTest extends WordSpec with Matchers {
     "empty" should {
       val matchfield = new Field()
       val matchfield2 = new BigField()
-
-
+      val undoManager = new UndoManager
       val dice = Array(new Die, new Die)
       val controller = new Controller()
+
+
 
 
       "a value" in {
@@ -83,7 +82,9 @@ class ControllerTest extends WordSpec with Matchers {
         controller.printOutput shouldBe a [String]
         controller.fieldToString shouldBe a [String]
         controller.rollToString shouldBe a [String]
-
+        controller.save shouldBe a [BoxedUnit]
+        controller.load shouldBe a [BoxedUnit]
+        controller.update shouldBe a [BoxedUnit]
       }
 
 

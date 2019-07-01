@@ -25,14 +25,12 @@ class FileIO extends FileIOInterface {
       case 12 => field = injector.instance[fieldInterface](Names.named("big"))
       case _ =>
     }
-    print("test")
     val celltest = (json \ "field" \\ "cells") (0).toString()
     var jsonList: List[JsValue] = Json.parse(celltest).as[List[JsValue]]
     var count = 0
     for (feld <- jsonList) {
       if (feld.toString().contains("true")) {
         field.field(count).isShut = true
-        print(count)
       }
       count += 1
     }

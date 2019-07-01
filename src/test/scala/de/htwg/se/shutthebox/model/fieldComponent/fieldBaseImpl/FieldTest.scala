@@ -1,6 +1,5 @@
-package de.htwg.se.shutthebox.model
+package de.htwg.se.shutthebox.model.fieldComponent.fieldBaseImpl
 
-import de.htwg.se.shutthebox.model.fieldComponent.fieldBaseImpl.{Cell, Field}
 import org.scalatest._
 
 class FieldTest extends WordSpec with Matchers {

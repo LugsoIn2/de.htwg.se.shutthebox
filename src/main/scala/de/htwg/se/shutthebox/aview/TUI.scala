@@ -87,7 +87,7 @@ class TUI(controller:ControllerInterface) extends Reactor {
     controller.setCurrentPlayer()
   }
 
-  def printScoreBoard : String = {
+  def printScoreBoard() : String = {
     var output = "\n"
     output += "========= SCOREBOARD ==========\n"
     output += controller.getPlayers(0).plrName

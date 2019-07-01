@@ -1,3 +1,4 @@
+
 package de.htwg.se.shutthebox.util
 
 trait Observer {
@@ -13,3 +14,4 @@ class Observable {
 
   def notifyObservers: Unit = subscribers.foreach(o => o.update)
 }
+
