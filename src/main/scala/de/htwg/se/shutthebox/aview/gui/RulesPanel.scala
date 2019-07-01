@@ -27,16 +27,28 @@ class RulesPanel(mainFrame:SwingGUI) extends GridPanel(3,1) {
 
   var rulesText =
     """
-      | Shut the Box can be played by any number of players although it is most enjoyable with two, three or four.
+      | Shut the Box can be played by any number of players although it is
+      | most enjoyable with two, three or four.
       | Some people even play the game solo as a pastime akin to patience.
-      | As played traditionally in English pubs, Shut the Box is a gambling pastime with each of the players paying an agreed amount into the "pool" at the beginning and the winner collecting the pool at the end of each round.
-      | However, it isn't necessary to gamble in order to play the game.
+      | As played traditionally in English pubs, Shut the Box is a gambling
+      | pastime with each of the players paying an agreed amount into the
+      | "pool" at the beginning and the winner collecting the pool at the end
+      | of each round. However, it isn't necessary to gamble in order to play
+      | the game.
       |
       |A round of the game consists of each player taking one turn.
-      |A player's takes a turn by repeatedly throwing the dice until the player cannot continue.  Each throw of the dice is taken as follows:
+      |A player's takes a turn by repeatedly throwing the dice until the player
+      |cannot continue. Each throw of the dice is taken as follows:
       |
-      |If 7, 8 and 9 are all covered, the player decides whether to throw one die or two.
-      |If any of these 3 numbers are still uncovered, the player must use both dice.  The player throws the die or dice into the box and adds up the pips.  The player must then cover up a set of unique uncovered numbers that add up to the sum thrown.  So for instance, if the total pips is 8, the player may choose one of the following sets of numbers as long as all of the numbers in the set are available to be covered:
+      |If 7, 8 and 9 are all covered, the player decides whether to throw
+      |one die or two. If any of these 3 numbers are still uncovered, the
+      |player must use both dice. The player throws the die or dice into
+      |the box and adds up the pips.
+      |The player must then cover up a set of unique uncovered numbers that
+      |add up to the sum thrown.
+      |So for instance, if the total pips is 8, the player may choose one of
+      |the following sets of numbers as long as all of the numbers in the set
+      |are available to be covered:
       |
       |8
       |7 & 1
@@ -46,20 +58,25 @@ class RulesPanel(mainFrame:SwingGUI) extends GridPanel(3,1) {
       |4 & 3 & 1
       |The player then does exactly the same thing with a second throw and so on.
       |
-      |Once a number is covered up, it stays covered so, eventually, the player will throw a total for which it is not possible to find a set of uncovered numbers.
-      |When this happens, the player scores the sum of the numbers that are still uncovered.  So if the numbers 1, 5 and 9 are uncovered and the player throws a 4, with options 4 or 3 & 1, the turn finishes and the player's score is 15.
+      |Once a number is covered up, it stays covered so, eventually, the player will
+      |throw a total for which it is not possible to find a set of uncovered numbers.
+      |When this happens, the player scores the sum of the numbers that are still uncovered.
+      |So if the numbers 1, 5 and 9 are uncovered and the player
+      |throws a 4, with options 4 or 3 & 1, the turn finishes and the player's score is 15.
       |
-      |If anyone succeeds in shutting the box  i.e. closing all the numbers, that player wins outright immediately and receives double the stake from all players.
-      |Otherwise, after each player has taken one turn, the winner of the round is the player with the lowest score.
+      |If anyone succeeds in shutting the box  i.e. closing all the numbers, that player wins outright
+      |immediately and receives double the stake from all players.
+      |Otherwise, after each player has taken one turn, the winner of the round is the player with the
+      |lowest score.
     """.stripMargin
 
   var scrllPne_rules = new ScrollPane {
-    opaque = false
     var lbl_rules = new Label() {
       text = convertToMultiline(rulesText)
       font = new Font("Courier New", 1, 20)
       foreground = Color.WHITE
-      background = new Color(0, 63, 45)
+      opaque = true
+      background = new Color(59, 124, 108)
     }
     contents = lbl_rules
   }

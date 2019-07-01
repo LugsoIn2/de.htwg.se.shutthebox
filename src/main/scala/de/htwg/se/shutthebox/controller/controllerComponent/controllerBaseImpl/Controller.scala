@@ -340,6 +340,7 @@ class Controller @Inject() extends ControllerInterface with Publisher {
 
   def load:Unit = {
     matchfield = fileIo.load
+    publish(new GameLoaded)
     publish(new CellShut)
   }
 

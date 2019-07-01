@@ -117,6 +117,15 @@ class IngamePanel(mainFrame:SwingGUI) extends GridPanel(6,1) {
     }
   }
 
+  def loadGame() : Unit = {
+    for(i <- controller.matchfield.field.indices) {
+      //pnl_matchfield_cells.contents.remove(i)
+      //pnl_matchfield_shutcells.contents.remove(i)
+      pnl_matchfield_cells.contents += numButtons(i)
+      pnl_matchfield_shutcells.contents += numLabels(i)
+    }
+  }
+
   var pnl_matchfield_shutcells:GridPanel = new GridPanel(1,0) {
     opaque = false
     for(i <- controller.matchfield.field.indices) {
@@ -312,6 +321,7 @@ class IngamePanel(mainFrame:SwingGUI) extends GridPanel(6,1) {
       }
 
     case ButtonClicked(b) if b == btn_quit =>
+      mainFrame.makeMenuItemsInvisible()
       mainFrame.contents = mainFrame.mainMenuPanel
       mainFrame.repaint()
   }
@@ -325,5 +335,6 @@ class IngamePanel(mainFrame:SwingGUI) extends GridPanel(6,1) {
     case event: Redone => updateMatchfield()
     case event: ShowScoreBoard => mainFrame.contents = new ScoreboardPanel(mainFrame)
     case event: AIThink => updateMatchfield()
+    case event: GameLoaded => loadGame()
   }
 }

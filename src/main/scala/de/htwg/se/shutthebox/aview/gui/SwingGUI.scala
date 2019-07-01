@@ -10,7 +10,27 @@ import javax.swing.ImageIcon
 class SwingGUI(controller : ControllerInterface) extends Frame {
   listenTo(controller)
 
-  //peer.setDefaultCloseOperation(3)
+  peer.setDefaultCloseOperation(3)
+
+
+  var itemLoad = new MenuItem(new Action("Load") {
+    def apply {
+      controller.load
+    }
+  })
+
+  var itemSave = new MenuItem(new Action("Save") {
+    def apply {
+      controller.save
+    }
+  })
+
+  var itemExit = new MenuItem(new Action("Exit") {
+    def apply {
+      System.exit(0)
+    }
+  })
+
 
   def resizedTexture(path: String, width: Int, height: Int): ImageIcon = {
     var imageIcon = new ImageIcon(path)
@@ -31,25 +51,23 @@ class SwingGUI(controller : ControllerInterface) extends Frame {
 
   menuBar = new MenuBar {
     contents += new Menu("Game") {
-      contents += new MenuItem(new Action("Load") {
-        def apply {
-          controller.load
-        }
-      })
+      contents += itemLoad
 
-      contents += new MenuItem(new Action("Save") {
-        def apply {
-          controller.save
-        }
-      })
+      contents += itemSave
 
-      contents += new MenuItem(new Action("Exit") {
-        def apply {
-          System.exit(0)
-        }
-      })
-
+      contents += itemExit
     }
     visible = true
+  }
+  makeMenuItemsInvisible()
+
+  def makeMenuItemsInvisible() : Unit = {
+    itemLoad.enabled = false
+    itemSave.enabled = false
+  }
+
+  def makeMenuItemsVisible() : Unit = {
+    itemLoad.enabled = true
+    itemSave.enabled = true
   }
 }

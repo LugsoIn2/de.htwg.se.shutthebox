@@ -103,6 +103,7 @@ class NewGamePanel(mainFrame:SwingGUI) extends GridPanel(5,1) {
         controller.startGame(0, ai = false)
       else
         controller.startGame(1, ai = false)
+      mainFrame.makeMenuItemsVisible()
       mainFrame.contents = new IngamePanel(mainFrame)
       mainFrame.repaint()
 
@@ -111,6 +112,7 @@ class NewGamePanel(mainFrame:SwingGUI) extends GridPanel(5,1) {
         controller.startGame(0, ai = true)
       else
         controller.startGame(1, ai = true)
+      mainFrame.makeMenuItemsVisible()
       mainFrame.contents = new IngamePanel(mainFrame)
       mainFrame.repaint()
 

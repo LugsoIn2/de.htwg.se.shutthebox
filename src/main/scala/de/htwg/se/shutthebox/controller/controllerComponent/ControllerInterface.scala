@@ -76,3 +76,4 @@ class AllCellsShut extends Event
 class ScoreUpdated extends Event
 class ShowScoreBoard extends Event
 class AIThink extends Event
+class GameLoaded extends Event
