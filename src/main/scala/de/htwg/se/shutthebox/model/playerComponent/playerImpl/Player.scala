@@ -7,8 +7,7 @@ class Player() extends playerInterface {
   var score = 0
 
   def setName(index:Integer) : String = {
-    printf("Player " + index + ":")
-    plrName = "Player"//readLine()
+    plrName = "Player " + index
     plrName
   }
 

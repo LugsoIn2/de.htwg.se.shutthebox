@@ -31,13 +31,13 @@ class ScoreboardPanel(mainFrame:SwingGUI) extends GridPanel(5,1) {
   var lbl_plr1:Label = new Label {
     font = courierFont
     foreground = Color.WHITE
-    text = "Player 1 - " + controller.players(0).plrName + ": " + controller.players(0).score
+    text = controller.players(0).plrName + ": " + controller.players(0).score
   }
 
   var lbl_plr2:Label = new Label {
     font = courierFont
     foreground = Color.WHITE
-    text = "Player 2 - " + controller.players(1).plrName + ": " + controller.players(1).score
+    text = controller.players(1).plrName + ": " + controller.players(1).score
   }
 
   var lbl_winner:Label = new Label {

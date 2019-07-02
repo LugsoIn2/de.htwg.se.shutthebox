@@ -23,9 +23,12 @@ class TUI(controller:ControllerInterface) extends Reactor {
       input match {
         case "ss" => print(printStartGame())
                      controller.startGame(0, ai = false)
-        case "sb" => controller.startGame(1, ai = false)
-        case "ssai" => controller.startGame(0, ai = true)
-        case "sbai" => controller.startGame(1, ai = true)
+        case "sb" => print(printStartGame())
+                      controller.startGame(1, ai = false)
+        case "ssai" => print(printStartGame())
+                        controller.startGame(0, ai = true)
+        case "sbai" => print(printStartGame())
+                        controller.startGame(1, ai = true)
         case "z" => controller.cmdUnShut() // Undo
                     controller.printOutput
         case "y" => controller.cmdRedoShut() // Redo
@@ -65,12 +68,17 @@ class TUI(controller:ControllerInterface) extends Reactor {
       |║     /____\:\\: \ \\::\ \\:\_\:\ \  \::\ \      \::\ \   \: \ \\::\ \\:\____/\    \::(_)  \ \\:\_\ \ \\ \ \ \::\ \ ║
       |║     \_____\/ \__\/ \::\/ \_____\/   \__\/       \__\/    \__\/ \::\/ \_____\/     \_______\/ \_____\/ \_\/  \__\/ ║
       |║                                                                                                                   ║
-      |║                                          Press "s" to START the game!                                             ║
-      |║                                           Press "n" for next player                                               ║
-      |║                                             Press "r" to ROLL dice                                                ║
-      |║                                             Press "q" to QUIT game                                                ║
-      |║                                               Press "h" for HELP                                                  ║
-      |║                                      Press numbers (1 - 9) to shut the cells                                      ║
+      |║                                      Press "ss" to START the game (small matchfield)!                             ║
+      |║                                      Press "sb" to START the game (big matchfield)!                               ║
+      |║                                      Press "ssai" to PLAY AGAINST AI (small matchfield)!                          ║
+      |║                                      Press "ssab" to PLAY AGAINST AI (big matchfield)!                            ║
+      |║                                      Press "n" for next player                                                    ║
+      |║                                      Press "r" to ROLL dice                                                       ║
+      |║                                      Press "z" to UNDO step                                                       ║
+      |║                                      Press "y" to REDO step                                                       ║
+      |║                                      Press "q" to QUIT game                                                       ║
+      |║                                      Press "h" for HELP                                                           ║
+      |║                                      Press numbers (1 - 12) to shut the cells                                     ║
       |╚═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════╝
       |""".stripMargin
   }
@@ -78,7 +86,6 @@ class TUI(controller:ControllerInterface) extends Reactor {
   def printStartGame() : String = {
     """
       |---- NEW GAME ----
-      |Please enter your names!
       |""".stripMargin
   }
 

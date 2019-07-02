@@ -49,7 +49,6 @@ class Controller @Inject() extends ControllerInterface with Publisher {
     createField(t)
     createPlayers(ai)
     resetMatchfield()
-    //print(printStartGame())
     getPlayers(0).setName(1)   // problems with code coverage
     getPlayers(1).setName(2)   // NullPointerException or infinite loop for input
     //setCurrentPlayer()
