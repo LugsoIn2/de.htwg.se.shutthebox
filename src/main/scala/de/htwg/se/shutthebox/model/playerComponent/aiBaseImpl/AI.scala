@@ -55,9 +55,9 @@ class AI(controller:Controller) extends Player with aiInterface {
         } else {
           validShuts(currentMaxIndex) = 0
 
-          if (singleShuts(0) != 0 && singleShuts(1) != 0) {
+          if (singleShuts(0) != 0 & singleShuts(1) != 0) {
             // if the two single dice values aren't already shut
-            if (!controller.matchfield.field(singleShuts(0) - 1).isShut && !controller.matchfield.field(singleShuts(1) - 1).isShut) {
+            if ((singleShuts(0) != singleShuts(1)) & !controller.matchfield.field(singleShuts(0) - 1).isShut && !controller.matchfield.field(singleShuts(1) - 1).isShut) {
               // shut the single die values
               controller.doShut(singleShuts(0))
               Thread.sleep(700) // so human player can follow along
@@ -65,7 +65,7 @@ class AI(controller:Controller) extends Player with aiInterface {
               think()
             }
 
-            else if (!controller.matchfield.field(singleShuts(0) - 1).isShut | !controller.matchfield.field(singleShuts(1) - 1).isShut) {
+            else if ((singleShuts(0) == singleShuts(1)) | !controller.matchfield.field(singleShuts(0) - 1).isShut | !controller.matchfield.field(singleShuts(1) - 1).isShut) {
               analyze()
             }
           } else

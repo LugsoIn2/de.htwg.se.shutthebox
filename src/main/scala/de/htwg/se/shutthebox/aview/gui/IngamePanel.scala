@@ -118,9 +118,9 @@ class IngamePanel(mainFrame:SwingGUI) extends GridPanel(6,1) {
   }
 
   def loadGame() : Unit = {
+    pnl_matchfield_cells.contents.clear()
+    pnl_matchfield_shutcells.contents.clear()
     for(i <- controller.matchfield.field.indices) {
-      //pnl_matchfield_cells.contents.remove(i)
-      //pnl_matchfield_shutcells.contents.remove(i)
       pnl_matchfield_cells.contents += numButtons(i)
       pnl_matchfield_shutcells.contents += numLabels(i)
     }

@@ -71,7 +71,7 @@ class TUI(controller:ControllerInterface) extends Reactor {
       |║                                      Press "ss" to START the game (small matchfield)!                             ║
       |║                                      Press "sb" to START the game (big matchfield)!                               ║
       |║                                      Press "ssai" to PLAY AGAINST AI (small matchfield)!                          ║
-      |║                                      Press "ssab" to PLAY AGAINST AI (big matchfield)!                            ║
+      |║                                      Press "sbai" to PLAY AGAINST AI (big matchfield)!                            ║
       |║                                      Press "n" for next player                                                    ║
       |║                                      Press "r" to ROLL dice                                                       ║
       |║                                      Press "z" to UNDO step                                                       ║

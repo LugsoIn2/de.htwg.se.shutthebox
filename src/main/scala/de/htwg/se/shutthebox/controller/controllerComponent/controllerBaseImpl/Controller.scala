@@ -175,7 +175,8 @@ class Controller @Inject() extends ControllerInterface with Publisher {
     var message = " "
     if (gameState == ROLLDICE | gameState == SHUT | gameState == UNDOSTATE) {
 
-      if((validNumber(0) == i | validNumber(1) == i) & shutState == SHUTSTATE0) {
+      if((validNumber(0) == i | validNumber(1) == i) & shutState == SHUTSTATE0 &
+        (!matchfield.field(validNumber(0)).isShut & !matchfield.field(validNumber(0)).isShut)) {
         shut(i)
         shutState = SHUTSTATE5
       }else if((validNumber(0) == i | validNumber(1) == i) & shutState == SHUTSTATE5) {
