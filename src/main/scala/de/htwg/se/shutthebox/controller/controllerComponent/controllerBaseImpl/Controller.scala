@@ -9,10 +9,8 @@ import net.codingwell.scalaguice.InjectorExtensions._
 import de.htwg.se.shutthebox.controller.controllerComponent._
 import de.htwg.se.shutthebox.model.playerComponent.aiBaseImpl.AI
 import de.htwg.se.shutthebox.model.fieldComponent.fieldInterface
-import de.htwg.se.shutthebox.model.fieldComponent.fieldBaseImpl.{Die, Field}
-import de.htwg.se.shutthebox.model.fieldComponent.fieldAdvancedImpl.BigField
+import de.htwg.se.shutthebox.model.fieldComponent.fieldBaseImpl.{Die}
 import de.htwg.se.shutthebox.model.fileIoComponent.FileIOInterface
-import de.htwg.se.shutthebox.model.playerComponent.playerImpl.Player
 import de.htwg.se.shutthebox.model.playerComponent.playerInterface
 import de.htwg.se.shutthebox.util.UndoManager
 
