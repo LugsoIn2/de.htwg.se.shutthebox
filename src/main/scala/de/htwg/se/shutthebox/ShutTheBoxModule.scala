@@ -19,7 +19,7 @@ import de.htwg.se.shutthebox.model.fileIoComponent._
 class ShutTheBoxModule extends AbstractModule with ScalaModule {
 
 
-  def configure() = {
+  override def configure() = {
     bind[ControllerInterface].to[controllerBaseImpl.Controller]
     bind[fieldInterface].annotatedWithName("normal").toInstance(new Field())
     bind[fieldInterface].annotatedWithName("big").toInstance(new BigField())
