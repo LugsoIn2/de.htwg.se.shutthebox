@@ -14,7 +14,7 @@ object ShutTheBox {
   val injector = Guice.createInjector(new ShutTheBoxModule)
   val controller = injector.getInstance(classOf[ControllerInterface])
   val tui = new TUI(controller)
-  //val gui = new SwingGUI(controller)
+  val gui = new SwingGUI(controller)
 
   def main(args: Array[String]): Unit = {
 
